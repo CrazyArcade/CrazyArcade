@@ -6,14 +6,14 @@
 class Entity : public cocos2d::Node
 {
 public:
-	Entity() = default;
-	~Entity() = default;
+    Entity() = default;
+    ~Entity() = default;
 
-	void setID(std::string);
-	std::string getID() const;
+    void setID(std::string);
+    std::string getID() const;
 
-	// virtual void setStatus();
+    // virtual void setStatus();
 
 private:
-	std::string _id;
+    std::string _id;
 };

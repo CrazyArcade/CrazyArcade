@@ -13,5 +13,5 @@ Bubble::~Bubble()
 
 void Bubble::setStatus(Status status)
 {
-	this->_status = status
+    this->_status = status;
 }

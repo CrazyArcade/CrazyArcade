@@ -5,17 +5,17 @@
 class Bubble : public Entity
 {
 public:
-	Bubble();
-	~Bubble();
+    Bubble();
+    ~Bubble();
 
-	enum class Status : std::int8_t
-	{
-		ALIVE,
-		BOOM
-	};
+    enum class Status : std::int8_t
+    {
+        ALIVE,
+        BOOM
+    };
 
-	void setStatus(Status);
+    void setStatus(Status);
 private:
-	Status _status;
+    Status _status;
 };
 

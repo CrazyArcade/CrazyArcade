@@ -2,7 +2,7 @@
 class Prop
 {
 public:
-	Prop();
-	~Prop();
+    Prop();
+    ~Prop();
 };
 
