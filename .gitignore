@@ -27,3 +27,4 @@ cocos2d/
 *.pidb
 *.svclog
 *.scc
+[Dd]ebug.win32/
