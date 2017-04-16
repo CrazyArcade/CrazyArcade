@@ -2,11 +2,3 @@
 
 
 
-PropController::PropController()
-{
-}
-
-
-PropController::~PropController()
-{
-}
