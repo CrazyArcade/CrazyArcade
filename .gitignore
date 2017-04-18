@@ -28,3 +28,5 @@ cocos2d/
 *.svclog
 *.scc
 [Dd]ebug.win32/
+[Rr]elease.win32/
+[Rr]eleases.win32/
