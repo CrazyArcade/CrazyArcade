@@ -56,8 +56,7 @@ bool StartScene::init()
     // add a label shows "Hello World"
     // create and initialize a label
 
-    addChild(name());
-    
+    addChild(createTitle());
 
     return true;
 }
@@ -81,8 +80,8 @@ void StartScene::menuCloseCallback(Ref* pSender)
 cocos2d::Menu* StartScene::createTitle() {     //This function creates the name of the game and its background
     auto visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
     
-    auto nameBackground = Sprite::create("nameBackground.png");
-    auto label = Label::createWithTTF("Crazy Arcade", "fonts/Marker Felt.ttf", 24);
+    auto nameBackground = MenuItemImage::create("nameBackground.png", "nameBackground.png");
+    auto label = MenuItemLabel::create(Label::createWithTTF("Crazy Arcade", "fonts/Marker Felt.ttf", 24));
    
     auto name=Menu::create();
     name->addChild(label,1);

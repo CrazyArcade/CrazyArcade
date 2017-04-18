@@ -51,6 +51,9 @@
     <ClCompile Include="..\Classes\HelloWorldScene.cpp">
       <Filter>src\Views</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\StartScene.cpp">
+      <Filter>src\Views</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -81,6 +84,9 @@
       <Filter>src\Controllers</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\HelloWorldScene.h">
+      <Filter>src\Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\StartScene.h">
       <Filter>src\Views</Filter>
     </ClInclude>
   </ItemGroup>
