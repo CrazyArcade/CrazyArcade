@@ -14,7 +14,7 @@ public:
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
 
-    cocos2d::Menu* name();
+    cocos2d::Menu* createTitle();
     // implement the "static create()" method manually
     CREATE_FUNC(StartScene);
 };

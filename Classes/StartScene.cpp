@@ -78,7 +78,7 @@ void StartScene::menuCloseCallback(Ref* pSender)
     //_eventDispatcher->dispatchEvent(&customEndEvent);
 }
 
-cocos2d::Menu* StartScene::name() {     //This function creates the name of the game and its background
+cocos2d::Menu* StartScene::createTitle() {     //This function creates the name of the game and its background
     auto visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
     
     auto nameBackground = Sprite::create("nameBackground.png");
