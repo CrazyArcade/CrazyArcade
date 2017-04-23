@@ -11,11 +11,12 @@ public:
 
     virtual bool init();
 
-    // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
 
     cocos2d::Menu* createTitle();
-    // implement the "static create()" method manually
+
+	cocos2d::Menu* createButtons();
+
     CREATE_FUNC(StartScene);
 };
 

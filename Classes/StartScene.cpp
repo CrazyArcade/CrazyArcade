@@ -57,6 +57,7 @@ bool StartScene::init()
     // create and initialize a label
 
     addChild(createTitle());
+	addChild(createButtons());
 
     return true;
 }
@@ -77,10 +78,10 @@ void StartScene::menuCloseCallback(Ref* pSender)
     //_eventDispatcher->dispatchEvent(&customEndEvent);
 }
 
-cocos2d::Menu* StartScene::createTitle() {     //This function creates the name of the game and its background
+cocos2d::Menu* StartScene::createTitle() {     //This function creates the title of the game and its background
     auto visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
     
-    auto nameBackground = MenuItemImage::create("nameBackground.png", "nameBackground.png");
+    auto nameBackground = MenuItemImage::create("StartScene/nameBackground.png", "StartScene/nameBackground.png");
     auto label = MenuItemLabel::create(Label::createWithTTF("Crazy Arcade", "fonts/Marker Felt.ttf", 24));
    
     auto name=Menu::create();
@@ -92,3 +93,22 @@ cocos2d::Menu* StartScene::createTitle() {     //This function creates the name 
     name->setPosition(Vec2(visibleSize.width / 2,visibleSize.height -label->getContentSize().height*2));
     return name;
 }
+
+cocos2d::Menu* StartScene::createButtons() {
+	auto visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
+
+	auto buttons = Menu::create();
+
+	auto label1 = MenuItemLabel::create(Label::createWithTTF("Play", "fonts/Marker Felt.ttf", 24));
+	auto label2 = MenuItemLabel::create(Label::createWithTTF("Settings", "fonts/Marker Felt.ttf", 24));
+	auto label3 = MenuItemLabel::create(Label::createWithTTF("Help", "fonts/Marker Felt.ttf", 24));
+
+	buttons->addChild(label1, 1);
+	buttons->addChild(label2, 1);
+	buttons->addChild(label3, 1);
+	buttons->alignItemsVerticallyWithPadding(10);
+
+	buttons->setPosition(Vec2(visibleSize.width / 2, visibleSize.height -160));
+	return buttons;
+}
+
