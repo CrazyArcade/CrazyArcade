@@ -51,30 +51,30 @@ void StartScene::menuCloseCallback(Ref* pSender)
 }
 
 cocos2d::Menu* StartScene::createText() {
-	auto buttons = Menu::create();
+    auto buttons = Menu::create();
 
-	auto title = MenuItemLabel::create(Label::createWithTTF("Crazy Arcade", "fonts/Marker Felt.ttf", 30));
-	auto label1 = MenuItemLabel::create(Label::createWithTTF("Play", "fonts/Arial.ttf", 20));
-	auto label2 = MenuItemLabel::create(Label::createWithTTF("Settings", "fonts/Arial.ttf", 20));
-	auto label3 = MenuItemLabel::create(Label::createWithTTF("Help", "fonts/Arial.ttf", 20));
-	auto closeItem = MenuItemLabel::create(
-		Label::createWithTTF("Exit", "fonts/Arial.ttf", 20),
-		CC_CALLBACK_1(StartScene::menuCloseCallback, this));
+    auto title = MenuItemLabel::create(Label::createWithTTF("Crazy Arcade", "fonts/Marker Felt.ttf", 30));
+    auto label1 = MenuItemLabel::create(Label::createWithTTF("Play", "fonts/Arial.ttf", 20));
+    auto label2 = MenuItemLabel::create(Label::createWithTTF("Settings", "fonts/Arial.ttf", 20));
+    auto label3 = MenuItemLabel::create(Label::createWithTTF("Help", "fonts/Arial.ttf", 20));
+    auto closeItem = MenuItemLabel::create(
+        Label::createWithTTF("Exit", "fonts/Arial.ttf", 20),
+        CC_CALLBACK_1(StartScene::menuCloseCallback, this));
 
-	title->setPosition(title->getContentSize().width / 2 + 60, 260);										//left-aligned
-	label1->setPosition(label1->getContentSize().width / 2 + 60, 200);										
-	label2->setPosition(label2->getContentSize().width / 2 + 60, 170);
-	label3->setPosition(label3->getContentSize().width / 2 + 60, 140);
-	closeItem->setPosition(closeItem->getContentSize().width / 2 + 60, 110);
+    title->setPosition(title->getContentSize().width / 2 + 60, 260);										//left-aligned
+    label1->setPosition(label1->getContentSize().width / 2 + 60, 200);
+    label2->setPosition(label2->getContentSize().width / 2 + 60, 170);
+    label3->setPosition(label3->getContentSize().width / 2 + 60, 140);
+    closeItem->setPosition(closeItem->getContentSize().width / 2 + 60, 110);
 
-	buttons->addChild(title, 1);
-	buttons->addChild(label1, 1);
-	buttons->addChild(label2, 1);
-	buttons->addChild(label3, 1);
-	buttons->addChild(closeItem, 1);
+    buttons->addChild(title, 1);
+    buttons->addChild(label1, 1);
+    buttons->addChild(label2, 1);
+    buttons->addChild(label3, 1);
+    buttons->addChild(closeItem, 1);
 
-	buttons->setPosition(0, 0);
+    buttons->setPosition(0, 0);
 
-	return buttons;
+    return buttons;
 }
 

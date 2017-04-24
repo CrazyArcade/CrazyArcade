@@ -13,7 +13,7 @@ public:
 
     void menuCloseCallback(cocos2d::Ref* pSender);
 
-	cocos2d::Menu* createText();
+    cocos2d::Menu* createText();
 
     CREATE_FUNC(StartScene);
 };
