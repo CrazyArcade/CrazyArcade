@@ -29,35 +29,7 @@ bool StartScene::init()
         return false;
     }
 
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
-
-    // add a "close" icon to exit the progress. it's an autorelease object
-    auto closeItem = MenuItemImage::create(
-        "CloseNormal.png",
-        "CloseSelected.png",
-        CC_CALLBACK_1(StartScene::menuCloseCallback, this));
-
-    closeItem->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width / 2,
-        origin.y + closeItem->getContentSize().height / 2));
-
-    // create menu, it's an autorelease object
-    auto menu = Menu::create(closeItem, NULL);
-    menu->setPosition(Vec2::ZERO);
-    this->addChild(menu, 1);
-
-    /////////////////////////////
-    // 3. add your codes below...
-
-    // add a label shows "Hello World"
-    // create and initialize a label
-
-    addChild(createTitle());
-	addChild(createButtons());
+    addChild(createText());
 
     return true;
 }
@@ -78,37 +50,31 @@ void StartScene::menuCloseCallback(Ref* pSender)
     //_eventDispatcher->dispatchEvent(&customEndEvent);
 }
 
-cocos2d::Menu* StartScene::createTitle() {     //This function creates the title of the game and its background
-    auto visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
-    
-    auto nameBackground = MenuItemImage::create("StartScene/nameBackground.png", "StartScene/nameBackground.png");
-    auto label = MenuItemLabel::create(Label::createWithTTF("Crazy Arcade", "fonts/Marker Felt.ttf", 24));
-   
-    auto name=Menu::create();
-    name->addChild(label,1);
-    name->addChild(nameBackground,0);
-    
-    nameBackground->setScale(0.5);
-    
-    name->setPosition(Vec2(visibleSize.width / 2,visibleSize.height -label->getContentSize().height*2));
-    return name;
-}
-
-cocos2d::Menu* StartScene::createButtons() {
-	auto visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
-
+cocos2d::Menu* StartScene::createText() {
 	auto buttons = Menu::create();
 
-	auto label1 = MenuItemLabel::create(Label::createWithTTF("Play", "fonts/Marker Felt.ttf", 24));
-	auto label2 = MenuItemLabel::create(Label::createWithTTF("Settings", "fonts/Marker Felt.ttf", 24));
-	auto label3 = MenuItemLabel::create(Label::createWithTTF("Help", "fonts/Marker Felt.ttf", 24));
+	auto title = MenuItemLabel::create(Label::createWithTTF("Crazy Arcade", "fonts/Marker Felt.ttf", 30));
+	auto label1 = MenuItemLabel::create(Label::createWithTTF("Play", "fonts/Arial.ttf", 20));
+	auto label2 = MenuItemLabel::create(Label::createWithTTF("Settings", "fonts/Arial.ttf", 20));
+	auto label3 = MenuItemLabel::create(Label::createWithTTF("Help", "fonts/Arial.ttf", 20));
+	auto closeItem = MenuItemLabel::create(
+		Label::createWithTTF("Exit", "fonts/Arial.ttf", 20),
+		CC_CALLBACK_1(StartScene::menuCloseCallback, this));
 
+	title->setPosition(title->getContentSize().width / 2 + 60, 260);										//left-aligned
+	label1->setPosition(label1->getContentSize().width / 2 + 60, 200);										
+	label2->setPosition(label2->getContentSize().width / 2 + 60, 170);
+	label3->setPosition(label3->getContentSize().width / 2 + 60, 140);
+	closeItem->setPosition(closeItem->getContentSize().width / 2 + 60, 110);
+
+	buttons->addChild(title, 1);
 	buttons->addChild(label1, 1);
 	buttons->addChild(label2, 1);
 	buttons->addChild(label3, 1);
-	buttons->alignItemsVerticallyWithPadding(10);
+	buttons->addChild(closeItem, 1);
 
-	buttons->setPosition(Vec2(visibleSize.width / 2, visibleSize.height -160));
+	buttons->setPosition(0, 0);
+
 	return buttons;
 }
 
