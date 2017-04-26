@@ -19,21 +19,36 @@ Scene* StartScene::createScene()
     return scene;
 }
 
-// on "init" you need to initialize your instance
 bool StartScene::init()
 {
-    //////////////////////////////
-    // 1. super init first
     if (!Layer::init())
     {
         return false;
     }
 
     addChild(createText());
+    addChild(musicInit());
 
     return true;
 }
 
+void StartScene::musicPP(cocos2d::Ref * pSender) {
+    if (musicOn)
+        CocosDenshion::SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+    else
+        CocosDenshion::SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+    musicOn = !musicOn;
+}
+
+cocos2d::Menu* StartScene::musicInit() {
+    auto music = Menu::create();
+    CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("StartScene/bgmusic.mp3");
+    auto musicButton = MenuItemLabel::create(Label::createWithTTF("musicPP", "fonts/Arial.ttf", 20), this, menu_selector(StartScene::musicPP));
+    musicButton->setPosition(420, 270);
+    music->addChild(musicButton);
+    music->setPosition(0, 0);
+    return music;
+}
 
 void StartScene::menuCloseCallback(Ref* pSender)
 {
@@ -50,7 +65,7 @@ void StartScene::menuCloseCallback(Ref* pSender)
     //_eventDispatcher->dispatchEvent(&customEndEvent);
 }
 
-cocos2d::Menu* StartScene::createText() {
+cocos2d::Menu* StartScene::createText() {                                                                   //create all text units: title, menu label
     auto buttons = Menu::create();
 
     auto title = MenuItemLabel::create(Label::createWithTTF("Crazy Arcade", "fonts/Marker Felt.ttf", 30));
