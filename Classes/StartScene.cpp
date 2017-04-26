@@ -1,6 +1,4 @@
 #include "StartScene.h"
-#include "SimpleAudioEngine.h"
-#include "cocos2d.h"
 
 USING_NS_CC;
 
@@ -43,8 +41,18 @@ void StartScene::musicPP(cocos2d::Ref * pSender) {
 cocos2d::Menu* StartScene::musicInit() {
     auto music = Menu::create();
     CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("StartScene/bgmusic.mp3");
-    auto musicButton = MenuItemLabel::create(Label::createWithTTF("musicPP", "fonts/Arial.ttf", 20), this, menu_selector(StartScene::musicPP));
-    musicButton->setPosition(420, 270);
+    auto musicButton = MenuItemToggle::createWithCallback(
+        CC_CALLBACK_1(StartScene::musicPP, this),
+        MenuItemLabel::create(Label::createWithTTF("Music on", Settings::Font::Type::base, Settings::Font::Size::light)),
+        MenuItemLabel::create(Label::createWithTTF("Music off", Settings::Font::Type::base, Settings::Font::Size::light)),
+        nullptr
+        );
+        
+        //MenuItemLabel::create(
+        //Label::createWithTTF("Music on", Settings::Font::Type::base, Settings::Font::Size::light),
+        //this, menu_selector(StartScene::musicPP));
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    musicButton->setPosition(visibleSize.width * 0.95f, visibleSize.height * 0.95f);
     music->addChild(musicButton);
     music->setPosition(0, 0);
     return music;
@@ -67,20 +75,27 @@ void StartScene::menuCloseCallback(Ref* pSender)
 
 cocos2d::Menu* StartScene::createText() {                                                                   //create all text units: title, menu label
     auto buttons = Menu::create();
-
-    auto title = MenuItemLabel::create(Label::createWithTTF("Crazy Arcade", "fonts/Marker Felt.ttf", 30));
-    auto label1 = MenuItemLabel::create(Label::createWithTTF("Play", "fonts/Arial.ttf", 20));
-    auto label2 = MenuItemLabel::create(Label::createWithTTF("Settings", "fonts/Arial.ttf", 20));
-    auto label3 = MenuItemLabel::create(Label::createWithTTF("Help", "fonts/Arial.ttf", 20));
+    
+    auto title = MenuItemLabel::create(
+        Label::createWithTTF("Crazy Arcade", Settings::Font::Type::title, Settings::Font::Size::title));
+    auto label1 = MenuItemLabel::create(
+        Label::createWithTTF("Play", Settings::Font::Type::base, Settings::Font::Size::label));
+    auto label2 = MenuItemLabel::create(
+        Label::createWithTTF("Settings", Settings::Font::Type::base, Settings::Font::Size::label));
+    auto label3 = MenuItemLabel::create(
+        Label::createWithTTF("Help", Settings::Font::Type::base, Settings::Font::Size::label));
     auto closeItem = MenuItemLabel::create(
-        Label::createWithTTF("Exit", "fonts/Arial.ttf", 20),
+        Label::createWithTTF("Exit", Settings::Font::Type::base, Settings::Font::Size::label),
         CC_CALLBACK_1(StartScene::menuCloseCallback, this));
 
-    title->setPosition(title->getContentSize().width / 2 + 60, 260);										//left-aligned
-    label1->setPosition(label1->getContentSize().width / 2 + 60, 200);
-    label2->setPosition(label2->getContentSize().width / 2 + 60, 170);
-    label3->setPosition(label3->getContentSize().width / 2 + 60, 140);
-    closeItem->setPosition(closeItem->getContentSize().width / 2 + 60, 110);
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    auto baseY = visibleSize.height * 0.85f;
+
+    title->setPosition(title->getContentSize().width / 2 + 60, baseY);										//left-aligned
+    label1->setPosition(label1->getContentSize().width / 2 + 60, baseY - 200);
+    label2->setPosition(label2->getContentSize().width / 2 + 60, baseY - 260);
+    label3->setPosition(label3->getContentSize().width / 2 + 60, baseY - 320);
+    closeItem->setPosition(closeItem->getContentSize().width / 2 + 60, baseY - 380);
 
     buttons->addChild(title, 1);
     buttons->addChild(label1, 1);

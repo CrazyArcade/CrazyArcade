@@ -11,6 +11,7 @@ namespace Settings
             constexpr int title  = 60;
             constexpr int label  = 40;
             constexpr int normal = 32;
+            constexpr int light  = 24;
         }
         namespace Type
         {

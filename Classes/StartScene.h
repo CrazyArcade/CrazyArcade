@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
+#include "Settings.h"
 
 class StartScene :
     public cocos2d::Layer
