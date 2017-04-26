@@ -89,6 +89,9 @@
     <ClInclude Include="..\Classes\StartScene.h">
       <Filter>src\Views</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\Settings.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
