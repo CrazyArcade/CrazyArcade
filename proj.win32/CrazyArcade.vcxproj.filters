@@ -57,10 +57,10 @@
     <ClCompile Include="..\Classes\GameScene.cpp">
       <Filter>src\Views</Filter>
     </ClCompile>
-    <ClCompile Include="SettingsScene.cpp">
+    <ClCompile Include="..\Classes\SettingsScene.cpp">
       <Filter>src\Views</Filter>
     </ClCompile>
-    <ClCompile Include="HelpScene.cpp">
+    <ClCompile Include="..\Classes\HelpScene.cpp">
       <Filter>src\Views</Filter>
     </ClCompile>
   </ItemGroup>
@@ -104,10 +104,10 @@
     <ClInclude Include="..\Classes\GameScene.h">
       <Filter>src\Views</Filter>
     </ClInclude>
-    <ClInclude Include="SettingsScene.h">
+    <ClInclude Include="..\Classes\HelpSceneh.h">
       <Filter>src\Views</Filter>
     </ClInclude>
-    <ClInclude Include="HelpSceneh.h">
+    <ClInclude Include="..\Classes\SettingsScene.h">
       <Filter>src\Views</Filter>
     </ClInclude>
   </ItemGroup>
