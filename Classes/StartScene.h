@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 #include "Settings.h"
+#include "GameScene.h"
 
 class StartScene :
     public cocos2d::Layer
@@ -11,7 +12,8 @@ class StartScene :
 private:
     bool musicOn = true;    
     cocos2d::Menu* createText();
-    void menuCloseCallback(cocos2d::Ref* pSender);
+    void menuExitCallback(cocos2d::Ref* pSender);
+    void menuPlayCallback(cocos2d::Ref* pSender);
     cocos2d::Menu* musicInit();
     void musicPP(cocos2d::Ref* pSender);    //play or pause the music
 public:
