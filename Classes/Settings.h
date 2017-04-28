@@ -15,7 +15,7 @@ namespace Settings
         }
         namespace Type
         {
-            constexpr char * title = "fonts/Montserrat-Medium.ttf";
+            constexpr char * title = "fonts/Quicksand-Bold.ttf";
             constexpr char * base  = "fonts/OpenSans-Regular.ttf";
         };
     }

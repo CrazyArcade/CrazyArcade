@@ -54,6 +54,15 @@
     <ClCompile Include="..\Classes\StartScene.cpp">
       <Filter>src\Views</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\GameScene.cpp">
+      <Filter>src\Views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SettingsScene.cpp">
+      <Filter>src\Views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\HelpScene.cpp">
+      <Filter>src\Views</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -91,6 +100,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Settings.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameScene.h">
+      <Filter>src\Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HelpSceneh.h">
+      <Filter>src\Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SettingsScene.h">
+      <Filter>src\Views</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

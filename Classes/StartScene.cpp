@@ -39,17 +39,17 @@ void StartScene::musicPP(cocos2d::Ref * pSender) {
 }
 
 cocos2d::Menu* StartScene::musicInit() {
-    auto music = Menu::create();
+    const auto music = Menu::create();
     CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("StartScene/bgmusic.mp3");
     
-    auto musicButton = MenuItemToggle::createWithCallback(
+    const auto musicButton = MenuItemToggle::createWithCallback(
         CC_CALLBACK_1(StartScene::musicPP, this),
         MenuItemLabel::create(Label::createWithTTF("Music on", Settings::Font::Type::base, Settings::Font::Size::light)),
         MenuItemLabel::create(Label::createWithTTF("Music off", Settings::Font::Type::base, Settings::Font::Size::light)),
         nullptr
         );
 
-    auto visibleSize = Director::getInstance()->getVisibleSize();
+    const auto visibleSize = Director::getInstance()->getVisibleSize();
 
     musicButton->setPosition(visibleSize.width * 0.95f, visibleSize.height * 0.95f);
     music->addChild(musicButton);
@@ -57,38 +57,38 @@ cocos2d::Menu* StartScene::musicInit() {
     return music;
 }
 
-void StartScene::menuCloseCallback(Ref* pSender)
+void StartScene::menuPlayCallback(cocos2d::Ref * pSender){
+    const auto scene = GameScene::createScene();
+    Director::getInstance()->pushScene(scene);
+}
+
+void StartScene::menuExitCallback(Ref* pSender)
 {
-    //Close the cocos2d-x game scene and quit the application
     Director::getInstance()->end();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif
-
-    /*To navigate back to native iOS screen(if present) without quitting the application  ,do not use Director::getInstance()->end() and exit(0) as given above,instead trigger a custom event created in RootViewController.mm as below*/
-
-    //EventCustom customEndEvent("game_scene_close_event");
-    //_eventDispatcher->dispatchEvent(&customEndEvent);
 }
 
-cocos2d::Menu* StartScene::createText() {                                                                   //create all text units: title, menu label
-    auto buttons = Menu::create();
+cocos2d::Menu* StartScene::createText() {                                //create all text units: title, menu label
+    const auto buttons = Menu::create();
     
-    auto title = MenuItemLabel::create(
+    const auto title = MenuItemLabel::create(
         Label::createWithTTF("Crazy Arcade", Settings::Font::Type::title, Settings::Font::Size::title));
-    auto label1 = MenuItemLabel::create(
-        Label::createWithTTF("Play", Settings::Font::Type::base, Settings::Font::Size::label));
-    auto label2 = MenuItemLabel::create(
+    const auto label1 = MenuItemLabel::create(
+        Label::createWithTTF("Play", Settings::Font::Type::base, Settings::Font::Size::label),
+        CC_CALLBACK_1(StartScene::menuPlayCallback, this));
+    const auto label2 = MenuItemLabel::create(
         Label::createWithTTF("Settings", Settings::Font::Type::base, Settings::Font::Size::label));
-    auto label3 = MenuItemLabel::create(
+    const auto label3 = MenuItemLabel::create(
         Label::createWithTTF("Help", Settings::Font::Type::base, Settings::Font::Size::label));
-    auto closeItem = MenuItemLabel::create(
+    const auto closeItem = MenuItemLabel::create(
         Label::createWithTTF("Exit", Settings::Font::Type::base, Settings::Font::Size::label),
-        CC_CALLBACK_1(StartScene::menuCloseCallback, this));
+        CC_CALLBACK_1(StartScene::menuExitCallback, this));
 
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    auto baseY = visibleSize.height * 0.85f;
+    const auto visibleSize = Director::getInstance()->getVisibleSize();
+    const auto baseY = visibleSize.height * 0.85f;
 
     title->setPosition(title->getContentSize().width / 2 + 60, baseY);										//left-aligned
     label1->setPosition(label1->getContentSize().width / 2 + 60, baseY - 200);
