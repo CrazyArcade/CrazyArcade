@@ -40,14 +40,15 @@ void StartScene::musicPP(cocos2d::Ref * pSender) {
 
 cocos2d::Menu* StartScene::musicInit() {
     const auto music = Menu::create();
-    CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("StartScene/bgmusic.mp3");
+    if(!musicStatus)
+        CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("StartScene/bgmusic.mp3");
+    musicStatus = true;
     
     const auto musicButton = MenuItemToggle::createWithCallback(
         CC_CALLBACK_1(StartScene::musicPP, this),
         MenuItemLabel::create(Label::createWithTTF("Music on", Settings::Font::Type::base, Settings::Font::Size::light)),
         MenuItemLabel::create(Label::createWithTTF("Music off", Settings::Font::Type::base, Settings::Font::Size::light)),
-        nullptr
-        );
+        nullptr);
 
     const auto visibleSize = Director::getInstance()->getVisibleSize();
 
@@ -59,6 +60,16 @@ cocos2d::Menu* StartScene::musicInit() {
 
 void StartScene::menuPlayCallback(cocos2d::Ref * pSender){
     const auto scene = GameScene::createScene();
+    Director::getInstance()->pushScene(scene);
+}
+
+void StartScene::menuSettingsCallback(cocos2d::Ref * pSender) {
+    const auto scene = SettingsScene::createScene();
+    Director::getInstance()->pushScene(scene);
+}
+
+void StartScene::menuHelpCallback(cocos2d::Ref * pSender) {
+    const auto scene = HelpScene::createScene();
     Director::getInstance()->pushScene(scene);
 }
 
@@ -80,9 +91,11 @@ cocos2d::Menu* StartScene::createText() {                                //creat
         Label::createWithTTF("Play", Settings::Font::Type::base, Settings::Font::Size::label),
         CC_CALLBACK_1(StartScene::menuPlayCallback, this));
     const auto label2 = MenuItemLabel::create(
-        Label::createWithTTF("Settings", Settings::Font::Type::base, Settings::Font::Size::label));
+        Label::createWithTTF("Settings", Settings::Font::Type::base, Settings::Font::Size::label),
+        CC_CALLBACK_1(StartScene::menuSettingsCallback, this));
     const auto label3 = MenuItemLabel::create(
-        Label::createWithTTF("Help", Settings::Font::Type::base, Settings::Font::Size::label));
+        Label::createWithTTF("Help", Settings::Font::Type::base, Settings::Font::Size::label),
+        CC_CALLBACK_1(StartScene::menuHelpCallback, this));
     const auto closeItem = MenuItemLabel::create(
         Label::createWithTTF("Exit", Settings::Font::Type::base, Settings::Font::Size::label),
         CC_CALLBACK_1(StartScene::menuExitCallback, this));

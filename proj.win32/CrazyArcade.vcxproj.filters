@@ -104,10 +104,10 @@
     <ClInclude Include="..\Classes\GameScene.h">
       <Filter>src\Views</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\HelpSceneh.h">
+    <ClInclude Include="..\Classes\SettingsScene.h">
       <Filter>src\Views</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\SettingsScene.h">
+    <ClInclude Include="..\Classes\HelpScene.h">
       <Filter>src\Views</Filter>
     </ClInclude>
   </ItemGroup>

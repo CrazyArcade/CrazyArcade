@@ -29,15 +29,37 @@ bool GameScene::init()
     }
     auto visibleSize = Director::getInstance()->getVisibleSize();
 
-    auto label = Label::createWithTTF("Hello Game", Settings::Font::Type::base, Settings::Font::Size::label);
-    label->setPosition(visibleSize.width/2,visibleSize.height/2);
-    this->addChild(label, 1);
-
     auto keyListener = EventListenerKeyboard::create();
     keyListener->onKeyPressed = CC_CALLBACK_2(GameScene::keyPressedAct, this);
     keyListener->onKeyReleased = CC_CALLBACK_2(GameScene::keyReleasedAct, this);
 
+    addChild(createText());
+
     return true;
+}
+
+cocos2d::Menu* GameScene::createText() {
+    const auto buttons = Menu::create();
+
+    const auto backButton = MenuItemLabel::create(
+        Label::createWithTTF("Back", Settings::Font::Type::base, Settings::Font::Size::label),
+        CC_CALLBACK_1(GameScene::menuBackCallback, this));
+
+    const auto visibleSize = Director::getInstance()->getVisibleSize();
+    const auto baseY = visibleSize.height * 0.85f;
+
+    backButton->setPosition(backButton->getContentSize().width / 2 + 30, baseY + 30);
+
+    buttons->addChild(backButton, 1);
+
+    buttons->setPosition(0, 0);
+
+    return buttons;
+}
+
+void GameScene::menuBackCallback(Ref* pSender)
+{
+    Director::getInstance()->popScene();
 }
 
 void GameScene::keyPressedAct(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event* event)
@@ -51,19 +73,3 @@ void GameScene::keyReleasedAct(cocos2d::EventKeyboard::KeyCode keycode, cocos2d:
 }
 
 
-void GameScene::menuCloseCallback(Ref* pSender)
-{
-    //Close the cocos2d-x game scene and quit the application
-    Director::getInstance()->end();
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
-
-    /*To navigate back to native iOS screen(if present) without quitting the application  ,do not use Director::getInstance()->end() and exit(0) as given above,instead trigger a custom event created in RootViewController.mm as below*/
-
-    //EventCustom customEndEvent("game_scene_close_event");
-    //_eventDispatcher->dispatchEvent(&customEndEvent);
-
-
-}
