@@ -62,6 +62,11 @@ void StartScene::menuPlayCallback(cocos2d::Ref * pSender){
     Director::getInstance()->pushScene(scene);
 }
 
+void StartScene::menuHelpCallback(cocos2d::Ref * pSender) {
+    const auto scene = HelpScene::createScene();
+    Director::getInstance()->pushScene(scene);
+}
+
 void StartScene::menuExitCallback(Ref* pSender)
 {
     Director::getInstance()->end();
@@ -82,7 +87,8 @@ cocos2d::Menu* StartScene::createText() {                                //creat
     const auto label2 = MenuItemLabel::create(
         Label::createWithTTF("Settings", Settings::Font::Type::base, Settings::Font::Size::label));
     const auto label3 = MenuItemLabel::create(
-        Label::createWithTTF("Help", Settings::Font::Type::base, Settings::Font::Size::label));
+        Label::createWithTTF("Help", Settings::Font::Type::base, Settings::Font::Size::label),
+        CC_CALLBACK_1(StartScene::menuHelpCallback, this));
     const auto closeItem = MenuItemLabel::create(
         Label::createWithTTF("Exit", Settings::Font::Type::base, Settings::Font::Size::label),
         CC_CALLBACK_1(StartScene::menuExitCallback, this));

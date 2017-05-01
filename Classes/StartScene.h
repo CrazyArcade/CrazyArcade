@@ -5,6 +5,7 @@
 #include "SimpleAudioEngine.h"
 #include "Settings.h"
 #include "GameScene.h"
+#include "HelpScene.h"
 
 class StartScene :
     public cocos2d::Layer
@@ -14,6 +15,7 @@ private:
     cocos2d::Menu* createText();
     void menuExitCallback(cocos2d::Ref* pSender);
     void menuPlayCallback(cocos2d::Ref* pSender);
+    void menuHelpCallback(cocos2d::Ref * pSender);
     cocos2d::Menu* musicInit();
     void musicPP(cocos2d::Ref* pSender);    //play or pause the music
 public:
