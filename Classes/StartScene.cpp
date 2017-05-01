@@ -40,14 +40,15 @@ void StartScene::musicPP(cocos2d::Ref * pSender) {
 
 cocos2d::Menu* StartScene::musicInit() {
     const auto music = Menu::create();
-    CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("StartScene/bgmusic.mp3");
+    if(!musicStatus)
+        CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("StartScene/bgmusic.mp3");
+    musicStatus = true;
     
     const auto musicButton = MenuItemToggle::createWithCallback(
         CC_CALLBACK_1(StartScene::musicPP, this),
         MenuItemLabel::create(Label::createWithTTF("Music on", Settings::Font::Type::base, Settings::Font::Size::light)),
         MenuItemLabel::create(Label::createWithTTF("Music off", Settings::Font::Type::base, Settings::Font::Size::light)),
-        nullptr
-        );
+        nullptr);
 
     const auto visibleSize = Director::getInstance()->getVisibleSize();
 

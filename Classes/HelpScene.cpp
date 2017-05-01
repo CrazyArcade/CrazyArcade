@@ -29,12 +29,6 @@ bool HelpScene::init()
     return true;
 }
 
-void HelpScene::menuBackCallback(Ref* pSender)
-{
-    const auto scene = StartScene::createScene();
-    Director::getInstance()->pushScene(scene);
-}
-
 cocos2d::Menu* HelpScene::createText() {                                
     const auto buttons = Menu::create();
 
@@ -52,4 +46,9 @@ cocos2d::Menu* HelpScene::createText() {
     buttons->setPosition(0, 0);
 
     return buttons;
+}
+
+void HelpScene::menuBackCallback(Ref* pSender)
+{
+    Director::getInstance()->popScene();
 }

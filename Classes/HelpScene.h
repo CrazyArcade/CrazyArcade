@@ -9,8 +9,8 @@
 class HelpScene : public cocos2d::Layer
 {
 private:
-    cocos2d::Menu* createText();
     void menuBackCallback(cocos2d::Ref* pSender);
+    cocos2d::Menu* createText();
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();
