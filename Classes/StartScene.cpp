@@ -32,16 +32,16 @@ bool StartScene::init()
 
 void StartScene::musicPP(cocos2d::Ref * pSender) {
     if (musicOn)
-        CocosDenshion::SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+        CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
     else
-        CocosDenshion::SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+        CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
     musicOn = !musicOn;
 }
 
 cocos2d::Menu* StartScene::musicInit() {
     const auto music = Menu::create();
     if(!musicStatus)
-        CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("StartScene/bgmusic.mp3");
+        CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("StartScene/bgmusic.mp3");
     musicStatus = true;
     
     const auto musicButton = MenuItemToggle::createWithCallback(
