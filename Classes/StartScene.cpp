@@ -86,6 +86,7 @@ cocos2d::Menu* StartScene::createText() {                                //creat
     const auto buttons = Menu::create();
     const auto title = MenuItemLabel::create(
         Label::createWithTTF("Crazy Arcade", Settings::Font::Type::title, Settings::Font::Size::title));
+    title->getEventDispatcher()->removeEventListenersForType(EventListener::Type::TOUCH_ONE_BY_ONE);
     const auto label1 = MenuItemLabel::create(
         Label::createWithTTF("Play", Settings::Font::Type::base, Settings::Font::Size::label),
         CC_CALLBACK_1(StartScene::menuPlayCallback, this));
