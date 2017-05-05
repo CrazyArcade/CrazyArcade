@@ -84,7 +84,6 @@ void StartScene::menuExitCallback(Ref* pSender)
 
 cocos2d::Menu* StartScene::createText() {                                //create all text units: title, menu label
     const auto buttons = Menu::create();
-    
     const auto title = MenuItemLabel::create(
         Label::createWithTTF("Crazy Arcade", Settings::Font::Type::title, Settings::Font::Size::title));
     const auto label1 = MenuItemLabel::create(
