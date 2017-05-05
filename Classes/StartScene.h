@@ -8,8 +8,7 @@
 #include "HelpScene.h"
 #include "SettingsScene.h"
 
-class StartScene :
-    public cocos2d::Layer
+class StartScene : public cocos2d::Layer
 {
 private:
     bool musicOn = true;  
