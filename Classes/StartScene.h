@@ -11,8 +11,7 @@
 class StartScene : public cocos2d::Layer
 {
 private:
-    bool musicOn = true;  
-    bool musicStatus = false;
+    bool musicOn = false;
     cocos2d::Menu* createText();
     void menuExitCallback(cocos2d::Ref* pSender);
     void menuPlayCallback(cocos2d::Ref* pSender);
@@ -23,6 +22,7 @@ private:
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();
+    StartScene();
     CREATE_FUNC(StartScene);                
 };
 
