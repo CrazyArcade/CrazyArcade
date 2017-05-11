@@ -32,7 +32,7 @@ bool StartScene::init()
 
 StartScene::StartScene()
 {
-    FILE* fp = fopen("StartScene/Settings.json", "rb");
+    FILE* fp = fopen("user-setting.json", "rb");
     char Buffer[50];
     rapidjson::FileReadStream is(fp, Buffer, sizeof(Buffer));
     rapidjson::Document d;
@@ -50,12 +50,12 @@ void StartScene::musicPP(cocos2d::Ref * pSender) {
 
     char Buffer[50];
     rapidjson::Document doc;
-    FILE *fp = fopen("StartScene/Settings.json", "rb");
+    FILE *fp = fopen("user-setting.json", "rb");
     rapidjson::FileReadStream is(fp, Buffer, sizeof(Buffer));                   //bind file to Buffer
     doc.ParseStream(is);
     fclose(fp);
     doc["musicOn"].SetBool(musicOn);                                            //modify values
-    fp = fopen("StartScene/Settings.json", "wb");
+    fp = fopen("user-setting.json", "wb");
     rapidjson::FileWriteStream os(fp, Buffer, sizeof(Buffer));
     rapidjson::Writer<rapidjson::FileWriteStream> writer (os);                  //bind buffer to file
     doc.Accept(writer);
