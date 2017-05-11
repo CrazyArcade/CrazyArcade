@@ -1,8 +1,8 @@
 #include "StartScene.h"
+#include <cstdio>
 #include "json/filereadstream.h"
 #include "json/filewritestream.h"
 #include "json/document.h"
-#include <cstdio>
 #include <json/writer.h>
 
 USING_NS_CC;
@@ -38,8 +38,8 @@ bool StartScene::init()
 StartScene::StartScene()
 {
     FILE* fp = fopen("StartScene/Settings.json", "rb");
-    char readBuffer[50];
-    rapidjson::FileReadStream is(fp, readBuffer, sizeof(readBuffer));
+    char Buffer[50];
+    rapidjson::FileReadStream is(fp, Buffer, sizeof(Buffer));
     rapidjson::Document d;
     d.ParseStream(is);
     musicOn = d["musicOn"].GetBool();
@@ -53,16 +53,18 @@ void StartScene::musicPP(cocos2d::Ref * pSender) {
         CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
     musicOn = !musicOn;
 
-    /*FILE *fp = fopen("StartScene/Settings.json", "rb+");
-    rapidjson::Document d;
-    char writeBuffer[50];
-    rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
-    d.ParseStream(os);
-    rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
-    rapidjson::Value& temp = d["musicOn"];
-    temp = musicOn;
-    d.Accept(writer);
-    fclose(fp);*/
+    char Buffer[50];
+    rapidjson::Document doc;
+    FILE *fp = fopen("StartScene/Settings.json", "rb");
+    rapidjson::FileReadStream is(fp, Buffer, sizeof(Buffer));                   //bind file to Buffer
+    doc.ParseStream(is);
+    fclose(fp);
+    doc["musicOn"].SetBool(musicOn);                                            //modify values
+    fp = fopen("StartScene/Settings.json", "wb");
+    rapidjson::FileWriteStream os(fp, Buffer, sizeof(Buffer));
+    rapidjson::Writer<rapidjson::FileWriteStream> writer (os);                  //bind buffer to file
+    doc.Accept(writer);
+    fclose(fp);
 }
 
 cocos2d::Menu* StartScene::musicInit() {
