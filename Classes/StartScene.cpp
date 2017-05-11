@@ -30,24 +30,48 @@ bool StartScene::init()
     return true;
 }
 
+StartScene::StartScene()
+{
+    FILE* fp = fopen("user-setting.json", "rb");
+    char Buffer[50];
+    rapidjson::FileReadStream is(fp, Buffer, sizeof(Buffer));
+    rapidjson::Document d;
+    d.ParseStream(is);
+    musicOn = d["musicOn"].GetBool();
+    fclose(fp);
+}
+
 void StartScene::musicPP(cocos2d::Ref * pSender) {
     if (musicOn)
         CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
     else
         CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
     musicOn = !musicOn;
+
+    char Buffer[50];
+    rapidjson::Document doc;
+    FILE *fp = fopen("user-setting.json", "rb");
+    rapidjson::FileReadStream is(fp, Buffer, sizeof(Buffer));                   //bind file to Buffer
+    doc.ParseStream(is);
+    fclose(fp);
+    doc["musicOn"].SetBool(musicOn);                                            //modify values
+    fp = fopen("user-setting.json", "wb");
+    rapidjson::FileWriteStream os(fp, Buffer, sizeof(Buffer));
+    rapidjson::Writer<rapidjson::FileWriteStream> writer (os);                  //bind buffer to file
+    doc.Accept(writer);
+    fclose(fp);
 }
 
 cocos2d::Menu* StartScene::musicInit() {
     const auto music = Menu::create();
-    if(!musicStatus)
-        CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("StartScene/bgmusic.mp3");
-    musicStatus = true;
-    
+    CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("StartScene/bgmusic.mp3");
+    if (!musicOn)
+        CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+
     const auto musicButton = MenuItemToggle::createWithCallback(
         CC_CALLBACK_1(StartScene::musicPP, this),
-        MenuItemLabel::create(Label::createWithTTF("Music on", Settings::Font::Type::base, Settings::Font::Size::light)),
-        MenuItemLabel::create(Label::createWithTTF("Music off", Settings::Font::Type::base, Settings::Font::Size::light)),
+        MenuItemLabel::create(Label::createWithTTF(musicOn ? "Music on" : "Music off", Settings::Font::Type::base, Settings::Font::Size::light)),
+        MenuItemLabel::create(Label::createWithTTF(musicOn ? "Music off" : "Music on", Settings::Font::Type::base, Settings::Font::Size::light)),
         nullptr);
 
     const auto visibleSize = Director::getInstance()->getVisibleSize();
@@ -58,7 +82,7 @@ cocos2d::Menu* StartScene::musicInit() {
     return music;
 }
 
-void StartScene::menuPlayCallback(cocos2d::Ref * pSender){
+void StartScene::menuPlayCallback(cocos2d::Ref * pSender) {
     const auto scene = GameScene::createScene();
     Director::getInstance()->pushScene(scene);
 }
@@ -84,10 +108,10 @@ void StartScene::menuExitCallback(Ref* pSender)
 
 cocos2d::Menu* StartScene::createText() {                                //create all text units: title, menu label
     const auto buttons = Menu::create();
-    
+
     const auto title = MenuItemLabel::create(
         Label::createWithTTF("Crazy Arcade", Settings::Font::Type::title, Settings::Font::Size::title));
-    title->getEventDispatcher()->removeEventListenersForType(EventListener::Type::TOUCH_ONE_BY_ONE);
+    //title->getEventDispatcher()->removeEventListenersForType(EventListener::Type::TOUCH_ONE_BY_ONE);
     const auto label1 = MenuItemLabel::create(
         Label::createWithTTF("Play", Settings::Font::Type::base, Settings::Font::Size::label),
         CC_CALLBACK_1(StartScene::menuPlayCallback, this));
