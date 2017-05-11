@@ -7,6 +7,11 @@
 #include "GameScene.h"
 #include "HelpScene.h"
 #include "SettingsScene.h"
+#include <cstdio>
+#include "json/filereadstream.h"
+#include "json/filewritestream.h"
+#include "json/document.h"
+#include "json/writer.h"
 
 class StartScene : public cocos2d::Layer
 {
