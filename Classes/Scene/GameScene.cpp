@@ -33,7 +33,13 @@ bool GameScene::init()
     keyListener->onKeyPressed = CC_CALLBACK_2(GameScene::keyPressedAct, this);
     keyListener->onKeyReleased = CC_CALLBACK_2(GameScene::keyReleasedAct, this);
 
-    addChild(createText());
+    //addChild(createText());
+
+    _tileMap = TMXTiledMap::create("map/town_10.tmx");
+    //_tileMap->setScale(1.0f);
+    //_tileMap->setAnchorPoint(Vec2(0.5f, 0.5f));
+    //_tileMap->setPosition(Vec2(0, 0));
+    addChild(_tileMap, 0);
 
     return true;
 }

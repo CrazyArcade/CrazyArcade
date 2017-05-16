@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="15" height="13" tilewidth="40" tileheight="40" nextobjectid="1">
+ <tileset firstgid="1" name="Background" tilewidth="40" tileheight="40" tilecount="7" columns="7">
+  <image source="town_10/background.png" width="280" height="40"/>
+ </tileset>
+ <tileset firstgid="8" name="Tileset" tilewidth="40" tileheight="67" tilecount="8" columns="8">
+  <image source="town_10/tileset.png" width="320" height="67"/>
+ </tileset>
+ <layer name="Background" width="15" height="13">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYMSCmYGYDUpjk8eHKdHLgoTpae+o3tH4BQDg2wE5
+  </data>
+ </layer>
+ <layer name="Object" width="15" height="13">
+  <data encoding="base64" compression="zlib">
+   eJx1kUEOwCAIBDkqavn/b9vDbrohK4mZqMgEjIgY35rCJ/5I7A/uDs7JjRyyQEZJbRfqpjebNw1v3olVpq8bb/1274BPSa/27ByFup3d6/JcPb5hMG83LuQp3ZzdbNyZ+1/3Hwv3zqv99voafX46Z+elj2T/zuucL0CqBqA=
+  </data>
+ </layer>
+</map>
