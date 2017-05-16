@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __SETTING_H__
+#define __SETTING_H__
 
 #include <cstdint>
 
@@ -20,3 +21,4 @@ namespace Settings
         };
     }
 }
+#endif

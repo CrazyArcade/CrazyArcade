@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __MODEL_PLAYER_H__
+#define __MODEL_PLAYER_H__
 
 #include "cocos2d.h"
 #include "Entity.h"
@@ -31,3 +32,4 @@ public:
 private:
     Status _status;
 };
+#endif

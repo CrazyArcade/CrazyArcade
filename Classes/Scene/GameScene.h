@@ -1,5 +1,5 @@
-#ifndef __GAME_SCENE_H__
-#define __GAME_SCENE_H__
+#ifndef __SCENE_GAMESCENE_H__
+#define __SCENE_GAMESCENE_H__
 
 #include "cocos2d.h"
 #include "Settings.h"
