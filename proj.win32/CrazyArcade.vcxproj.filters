@@ -19,6 +19,9 @@
     <Filter Include="src\Scene">
       <UniqueIdentifier>{8852f8c2-17d6-40b9-9732-d35944fb89cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Scene\UI">
+      <UniqueIdentifier>{742279ca-e7db-4163-abcf-e6dc4ca658df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -62,6 +65,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Scene\StartScene.cpp">
       <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Controller\NetworkController.cpp">
+      <Filter>src\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Scene\UI\GameMap.cpp">
+      <Filter>src\Scene\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +118,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Scene\StartScene.h">
       <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Controller\NetworkController.h">
+      <Filter>src\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene\UI\GameMap.h">
+      <Filter>src\Scene\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

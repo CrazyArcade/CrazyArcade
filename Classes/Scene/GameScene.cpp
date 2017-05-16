@@ -35,11 +35,9 @@ bool GameScene::init()
 
     //addChild(createText());
 
-    _tileMap = TMXTiledMap::create("map/town_10.tmx");
-    //_tileMap->setScale(1.0f);
-    //_tileMap->setAnchorPoint(Vec2(0.5f, 0.5f));
-    //_tileMap->setPosition(Vec2(0, 0));
-    addChild(_tileMap, 0);
+    map = GameMap::create();
+    map->setMap("town_10");
+    addChild(map, -1);
 
     return true;
 }

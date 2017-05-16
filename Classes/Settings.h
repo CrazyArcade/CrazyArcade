@@ -1,7 +1,8 @@
-#ifndef __SETTING_H__
-#define __SETTING_H__
+#ifndef __SETTINGS_H__
+#define __SETTINGS_H__
 
 #include <cstdint>
+#include <set>
 
 namespace Settings
 {
@@ -16,8 +17,15 @@ namespace Settings
         }
         namespace Type
         {
-            constexpr char * title = "fonts/Quicksand-Bold.ttf";
-            constexpr char * base  = "fonts/OpenSans-Regular.ttf";
+            constexpr char title[] = "fonts/Quicksand-Bold.ttf";
+            constexpr char base[] = "fonts/OpenSans-Regular.ttf";
+        };
+    }
+    namespace Map
+    {
+        constexpr char path[] = "map/";
+        static std::set<const char *> list{
+            "town_10"
         };
     }
 }

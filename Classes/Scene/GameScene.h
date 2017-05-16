@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "Settings.h"
+#include "UI/GameMap.h"
 
 class GameScene : public cocos2d::Layer
 {
@@ -13,6 +14,8 @@ private:
     cocos2d::Menu* createText();
 
     cocos2d::TMXTiledMap *_tileMap;
+
+    GameMap * map;
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();
