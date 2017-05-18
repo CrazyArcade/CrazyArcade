@@ -10,14 +10,17 @@
     <Filter Include="src">
       <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Models">
-      <UniqueIdentifier>{92ec7a41-f29a-4f42-a05a-8c7b9e46832c}</UniqueIdentifier>
+    <Filter Include="src\Model">
+      <UniqueIdentifier>{0a86f38d-9206-4cc1-8e22-5b108e070b12}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Controllers">
-      <UniqueIdentifier>{62508783-8712-43ed-aed4-13a2b968e6a4}</UniqueIdentifier>
+    <Filter Include="src\Controller">
+      <UniqueIdentifier>{1694613c-e60c-4d75-8e98-88a78843c30e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Views">
-      <UniqueIdentifier>{fae4d1c7-dd95-442a-bcfb-9038d0d473e2}</UniqueIdentifier>
+    <Filter Include="src\Scene">
+      <UniqueIdentifier>{8852f8c2-17d6-40b9-9732-d35944fb89cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Scene\UI">
+      <UniqueIdentifier>{742279ca-e7db-4163-abcf-e6dc4ca658df}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -27,41 +30,47 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Bubble.cpp">
-      <Filter>src\Models</Filter>
+    <ClCompile Include="..\Classes\Model\Bubble.cpp">
+      <Filter>src\Model</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Entity.cpp">
-      <Filter>src\Models</Filter>
+    <ClCompile Include="..\Classes\Model\Entity.cpp">
+      <Filter>src\Model</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Player.cpp">
-      <Filter>src\Models</Filter>
+    <ClCompile Include="..\Classes\Model\Player.cpp">
+      <Filter>src\Model</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Prop.cpp">
-      <Filter>src\Models</Filter>
+    <ClCompile Include="..\Classes\Model\Prop.cpp">
+      <Filter>src\Model</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\PlayerController.cpp">
-      <Filter>src\Controllers</Filter>
+    <ClCompile Include="..\Classes\Controller\BubbleController.cpp">
+      <Filter>src\Controller</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\PropController.cpp">
-      <Filter>src\Controllers</Filter>
+    <ClCompile Include="..\Classes\Controller\PlayerController.cpp">
+      <Filter>src\Controller</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\BubbleController.cpp">
-      <Filter>src\Controllers</Filter>
+    <ClCompile Include="..\Classes\Controller\PropController.cpp">
+      <Filter>src\Controller</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
-      <Filter>src\Views</Filter>
+    <ClCompile Include="..\Classes\Scene\GameScene.cpp">
+      <Filter>src\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\StartScene.cpp">
-      <Filter>src\Views</Filter>
+    <ClCompile Include="..\Classes\Scene\HelloWorldScene.cpp">
+      <Filter>src\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\GameScene.cpp">
-      <Filter>src\Views</Filter>
+    <ClCompile Include="..\Classes\Scene\HelpScene.cpp">
+      <Filter>src\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\SettingsScene.cpp">
-      <Filter>src\Views</Filter>
+    <ClCompile Include="..\Classes\Scene\SettingsScene.cpp">
+      <Filter>src\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\HelpScene.cpp">
-      <Filter>src\Views</Filter>
+    <ClCompile Include="..\Classes\Scene\StartScene.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Controller\NetworkController.cpp">
+      <Filter>src\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Scene\UI\GameMap.cpp">
+      <Filter>src\Scene\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -71,44 +80,50 @@
     <ClInclude Include="..\Classes\AppDelegate.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Bubble.h">
-      <Filter>src\Models</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Entity.h">
-      <Filter>src\Models</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Player.h">
-      <Filter>src\Models</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Prop.h">
-      <Filter>src\Models</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\BubbleController.h">
-      <Filter>src\Controllers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PlayerController.h">
-      <Filter>src\Controllers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PropController.h">
-      <Filter>src\Controllers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\HelloWorldScene.h">
-      <Filter>src\Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\StartScene.h">
-      <Filter>src\Views</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Settings.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\GameScene.h">
-      <Filter>src\Views</Filter>
+    <ClInclude Include="..\Classes\Model\Bubble.h">
+      <Filter>src\Model</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\SettingsScene.h">
-      <Filter>src\Views</Filter>
+    <ClInclude Include="..\Classes\Model\Entity.h">
+      <Filter>src\Model</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\HelpScene.h">
-      <Filter>src\Views</Filter>
+    <ClInclude Include="..\Classes\Model\Player.h">
+      <Filter>src\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Prop.h">
+      <Filter>src\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Controller\BubbleController.h">
+      <Filter>src\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Controller\PlayerController.h">
+      <Filter>src\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Controller\PropController.h">
+      <Filter>src\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene\GameScene.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene\HelloWorldScene.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene\HelpScene.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene\SettingsScene.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene\StartScene.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Controller\NetworkController.h">
+      <Filter>src\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene\UI\GameMap.h">
+      <Filter>src\Scene\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

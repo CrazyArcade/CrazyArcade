@@ -1,6 +1,5 @@
-#pragma once
-#ifndef __HELP_SCENE_H__
-#define __HELP_SCENE_H__
+#ifndef __SCENE_HELPSCENE_H__
+#define __SCENE_HELPSCENE_H__
 
 #include "cocos2d.h"
 #include "Settings.h"

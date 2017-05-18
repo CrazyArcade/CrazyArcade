@@ -1,8 +1,9 @@
-#ifndef __GAME_SCENE_H__
-#define __GAME_SCENE_H__
+#ifndef __SCENE_GAMESCENE_H__
+#define __SCENE_GAMESCENE_H__
 
 #include "cocos2d.h"
 #include "Settings.h"
+#include "UI/GameMap.h"
 
 class GameScene : public cocos2d::Layer
 {
@@ -11,6 +12,10 @@ private:
     void keyReleasedAct(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event* event);
     void menuBackCallback(cocos2d::Ref* pSender);
     cocos2d::Menu* createText();
+
+    cocos2d::TMXTiledMap *_tileMap;
+
+    GameMap * map;
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();

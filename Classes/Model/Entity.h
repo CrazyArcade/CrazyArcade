@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __MODEL_ENTITY_H__
+#define __MODEL_ENTITY_H__
 
 #include "cocos2d.h"
 #include <string>
@@ -17,3 +18,4 @@ public:
 private:
     std::string _id;
 };
+#endif

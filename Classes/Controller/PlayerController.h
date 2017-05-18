@@ -1,7 +1,8 @@
-#pragma once
+#ifndef __CONTROLLER_PLAYER_H__
+#define __CONTROLLER_PLAYER_H__
 
 #include "cocos2d.h"
-#include "Player.h"
+#include "Model/Player.h"
 
 class PlayerController : public cocos2d::Layer
 {
@@ -17,4 +18,4 @@ public:
 private:
     cocos2d::Vector<Player*> _playerList;
 };
-
+#endif

@@ -33,7 +33,11 @@ bool GameScene::init()
     keyListener->onKeyPressed = CC_CALLBACK_2(GameScene::keyPressedAct, this);
     keyListener->onKeyReleased = CC_CALLBACK_2(GameScene::keyReleasedAct, this);
 
-    addChild(createText());
+    //addChild(createText());
+
+    map = GameMap::create();
+    map->setMap("town_10");
+    addChild(map, -1);
 
     return true;
 }
