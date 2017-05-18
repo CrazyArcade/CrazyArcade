@@ -28,5 +28,9 @@ namespace Settings
             "town_10"
         };
     }
+    namespace Sever
+    {
+        constexpr char addr[] = "ws://dev.server.crazyarcade:4000";
+    }
 }
 #endif

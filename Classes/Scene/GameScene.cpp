@@ -39,6 +39,8 @@ bool GameScene::init()
     map->setMap("town_10");
     addChild(map, -1);
 
+
+
     return true;
 }
 
