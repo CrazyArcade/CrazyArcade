@@ -18,8 +18,7 @@ PlayerController::~PlayerController()
 
 Player* PlayerController::createPlayer()
 {
-    auto player = new Player();
-    // init
+    auto player = Player::create();
 
     this->_playerList.pushBack(player);
     return player;

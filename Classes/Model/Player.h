@@ -7,11 +7,12 @@
 class Player : public Entity
 {
 public:
-    Player();
-    ~Player() = default;
+    /** 
+     * create Player with role 
+     * @return Player Object
+     */
+    static Player * create(const std::string& role = "temp");
     
-    // bool init();
-
     enum class Status : std::int8_t
     {
         FREE,
@@ -31,5 +32,8 @@ public:
 
 private:
     Status _status;
+
+    bool init();
+    bool initWithRole(const std::string& role);
 };
 #endif

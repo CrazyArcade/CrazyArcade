@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 #include <string>
 
-class Entity : public cocos2d::Node
+class Entity : public cocos2d::Sprite
 {
 public:
     Entity() = default;
