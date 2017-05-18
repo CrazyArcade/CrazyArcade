@@ -27,6 +27,15 @@ namespace Settings
         static std::set<const char *> list{
             "town_10"
         };
+        namespace TileSize
+        {
+            constexpr int height = 40;
+            constexpr int width = 40;
+        }
+    }
+    namespace Player
+    {
+        constexpr char path[] = "player/";
     }
     namespace Sever
     {

@@ -39,7 +39,12 @@ bool GameScene::init()
     map->setMap("town_10");
     addChild(map, -1);
 
+    playerController = PlayerController::create();
+    addChild(playerController, -1, "player_controller");
 
+    auto player1 = playerController->createPlayer();
+    map->addChild(player1, 1);
+    player1->setPosition(map->tileCoordToPosition(Vec2(0, 0)));
 
     return true;
 }
