@@ -17,9 +17,9 @@ public:
     void removeBox(const cocos2d::Vec2& pos);
     CREATE_FUNC(GameMap);
 
-    // tranform titecoord to position
-    cocos2d::Vec2 tileCoordToPosition(const cocos2d::Vec2& pos);
-    // tranform position to titecoord
+    // transform titecoord to position
+    cocos2d::Vec2 tileCoordToPosition(const cocos2d::Vec2& coord);
+    // transform position to titecoord
     cocos2d::Vec2 postitionTotileCoord(const cocos2d::Vec2& pos);
     
 

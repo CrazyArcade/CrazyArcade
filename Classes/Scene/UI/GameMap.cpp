@@ -39,14 +39,14 @@ void GameMap::removeBox(const cocos2d::Vec2& pos)
     boxLayer->removeTileAt(pos);
 }
 
-cocos2d::Vec2 GameMap::tileCoordToPosition(const cocos2d::Vec2 & pos)
+cocos2d::Vec2 GameMap::tileCoordToPosition(const cocos2d::Vec2 & coord)
 {
     auto mapSize = tileMap->getMapSize();
     auto tileSize = tileMap->getTileSize();
 
-    float x = pos.x * tileSize.width + tileSize.width / 2;
-    float y = (mapSize.height - pos.y) * tileSize.height - tileSize.height / 2;
-    CCLOG("pos x: %f y: %f", x, y);
+    int x = coord.x * tileSize.width + tileSize.width / 2;
+    int y = (mapSize.height - coord.y) * tileSize.height - tileSize.height / 2;
+    //CCLOG("pos x: %f y: %f", x, y);
     return Vec2(x, y);
 }
 
@@ -56,6 +56,9 @@ cocos2d::Vec2 GameMap::postitionTotileCoord(const cocos2d::Vec2 & pos)
     Size tileSize = tileMap->getTileSize();
     int x = pos.x / tileSize.width;
     int y = (mapSize.height * tileSize.height - pos.y) / tileSize.height;
-    CCLOG("coord x: %f y: %f", x, y);
+    // edge case
+    x = MIN(MAX(0, x), mapSize.width - 1);
+    y = MIN(MAX(0, y), mapSize.height - 1);
+    //CCLOG("coord x: %f y: %f", x, y);
     return Vec2(x, y);
 }
