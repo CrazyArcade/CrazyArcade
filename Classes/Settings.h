@@ -39,7 +39,7 @@ namespace Settings
     }
     namespace Sever
     {
-        constexpr char addr[] = "ws://dev.server.crazyarcade:4000";
+        constexpr char addr[] = "ws://dev.server.crazyarcade.giuem.com:4000";
     }
 }
 #endif

@@ -15,7 +15,8 @@ public:
 
     // virtual void setStatus();
 
-private:
+protected:
     std::string _id;
+    
 };
 #endif

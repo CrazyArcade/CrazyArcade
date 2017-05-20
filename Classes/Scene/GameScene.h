@@ -17,9 +17,9 @@ private:
 
     cocos2d::TMXTiledMap *_tileMap;
 
-    Client * client;
-    GameMap * map;
-    PlayerController * playerController;
+    //Client * _client;
+    GameMap * _map;
+    PlayerController * _playerController;
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();

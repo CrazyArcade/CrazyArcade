@@ -10,7 +10,7 @@ Scene* GameScene::createScene()
 
     // 'layer' is an autorelease object
     auto layer = GameScene::create();
-
+    layer->setName("root");
     // add layer as a child to scene
     scene->addChild(layer);
 
@@ -33,18 +33,19 @@ bool GameScene::init()
     keyListener->onKeyPressed = CC_CALLBACK_2(GameScene::keyPressedAct, this);
     keyListener->onKeyReleased = CC_CALLBACK_2(GameScene::keyReleasedAct, this);
 
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(keyListener, this);
     //addChild(createText());
 
-    map = GameMap::create();
-    map->setMap("town_10");
-    addChild(map, -1);
+    _map = GameMap::create();
+    _map->setMap("town_10");
+    addChild(_map, -1);
 
-    playerController = PlayerController::create();
-    addChild(playerController, -1, "player_controller");
+    _playerController = PlayerController::create();
+    addChild(_playerController, -1, "player_controller");
 
-    auto player1 = playerController->createPlayer();
-    map->addChild(player1, 1);
-    player1->setPosition(map->tileCoordToPosition(Vec2(0, 0)));
+    auto player1 = _playerController->createLocalPlayer("test");
+    _map->addChild(player1, 1);
+    player1->setPosition(_map->tileCoordToPosition(Vec2(0, 0)));
 
     return true;
 }
@@ -73,14 +74,50 @@ void GameScene::menuBackCallback(Ref* pSender)
     Director::getInstance()->popScene();
 }
 
-void GameScene::keyPressedAct(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event* event)
+void GameScene::keyPressedAct(EventKeyboard::KeyCode keyCode, Event* event)
 {
-    //undefined
+    switch (keyCode)
+    {
+    case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+    case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+    case EventKeyboard::KeyCode::KEY_UP_ARROW:
+    case EventKeyboard::KeyCode::KEY_DOWN_ARROW: {
+        int direction = static_cast<int>(keyCode) - static_cast<int>(EventKeyboard::KeyCode::KEY_LEFT_ARROW);
+        char * buf = new char[4];
+        sprintf(buf, "1 %d", direction);
+        EventCustom myEvent("on_local_player_move");
+        myEvent.setUserData(buf);
+        _playerController->getEventDispatcher()->dispatchEvent(&myEvent);
+        CC_SAFE_DELETE_ARRAY(buf);
+        break;
+    }
+    default: break;
+    }
 }
 
-void GameScene::keyReleasedAct(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event* event)
+void GameScene::keyReleasedAct(EventKeyboard::KeyCode keyCode, Event* event)
 {
-    //undefined
+    switch (keyCode)
+    {
+    case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+    case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+    case EventKeyboard::KeyCode::KEY_UP_ARROW:
+    case EventKeyboard::KeyCode::KEY_DOWN_ARROW: {
+        int direction = static_cast<int>(keyCode) - static_cast<int>(EventKeyboard::KeyCode::KEY_LEFT_ARROW);
+        char * buf = new char[4];
+        sprintf(buf, "0 %d", direction);
+        EventCustom myEvent("on_local_player_move");
+        myEvent.setUserData(buf);
+        _playerController->getEventDispatcher()->dispatchEvent(&myEvent);
+        CC_SAFE_DELETE_ARRAY(buf);
+        break;
+    }
+    case EventKeyboard::KeyCode::KEY_SPACE: {
+        // TODO set bubble
+        break;
+    }
+    default: break;
+    }
 }
 
 

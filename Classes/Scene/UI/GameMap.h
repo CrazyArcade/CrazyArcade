@@ -20,8 +20,10 @@ public:
     // transform titecoord to position
     cocos2d::Vec2 tileCoordToPosition(const cocos2d::Vec2& coord);
     // transform position to titecoord
-    cocos2d::Vec2 postitionTotileCoord(const cocos2d::Vec2& pos);
-    
+    cocos2d::Vec2 positionToTileCoord(const cocos2d::Vec2& pos);
+
+    bool isCanAccess(const cocos2d::Vec2& pos);
+    bool isInMap(const cocos2d::Vec2& pos);
 
 private:
     cocos2d::TMXTiledMap * tileMap;

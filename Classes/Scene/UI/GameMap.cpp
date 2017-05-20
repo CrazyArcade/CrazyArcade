@@ -4,6 +4,7 @@ USING_NS_CC;
 
 bool GameMap::init()
 {
+    this->setName("map");
     return true;
 }
 
@@ -50,7 +51,7 @@ cocos2d::Vec2 GameMap::tileCoordToPosition(const cocos2d::Vec2 & coord)
     return Vec2(x, y);
 }
 
-cocos2d::Vec2 GameMap::postitionTotileCoord(const cocos2d::Vec2 & pos)
+cocos2d::Vec2 GameMap::positionToTileCoord(const cocos2d::Vec2 & pos)
 {
     Size mapSize = tileMap->getMapSize();
     Size tileSize = tileMap->getTileSize();
@@ -61,4 +62,22 @@ cocos2d::Vec2 GameMap::postitionTotileCoord(const cocos2d::Vec2 & pos)
     y = MIN(MAX(0, y), mapSize.height - 1);
     //CCLOG("coord x: %f y: %f", x, y);
     return Vec2(x, y);
+}
+
+bool GameMap::isCanAccess(const cocos2d::Vec2 & pos)
+{
+    auto coord = positionToTileCoord(pos);
+    if (isInMap(pos) && boxLayer->getTileGIDAt(coord) == 0)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool GameMap::isInMap(const cocos2d::Vec2 & pos)
+{
+    auto mapSize = tileMap->getMapSize();
+    auto tileSize = tileMap->getTileSize();
+    return 0 <= pos.x && pos.x < mapSize.width * tileSize.width
+        && 0 <= pos.y && pos.y < mapSize.height * tileSize.height;
 }
