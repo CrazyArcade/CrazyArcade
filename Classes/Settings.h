@@ -27,6 +27,19 @@ namespace Settings
         static std::set<const char *> list{
             "town_10"
         };
+        namespace TileSize
+        {
+            constexpr int height = 40;
+            constexpr int width = 40;
+        }
+    }
+    namespace Player
+    {
+        constexpr char path[] = "player/";
+    }
+    namespace Sever
+    {
+        constexpr char addr[] = "ws://dev.server.crazyarcade.giuem.com:4000";
     }
 }
 #endif

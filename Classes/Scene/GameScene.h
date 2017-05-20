@@ -4,6 +4,8 @@
 #include "cocos2d.h"
 #include "Settings.h"
 #include "UI/GameMap.h"
+#include "Client.h"
+#include "Controller/PlayerController.h"
 
 class GameScene : public cocos2d::Layer
 {
@@ -15,7 +17,9 @@ private:
 
     cocos2d::TMXTiledMap *_tileMap;
 
-    GameMap * map;
+    //Client * _client;
+    GameMap * _map;
+    PlayerController * _playerController;
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();

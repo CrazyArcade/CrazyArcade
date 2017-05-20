@@ -66,11 +66,11 @@
     <ClCompile Include="..\Classes\Scene\StartScene.cpp">
       <Filter>src\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Controller\NetworkController.cpp">
-      <Filter>src\Controller</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Scene\UI\GameMap.cpp">
       <Filter>src\Scene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Client.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,11 +119,11 @@
     <ClInclude Include="..\Classes\Scene\StartScene.h">
       <Filter>src\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Controller\NetworkController.h">
-      <Filter>src\Controller</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Scene\UI\GameMap.h">
       <Filter>src\Scene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Client.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

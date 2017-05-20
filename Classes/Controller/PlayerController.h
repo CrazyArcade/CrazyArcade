@@ -10,12 +10,17 @@ public:
     virtual bool init();
     ~PlayerController();
     
-    Player* createPlayer();
+    Player* createPlayer(const std::string& id, const std::string& role = "temp");
+    Player* createLocalPlayer(const std::string& id, const std::string& role = "temp");
+
     void setStatus(std::string, Player::Status);
     Player* getPlayer(std::string);
+
+    virtual void update(float dt);
 
     CREATE_FUNC(PlayerController);
 private:
     cocos2d::Vector<Player*> _playerList;
+    Player* localPlayer;
 };
 #endif
