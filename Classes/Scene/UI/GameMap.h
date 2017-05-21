@@ -21,6 +21,8 @@ public:
     cocos2d::Vec2 tileCoordToPosition(const cocos2d::Vec2& coord);
     // transform position to titecoord
     cocos2d::Vec2 positionToTileCoord(const cocos2d::Vec2& pos);
+    // get centre pos of pos
+    cocos2d::Vec2 centrePos(const cocos2d::Vec2& pos);
 
     bool isCanAccess(const cocos2d::Vec2& pos);
     bool isInMap(const cocos2d::Vec2& pos);

@@ -1,6 +1,5 @@
 #include "Player.h"
 #include "Settings.h"
-#include "Scene/UI/GameMap.h"
 #include <ctime>
 
 USING_NS_CC;
@@ -21,7 +20,7 @@ Player * Player::create(const std::string& id, const std::string& role)
 bool Player::init()
 {
     _status = Status::FREE;
-    attr.speed = 3;
+    attr.speed = 2;
     attr.power = 1;
     attr.bubble = 1;
     size = this->getContentSize();
@@ -75,56 +74,4 @@ Player::Direction Player::getDirection()
         }
     }
     return direction;
-}
-
-void Player::move()
-{
-    if (_status == Status::FREE && getDirection() != Direction::NONE)
-    {
-        auto map = dynamic_cast<GameMap*>(Director::getInstance()->getRunningScene()->getChildByName("root")->getChildByName("map"));
-        if (!map) return;
-        auto pair = getNextPos();
-        // next center point
-        auto nextPos = pair.first;
-        // next edge point
-        auto logicPos = pair.second;
-
-        if (map->isCanAccess(logicPos))
-        {
-            setPosition(nextPos);
-        }
-        else
-        {
-            // TODO update UE
-        }
-    }
-}
-
-std::pair<cocos2d::Vec2, cocos2d::Vec2> Player::getNextPos()
-{
-    auto pos = getPosition();
-    Vec2 nextPos(pos.x, pos.y), logicPos(pos.x, pos.y);
-
-    switch (getDirection())
-    {
-    case Direction::LEFT:
-        nextPos.x -= attr.speed;
-        logicPos.x = nextPos.x - size.width / 2;
-        break;
-    case Direction::RIGHT:
-        nextPos.x += attr.speed;
-        logicPos.x = nextPos.x + size.width / 2;
-        break;
-    case Direction::UP:
-        nextPos.y += attr.speed;
-        logicPos.y = nextPos.y + size.height / 2;
-        break;
-    case Direction::DOWN:
-        nextPos.y -= attr.speed;
-        logicPos.y = nextPos.y - size.height / 2;
-        break;
-    default:
-        break;
-    }
-    return std::make_pair(nextPos, logicPos);
 }

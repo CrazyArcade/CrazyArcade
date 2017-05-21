@@ -35,6 +35,7 @@ public:
         uint32_t power;
         uint32_t bubble;
     };
+    Attr attr;
 
     void setStatus(Status);
     const Status getStatus() const;
@@ -43,14 +44,11 @@ public:
     void removeDirection(Direction direction);
     Direction getDirection();
     
-    void move();
-    std::pair<cocos2d::Vec2, cocos2d::Vec2> getNextPos();
     // TODO
     // void setAnimation();
 
 private:
     Status _status;
-    Attr attr;
     cocos2d::Size size;
     // record what time the direction was set
     time_t directions[4];
