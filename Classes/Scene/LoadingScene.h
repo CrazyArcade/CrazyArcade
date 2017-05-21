@@ -10,6 +10,7 @@ class LoadingScene : public cocos2d::Layer
 private:
     void endLoading(cocos2d::Ref* render);
     void keyReleasedAct(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event* event);
+    cocos2d::ui::LoadingBar* createLoadingBar();
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();
