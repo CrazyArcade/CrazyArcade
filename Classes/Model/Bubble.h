@@ -17,9 +17,11 @@ public:
 
     bool init();
 
-    void setStatus(Status);
+    uint8_t getDamage();
+
+    void setStatus(Status status);
 private:
-    Status _status;
+    // Status _status;
     uint8_t _damage;
 };
 #endif

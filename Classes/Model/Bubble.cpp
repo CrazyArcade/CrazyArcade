@@ -1,7 +1,7 @@
 #include "Bubble.h"
 #include "Settings.h"
 
-static Bubble * Bubble::create(const std::string & id, uint8_t damage)
+Bubble * Bubble::create(const std::string & id, uint8_t damage)
 {
     auto bubble = new (std::nothrow) Bubble();
     if (bubble && bubble->init())
@@ -25,7 +25,20 @@ bool Bubble::init()
     return true;
 }
 
+uint8_t Bubble::getDamage()
+{
+    return _damage;
+}
+
 void Bubble::setStatus(Status status)
 {
-    this->_status = status;
+    // this->_status = status;
+    if (status == Status::ALIVE)
+    {
+        // TODO animation
+    }
+    else if (status == Status::BOOM)
+    {
+        // TODO animation
+    }
 }
