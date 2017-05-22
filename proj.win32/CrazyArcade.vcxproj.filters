@@ -140,4 +140,8 @@
   <ItemGroup>
     <Image Include="..\Resources\StartScene\loading bar.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\Resources\GameAudio\bubble1.wav" />
+    <Media Include="..\Resources\GameAudio\bubble2.wav" />
+  </ItemGroup>
 </Project>
