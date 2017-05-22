@@ -13,7 +13,7 @@ public:
         BOOM
     };
 
-    Bubble * createAt(const std::string & id, const cocos2d::Vec2 & pos, uint8_t damage = 1);
+    static Bubble * create(const std::string & id, uint8_t damage = 1);
 
     bool init();
 

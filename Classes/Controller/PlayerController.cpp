@@ -38,9 +38,12 @@ PlayerController::~PlayerController()
 Player* PlayerController::createPlayer(const std::string& id, const std::string& role)
 {
     auto player = Player::create(id, role);
-
-    this->_playerList.pushBack(player);
-    return player;
+    if (player)
+    {
+        this->_playerList.insert(id, player);
+        return player;
+    }
+    return nullptr;
 }
 
 Player * PlayerController::createLocalPlayer(const std::string & id, const std::string & role)
@@ -49,7 +52,7 @@ Player * PlayerController::createLocalPlayer(const std::string & id, const std::
     return localPlayer;
 }
 
-void PlayerController::setStatus(std::string id, Player::Status status)
+void PlayerController::setStatus(const std::string& id, Player::Status status)
 {
     auto player = this->getPlayer(id);
     if (player)
@@ -58,16 +61,9 @@ void PlayerController::setStatus(std::string id, Player::Status status)
     }
 }
 
-Player * PlayerController::getPlayer(std::string id)
+Player * PlayerController::getPlayer(const std::string& id)
 {
-    for (auto player : this->_playerList)
-    {
-        if (player->getID() == id)
-        {
-            return player;
-        }
-    }
-    return nullptr;
+    return _playerList.at(id);
 }
 
 void PlayerController::localPlayerMove()
