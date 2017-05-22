@@ -87,3 +87,13 @@ bool GameMap::isInMap(const cocos2d::Vec2 & pos)
     return 0 <= pos.x && pos.x < mapSize.width * tileSize.width
         && 0 <= pos.y && pos.y < mapSize.height * tileSize.height;
 }
+
+GameMap * GameMap::getCurrentMap()
+{
+    auto map = dynamic_cast<GameMap*>(cocos2d::Director::getInstance()->getRunningScene()->getChildByName("root")->getChildByName("map"));
+    if (map)
+    {
+        return map;
+    }
+    return nullptr;
+}

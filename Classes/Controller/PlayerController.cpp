@@ -70,7 +70,7 @@ void PlayerController::localPlayerMove()
 {
     if (localPlayer->getStatus() == Player::Status::FREE && localPlayer->getDirection() != Player::Direction::NONE)
     {
-        auto map = dynamic_cast<GameMap*>(Director::getInstance()->getRunningScene()->getChildByName("root")->getChildByName("map"));
+        auto map = GameMap::getCurrentMap();
         if (map == nullptr) return;
 
         const auto speed = localPlayer->getSpeed();

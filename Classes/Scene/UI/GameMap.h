@@ -27,6 +27,8 @@ public:
     bool isCanAccess(const cocos2d::Vec2& pos);
     bool isInMap(const cocos2d::Vec2& pos);
 
+    static GameMap * GameMap::getCurrentMap();
+
 private:
     cocos2d::TMXTiledMap * tileMap;
     // ObjectLayer that store wall, box ...
