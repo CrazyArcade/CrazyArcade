@@ -72,7 +72,7 @@ cocos2d::Vec2 GameMap::centrePos(const cocos2d::Vec2 & pos)
 bool GameMap::isCanAccess(const cocos2d::Vec2 & pos)
 {
     auto coord = positionToTileCoord(pos);
-    log("%f %f", coord.x, coord.y);
+    // log("%f %f", coord.x, coord.y);
     if (isInMap(pos) && boxLayer->getTileGIDAt(coord) == 0)
     {
         return true;

@@ -31,14 +31,22 @@ public:
 
     struct Attr
     {
-        uint32_t speed;
-        uint32_t power;
-        uint32_t bubble;
+        uint8_t speed;
+        uint8_t damage;
+        uint8_t bubble;
     };
-    Attr attr;
+
+    uint8_t getSpeed();
+    void setSpeed(uint8_t speed);
+
+    uint8_t getDamage();
+    void setDamage(uint8_t damage);
+
+    uint8_t getBubble();
+    void setBubble(uint8_t bubble);
 
     void setStatus(Status);
-    const Status getStatus() const;
+    Status getStatus();
 
     void setDirection(Direction direction);
     void removeDirection(Direction direction);
@@ -49,6 +57,7 @@ public:
 
 private:
     Status _status;
+    Attr attr;
     cocos2d::Size size;
     // record what time the direction was set
     time_t directions[4];

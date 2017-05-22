@@ -76,12 +76,17 @@ void PlayerController::localPlayerMove()
     {
         auto map = dynamic_cast<GameMap*>(Director::getInstance()->getRunningScene()->getChildByName("root")->getChildByName("map"));
         if (map == nullptr) return;
-        auto pair = getNextPos(localPlayer);
-        auto nextPos = pair.first, logicPos1 = pair.second.first, logicPos2 = pair.second.second;
-        
-        if (map->isCanAccess(logicPos1) && map->isCanAccess(logicPos2))
+
+        const auto speed = localPlayer->getSpeed();
+        for (uint8_t i = 0; i < speed; ++i)
         {
-            localPlayer->setPosition(nextPos);
+            auto pair = getNextPos(localPlayer->getPosition(), localPlayer->getDirection());
+            auto nextPos = pair.first, logicPos1 = pair.second.first, logicPos2 = pair.second.second;
+
+            if (map->isCanAccess(logicPos1) && map->isCanAccess(logicPos2))
+            {
+                localPlayer->setPosition(nextPos);
+            }
         }
     }
 }
@@ -91,36 +96,35 @@ void PlayerController::update(float dt)
     if (localPlayer) localPlayerMove();
 }
 
-std::pair<cocos2d::Vec2, std::pair<cocos2d::Vec2, cocos2d::Vec2>> PlayerController::getNextPos(Player * player, uint32_t speed)
+std::pair<cocos2d::Vec2, std::pair<cocos2d::Vec2, cocos2d::Vec2>> PlayerController::getNextPos(const cocos2d::Vec2& pos, Player::Direction direction)
 {
-    auto pos = player->getPosition();
-    if (speed == 0) speed = player->attr.speed;
-    
+    int step = 1;
+
     Vec2 nextPos(pos.x, pos.y);
     Vec2 logicPos1(pos.x, pos.y), logicPos2(pos.x, pos.y);
 
-    switch (player->getDirection())
+    switch (direction)
     {
     case Player::Direction::LEFT:
-        nextPos.x -= speed;
+        nextPos.x -= step;
         logicPos1.x = logicPos2.x = nextPos.x - 20;
         logicPos1.y -= 16;
         logicPos2.y += 16;
         break;
     case Player::Direction::RIGHT:
-        nextPos.x += speed;
+        nextPos.x += step;
         logicPos1.x = logicPos2.x = nextPos.x + 20;
         logicPos1.y -= 16;
         logicPos2.y += 16;
         break;
     case Player::Direction::UP:
-        nextPos.y += speed;
+        nextPos.y += step;
         logicPos1.y = logicPos2.y = nextPos.y + 20;
         logicPos1.x += 16;
         logicPos2.x -= 16;
         break;
     case Player::Direction::DOWN:
-        nextPos.y -= speed;
+        nextPos.y -= step;
         logicPos1.y = logicPos2.y = nextPos.y - 20;
         logicPos1.x += 16;
         logicPos2.x -= 16;
