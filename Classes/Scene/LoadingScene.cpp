@@ -22,6 +22,17 @@ void LoadingScene::endLoading(float dt) {
     Director::getInstance()->replaceScene(transition);
 }
 
+void LoadingScene::loadSound()
+{
+    audio = CocosDenshion::SimpleAudioEngine::getInstance();
+    audio->preloadEffect("GameAudio/bubble1.wav");
+    audio->preloadEffect("GameAudio/bubble2.wav");
+}
+
+void LoadingScene::loadImage() {
+    //undefined
+}
+
 bool LoadingScene::init()
 {
     if (!Layer::init())
@@ -38,24 +49,20 @@ bool LoadingScene::init()
     return true;
 }
 
-
 cocos2d::ui::LoadingBar* LoadingScene::createLoadingBar(){
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     const auto baseY = visibleSize.height * 0.35f;
-    
-    auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
 
     auto loadingBar = ui::LoadingBar::create("StartScene/loading bar.jpg");
     loadingBar->setPosition(Vec2(visibleSize.width / 2, baseY));
     loadingBar->setScale(0.5);
     loadingBar->setDirection(ui::LoadingBar::Direction::LEFT);
+    loadingBar->setPercent(33);
 
-    loadingBar->setPercent(50);
+    loadImage();
+    loadingBar->setPercent(67);
 
-    //load effects
-    audio->preloadEffect("GameAudio/bubble1.wav");
-    audio->preloadEffect("GameAudio/bubble2.wav");
-
+    loadSound();
     loadingBar->setPercent(100);
    
     return loadingBar;

@@ -8,7 +8,10 @@
 class LoadingScene : public cocos2d::Layer
 {
 private:
+    CocosDenshion::SimpleAudioEngine* audio;
     void endLoading(float dt);
+    void loadSound();
+    void loadImage();
     cocos2d::ui::LoadingBar* createLoadingBar();
 public:
     static cocos2d::Scene* createScene();
