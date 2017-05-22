@@ -1,6 +1,5 @@
 #include "Player.h"
 #include "Settings.h"
-#include "Scene/UI/GameMap.h"
 #include <ctime>
 
 USING_NS_CC;
@@ -22,7 +21,7 @@ bool Player::init()
 {
     _status = Status::FREE;
     attr.speed = 3;
-    attr.power = 1;
+    attr.damage = 1;
     attr.bubble = 1;
     size = this->getContentSize();
     // set right anchor point.
@@ -42,12 +41,42 @@ bool Player::initWithRole(const std::string& role)
     return false;
 }
 
+uint8_t Player::getSpeed()
+{
+    return attr.speed;
+}
+
+void Player::setSpeed(uint8_t speed)
+{
+    this->attr.speed = speed;
+}
+
+uint8_t Player::getDamage()
+{
+    return attr.damage;
+}
+
+void Player::setDamage(uint8_t damage)
+{
+    attr.damage = damage;
+}
+
+uint8_t Player::getBubble()
+{
+    return attr.bubble;
+}
+
+void Player::setBubble(uint8_t bubble)
+{
+    attr.bubble = bubble;
+}
+
 void Player::setStatus(Player::Status status)
 {
     this->_status = status;
 }
 
-const Player::Status Player::getStatus() const
+Player::Status Player::getStatus()
 {
     return this->_status;
 }
@@ -75,56 +104,4 @@ Player::Direction Player::getDirection()
         }
     }
     return direction;
-}
-
-void Player::move()
-{
-    if (_status == Status::FREE && getDirection() != Direction::NONE)
-    {
-        auto map = dynamic_cast<GameMap*>(Director::getInstance()->getRunningScene()->getChildByName("root")->getChildByName("map"));
-        if (!map) return;
-        auto pair = getNextPos();
-        // next center point
-        auto nextPos = pair.first;
-        // next edge point
-        auto logicPos = pair.second;
-
-        if (map->isCanAccess(logicPos))
-        {
-            setPosition(nextPos);
-        }
-        else
-        {
-            // TODO update UE
-        }
-    }
-}
-
-std::pair<cocos2d::Vec2, cocos2d::Vec2> Player::getNextPos()
-{
-    auto pos = getPosition();
-    Vec2 nextPos(pos.x, pos.y), logicPos(pos.x, pos.y);
-
-    switch (getDirection())
-    {
-    case Direction::LEFT:
-        nextPos.x -= attr.speed;
-        logicPos.x = nextPos.x - size.width / 2;
-        break;
-    case Direction::RIGHT:
-        nextPos.x += attr.speed;
-        logicPos.x = nextPos.x + size.width / 2;
-        break;
-    case Direction::UP:
-        nextPos.y += attr.speed;
-        logicPos.y = nextPos.y + size.height / 2;
-        break;
-    case Direction::DOWN:
-        nextPos.y -= attr.speed;
-        logicPos.y = nextPos.y - size.height / 2;
-        break;
-    default:
-        break;
-    }
-    return std::make_pair(nextPos, logicPos);
 }

@@ -31,20 +31,27 @@ public:
 
     struct Attr
     {
-        uint32_t speed;
-        uint32_t power;
-        uint32_t bubble;
+        uint8_t speed;
+        uint8_t damage;
+        uint8_t bubble;
     };
 
+    uint8_t getSpeed();
+    void setSpeed(uint8_t speed);
+
+    uint8_t getDamage();
+    void setDamage(uint8_t damage);
+
+    uint8_t getBubble();
+    void setBubble(uint8_t bubble);
+
     void setStatus(Status);
-    const Status getStatus() const;
+    Status getStatus();
 
     void setDirection(Direction direction);
     void removeDirection(Direction direction);
     Direction getDirection();
     
-    void move();
-    std::pair<cocos2d::Vec2, cocos2d::Vec2> getNextPos();
     // TODO
     // void setAnimation();
 
