@@ -23,7 +23,7 @@ namespace Settings
     }
     namespace Map
     {
-        constexpr char path[] = "map/";
+        constexpr char path[] = "GameItem/Map/";
         static std::set<const char *> list{
             "town_10"
         };
@@ -35,7 +35,11 @@ namespace Settings
     }
     namespace Player
     {
-        constexpr char path[] = "player/";
+        constexpr char path[] = "GameItem/Player/";
+    }
+    namespace Bubble
+    {
+        constexpr char path[] = "GameItem/Player/bubble.png";
     }
     namespace Sever
     {
