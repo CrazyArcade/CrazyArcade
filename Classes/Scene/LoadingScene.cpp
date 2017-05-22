@@ -43,7 +43,8 @@ cocos2d::ui::LoadingBar* LoadingScene::createLoadingBar(){
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     const auto baseY = visibleSize.height * 0.35f;
     
-    auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+    auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+
     auto loadingBar = ui::LoadingBar::create("StartScene/loading bar.jpg");
     loadingBar->setPosition(Vec2(visibleSize.width / 2, baseY));
     loadingBar->setScale(0.5);
