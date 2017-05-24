@@ -15,21 +15,17 @@ public:
     void removeEntity(const cocos2d::Vec2& pos);
     // remove a box from map
     void removeBox(const cocos2d::Vec2& pos);
-
-    const Size& getMapSize() { return tileMap->getMapSize(); }
-   
     CREATE_FUNC(GameMap);
 
-    // transform tilecoord to position
+    // transform titecoord to position
     cocos2d::Vec2 tileCoordToPosition(const cocos2d::Vec2& coord);
-    // transform position to tilecoord
+    // transform position to titecoord
     cocos2d::Vec2 positionToTileCoord(const cocos2d::Vec2& pos);
     // get centre pos of pos
     cocos2d::Vec2 centrePos(const cocos2d::Vec2& pos);
 
     bool isCanAccess(const cocos2d::Vec2& pos);
     bool isInMap(const cocos2d::Vec2& pos);
-    bool isBoomable(const cocos2d::Vec2& pos);
 
     static GameMap * GameMap::getCurrentMap();
 
