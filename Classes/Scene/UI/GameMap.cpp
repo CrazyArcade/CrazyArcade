@@ -11,17 +11,17 @@ bool GameMap::init()
 void GameMap::setMap(const char * mapName)
 {
     CCASSERT(Settings::Map::list.find(mapName) != Settings::Map::list.cend(), "Map NOT Found");
-    
+
     auto visibleSize = Director::getInstance()->getVisibleSize();
-    
+
     auto path = Settings::Map::path + std::string{ mapName } +".tmx";
     tileMap = TMXTiledMap::create(path);
     addChild(tileMap, -1);
 
     boxLayer = tileMap->getLayer("Box");
     entityLayer = tileMap->getLayer("Entity");
-    
-    this->setPosition(Vec2(visibleSize.width * 0.05f, visibleSize.height * 0.05f));
+
+    this->setPosition(Vec2(visibleSize.width * 0.25, visibleSize.height * 0.05));
 }
 
 void GameMap::addEntity(const cocos2d::Vec2& pos)
@@ -86,6 +86,11 @@ bool GameMap::isInMap(const cocos2d::Vec2 & pos)
     auto tileSize = tileMap->getTileSize();
     return 0 <= pos.x && pos.x < mapSize.width * tileSize.width
         && 0 <= pos.y && pos.y < mapSize.height * tileSize.height;
+}
+
+bool GameMap::isBoomable(const cocos2d::Vec2 & pos)
+{
+    return isInMap(pos) && boxLayer->getTileGIDAt(positionToTileCoord(pos)) != 0;
 }
 
 GameMap * GameMap::getCurrentMap()
