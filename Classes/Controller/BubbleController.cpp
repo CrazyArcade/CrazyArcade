@@ -30,12 +30,12 @@ void BubbleController::boom(const std::string & id)
 
     auto pos = map->positionToTileCoord(bubble->getPosition());
 
-    for (uint8_t i = 0; i < map->getMapSize().width; i++) {     //horizontal
+    for (uint8_t i = (pos.x - damage > 0 ? pos.x - damage : 0); i < (pos.x + damage < map->getMapSize().width ? pos.x + damage : map->getMapSize.width); i++) {     //horizontal
         Vec2 Pos(i, pos.y);
         if (map->isBoomable(map->tileCoordToPosition(Pos)))
             map->removeBox(Pos);
     }
-    for (uint8_t i = 0; i < map->getMapSize().height; i++) {    //vertical
+    for (uint8_t i = (pos.y - damage > 0 ? pos.y - damage : 0); i < (pos.y + damage < map->getMapSize().height ? pos.y + damage : map->getMapSize.height); i++) {    //vertical
         Vec2 Pos(pos.x, i);
         if (map->isBoomable(map->tileCoordToPosition(Pos)))
             map->removeBox(Pos);
