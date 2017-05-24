@@ -43,6 +43,9 @@ bool GameScene::init()
     _playerController = PlayerController::create();
     addChild(_playerController, -1, "player_controller");
 
+    //_bubbleController = BubbleController::create();
+    //addChild(_bubbleController, -1, "bubble_controller");
+
     auto player1 = _playerController->createLocalPlayer("test");
     _map->addChild(player1, 1);
     player1->setPosition(_map->tileCoordToPosition(Vec2(0, 0)));

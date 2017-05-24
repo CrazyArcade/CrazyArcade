@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "Model/Bubble.h"
 
+
 class BubbleController : public cocos2d::Layer
 {
 public:
