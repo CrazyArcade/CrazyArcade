@@ -16,7 +16,7 @@ public:
     // remove a box from map
     void removeBox(const cocos2d::Vec2& pos);
 
-    const Size& getMapSize() { return tileMap->getMapSize(); }
+    const cocos2d::Size& getMapSize() { return tileMap->getMapSize(); }
    
     CREATE_FUNC(GameMap);
 

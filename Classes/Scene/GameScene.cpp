@@ -122,5 +122,3 @@ void GameScene::keyReleasedAct(EventKeyboard::KeyCode keyCode, Event* event)
     default: break;
     }
 }
-
-

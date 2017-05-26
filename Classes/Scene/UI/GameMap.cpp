@@ -53,8 +53,8 @@ cocos2d::Vec2 GameMap::tileCoordToPosition(const cocos2d::Vec2 & coord)
 
 cocos2d::Vec2 GameMap::positionToTileCoord(const cocos2d::Vec2 & pos)
 {
-    Size mapSize = tileMap->getMapSize();
-    Size tileSize = tileMap->getTileSize();
+    cocos2d::Size mapSize = tileMap->getMapSize();
+    cocos2d::Size tileSize = tileMap->getTileSize();
     int x = pos.x / tileSize.width;
     int y = (mapSize.height * tileSize.height - pos.y) / tileSize.height;
     // edge case
