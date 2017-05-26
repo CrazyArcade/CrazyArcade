@@ -10,7 +10,11 @@ Bubble * BubbleController::createBubble(const cocos2d::Vec2 & pos, const std::st
     {
         bubble->setPosition(pos);
         _bubbleList.insert(id, bubble);
-        // TODO here set a schedule, 3sec later boom itself
+
+        /*
+        scheduleOnce(CC_SCHEDULE_SELECTOR(BubbleController::boom), 3);
+        */
+
         return bubble;
     }
     return nullptr;
@@ -21,7 +25,7 @@ Bubble * BubbleController::getBubble(const std::string & id)
     return _bubbleList.at(id);
 }
 
-void BubbleController::boom(const std::string & id)
+void BubbleController::boom(float dt, const std::string & id)
 {
     auto bubble = getBubble(id);
     auto damage = bubble->getDamage();
@@ -30,14 +34,46 @@ void BubbleController::boom(const std::string & id)
 
     auto pos = map->positionToTileCoord(bubble->getPosition());
 
-    for (uint8_t i = (pos.x - damage > 0 ? pos.x - damage : 0); i < (pos.x + damage < map->getMapSize().width ? pos.x + damage : map->getMapSize.width); i++) {     //horizontal
-        Vec2 Pos(i, pos.y);
-        if (map->isBoomable(map->tileCoordToPosition(Pos)))
+
+    for (uint8_t i = 1; i <= damage; i++) {     //right
+        Vec2 Pos(pos.x + i, pos.y);
+        if (map->isBoomable(map->tileCoordToPosition(Pos))) {
             map->removeBox(Pos);
+            break;
+        }
+        else {
+            //TODO player death judge
+        }
     }
-    for (uint8_t i = (pos.y - damage > 0 ? pos.y - damage : 0); i < (pos.y + damage < map->getMapSize().height ? pos.y + damage : map->getMapSize.height); i++) {    //vertical
-        Vec2 Pos(pos.x, i);
-        if (map->isBoomable(map->tileCoordToPosition(Pos)))
+    for (uint8_t i = 1; i <= damage; i++) {     //left
+        Vec2 Pos(pos.x - i, pos.y);
+        if (map->isBoomable(map->tileCoordToPosition(Pos))) {
             map->removeBox(Pos);
+            break;
+        }
+        else {
+            //TODO player death judge
+        }
     }
+    for (uint8_t i = 1; i <= damage; i++) {     //up
+        Vec2 Pos(pos.x, pos.y - i);
+        if (map->isBoomable(map->tileCoordToPosition(Pos))) {
+            map->removeBox(Pos);
+            break;
+        }
+        else {
+            //TODO player death judge
+        }
+    }
+    for (uint8_t i = 1; i <= damage; i++) {     //down
+        Vec2 Pos(pos.x, pos.y + i);
+        if (map->isBoomable(map->tileCoordToPosition(Pos))) {
+            map->removeBox(Pos);
+            break;
+        }
+        else {
+            //TODO player death judge
+        }
+    }
+
 }
