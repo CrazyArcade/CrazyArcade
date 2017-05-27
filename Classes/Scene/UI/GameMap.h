@@ -3,11 +3,15 @@
 
 #include "cocos2d.h"
 #include "Settings.h"
+#include <vector>
+#include <json/filereadstream.h>
+#include <json/document.h> 
 
 class GameMap : public cocos2d::Layer
 {
 public:
     virtual bool init();
+    void readMapInfo(const char * mapName);
     void setMap(const char * mapName);
     // add an entity to map
     void addEntity(const cocos2d::Vec2& pos);
@@ -17,7 +21,7 @@ public:
     void removeBox(const cocos2d::Vec2& pos);
 
     const cocos2d::Size& getMapSize() { return tileMap->getMapSize(); }
-   
+
     CREATE_FUNC(GameMap);
 
     // transform tilecoord to position
@@ -34,6 +38,7 @@ public:
     static GameMap * GameMap::getCurrentMap();
 
 private:
+    std::vector<std::vector<int> > mapInfo;
     cocos2d::TMXTiledMap * tileMap;
     // ObjectLayer that store wall, box ...
     cocos2d::TMXLayer * boxLayer;

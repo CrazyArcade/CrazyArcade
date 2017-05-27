@@ -8,6 +8,29 @@ bool GameMap::init()
     return true;
 }
 
+void GameMap::readMapInfo(const char * mapName)
+{
+    using namespace rapidjson;
+
+    auto path = Settings::Map::path + std::string{ mapName } +".json";
+    FILE* fp = fopen(path.c_str(), "rb");
+    char readBuffer[500];
+    FileReadStream is(fp, readBuffer, sizeof(readBuffer)); 
+    
+    Document d;
+    d.ParseStream(is);
+
+    mapInfo.resize(13);
+
+    for (int i = 0; i < 13; i++) {
+        for (int j = 0; j < 15; j++) {
+            mapInfo[i].push_back(d["info"][i].GetArray()[j].GetInt());
+        }
+    }
+
+    fclose(fp);
+}
+
 void GameMap::setMap(const char * mapName)
 {
     CCASSERT(Settings::Map::list.find(mapName) != Settings::Map::list.cend(), "Map NOT Found");
@@ -20,6 +43,8 @@ void GameMap::setMap(const char * mapName)
 
     boxLayer = tileMap->getLayer("Box");
     entityLayer = tileMap->getLayer("Entity");
+
+    readMapInfo(mapName);
 
     this->setPosition(Vec2(visibleSize.width * 0.25, visibleSize.height * 0.05));
 }
@@ -37,7 +62,8 @@ void GameMap::removeEntity(const cocos2d::Vec2 & pos)
 
 void GameMap::removeBox(const cocos2d::Vec2& pos)
 {
-    boxLayer->removeTileAt(pos);
+    mapInfo[pos.x][pos.y] = 0; 
+    //boxLayer->removeTileAt(pos);
 }
 
 cocos2d::Vec2 GameMap::tileCoordToPosition(const cocos2d::Vec2 & coord)
@@ -90,7 +116,8 @@ bool GameMap::isInMap(const cocos2d::Vec2 & pos)
 
 bool GameMap::isBoomable(const cocos2d::Vec2 & pos)
 {
-    return isInMap(pos) && boxLayer->getTileGIDAt(positionToTileCoord(pos)) != 0;
+    auto Pos = positionToTileCoord(pos);
+    return isInMap(pos) && (mapInfo[Pos.x][Pos.y] == 1 || mapInfo[Pos.x][Pos.y] == 2);
 }
 
 GameMap * GameMap::getCurrentMap()

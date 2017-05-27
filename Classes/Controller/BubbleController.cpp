@@ -34,7 +34,6 @@ void BubbleController::boom(float dt, const std::string & id)
 
     auto pos = map->positionToTileCoord(bubble->getPosition());
 
-
     for (uint8_t i = 1; i <= damage; i++) {     //right
         Vec2 Pos(pos.x + i, pos.y);
         if (map->isBoomable(map->tileCoordToPosition(Pos))) {
