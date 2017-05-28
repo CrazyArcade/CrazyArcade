@@ -8,20 +8,45 @@ bool GameMap::init()
     return true;
 }
 
+void GameMap::readMapInfo(const char * mapName)
+{
+    using namespace rapidjson;
+
+    auto path = Settings::Map::path + std::string{ mapName } +".json";
+    FILE* fp = fopen(path.c_str(), "rb");
+    char readBuffer[500];
+    FileReadStream is(fp, readBuffer, sizeof(readBuffer)); 
+    
+    Document d;
+    d.ParseStream(is);
+
+    mapInfo.resize(13);
+
+    for (int i = 0; i < 13; i++) {
+        for (int j = 0; j < 15; j++) {
+            mapInfo[i].push_back(d["info"][i].GetArray()[j].GetInt());
+        }
+    }
+
+    fclose(fp);
+}
+
 void GameMap::setMap(const char * mapName)
 {
     CCASSERT(Settings::Map::list.find(mapName) != Settings::Map::list.cend(), "Map NOT Found");
-    
+
     auto visibleSize = Director::getInstance()->getVisibleSize();
-    
+
     auto path = Settings::Map::path + std::string{ mapName } +".tmx";
     tileMap = TMXTiledMap::create(path);
     addChild(tileMap, -1);
 
     boxLayer = tileMap->getLayer("Box");
     entityLayer = tileMap->getLayer("Entity");
-    
-    this->setPosition(Vec2(visibleSize.width * 0.05f, visibleSize.height * 0.05f));
+
+    readMapInfo(mapName);
+
+    this->setPosition(Vec2(visibleSize.width * 0.25, visibleSize.height * 0.05));
 }
 
 void GameMap::addEntity(const cocos2d::Vec2& pos)
@@ -37,7 +62,8 @@ void GameMap::removeEntity(const cocos2d::Vec2 & pos)
 
 void GameMap::removeBox(const cocos2d::Vec2& pos)
 {
-    boxLayer->removeTileAt(pos);
+    mapInfo[pos.x][pos.y] = 0; 
+    //boxLayer->removeTileAt(pos);
 }
 
 cocos2d::Vec2 GameMap::tileCoordToPosition(const cocos2d::Vec2 & coord)
@@ -53,8 +79,8 @@ cocos2d::Vec2 GameMap::tileCoordToPosition(const cocos2d::Vec2 & coord)
 
 cocos2d::Vec2 GameMap::positionToTileCoord(const cocos2d::Vec2 & pos)
 {
-    Size mapSize = tileMap->getMapSize();
-    Size tileSize = tileMap->getTileSize();
+    cocos2d::Size mapSize = tileMap->getMapSize();
+    cocos2d::Size tileSize = tileMap->getTileSize();
     int x = pos.x / tileSize.width;
     int y = (mapSize.height * tileSize.height - pos.y) / tileSize.height;
     // edge case
@@ -86,6 +112,12 @@ bool GameMap::isInMap(const cocos2d::Vec2 & pos)
     auto tileSize = tileMap->getTileSize();
     return 0 <= pos.x && pos.x < mapSize.width * tileSize.width
         && 0 <= pos.y && pos.y < mapSize.height * tileSize.height;
+}
+
+bool GameMap::isBoomable(const cocos2d::Vec2 & pos)
+{
+    auto Pos = positionToTileCoord(pos);
+    return isInMap(pos) && (mapInfo[Pos.x][Pos.y] == 1 || mapInfo[Pos.x][Pos.y] == 2);
 }
 
 GameMap * GameMap::getCurrentMap()

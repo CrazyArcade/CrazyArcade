@@ -13,6 +13,7 @@ public:
         BOOM
     };
 
+
     static Bubble * create(const std::string & id, uint8_t damage = 1);
 
     bool init();
@@ -21,7 +22,7 @@ public:
 
     void setStatus(Status status);
 private:
-    // Status _status;
+    Status _status;
     uint8_t _damage;
 };
 #endif
