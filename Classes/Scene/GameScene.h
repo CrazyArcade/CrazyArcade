@@ -6,6 +6,7 @@
 #include "UI/GameMap.h"
 #include "Client.h"
 #include "Controller/PlayerController.h"
+#include "Controller/BubbleController.h"
 
 class GameScene : public cocos2d::Layer
 {
@@ -20,6 +21,7 @@ private:
     //Client * _client;
     GameMap * _map;
     PlayerController * _playerController;
+    BubbleController* _bubbleController;
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();

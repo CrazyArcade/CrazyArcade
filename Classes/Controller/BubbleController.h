@@ -4,12 +4,13 @@
 #include "cocos2d.h"
 #include "Model/Bubble.h"
 
+
 class BubbleController : public cocos2d::Layer
 {
 public:
 
     Bubble * createBubble(const cocos2d::Vec2 & pos, const std::string & id, uint8_t damage);
-    
+
     /**
      * get bubble by id
      * @param string id
@@ -21,7 +22,7 @@ public:
      * boom a bubble by id
      * @param string id
      */
-    void boom(const std::string & id);
+    void boom(float dt, const std::string & id);
 
     virtual bool init();
     CREATE_FUNC(BubbleController);
