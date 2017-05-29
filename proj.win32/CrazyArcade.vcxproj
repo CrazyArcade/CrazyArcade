@@ -166,6 +166,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Classes\api_generated.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\Client.h" />
     <ClInclude Include="..\Classes\Controller\BubbleController.h" />
@@ -199,13 +200,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\Resources\StartScene\loading bar.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="..\Resources\GameAudio\bubble1.wav" />
-    <Media Include="..\Resources\GameAudio\bubble2.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

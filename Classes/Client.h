@@ -11,12 +11,11 @@ public:
     virtual bool init();
     CREATE_FUNC(Client);
 
-    virtual void onOpen(cocos2d::network::WebSocket* ws);
-    virtual void onMessage(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::Data& data);
-    virtual void onClose(cocos2d::network::WebSocket* ws);
-    virtual void onError(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::ErrorCode& error);
-
-private:
+    void onOpen(cocos2d::network::WebSocket* ws);
+    void onMessage(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::Data& data);
+    void onClose(cocos2d::network::WebSocket* ws);
+    void onError(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::ErrorCode& error);
     cocos2d::network::WebSocket* ws;
+    
 };
 #endif

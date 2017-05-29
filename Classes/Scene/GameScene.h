@@ -13,18 +13,22 @@ class GameScene : public cocos2d::Layer
 private:
     void keyPressedAct(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event* event);
     void keyReleasedAct(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event* event);
-    void menuBackCallback(cocos2d::Ref* pSender);
-    cocos2d::Menu* createText();
+    
+    void initEventListen();
 
     cocos2d::TMXTiledMap *_tileMap;
 
-    //Client * _client;
+    Client * _client;
     GameMap * _map;
     PlayerController * _playerController;
-    BubbleController* _bubbleController;
+    BubbleController * _bubbleController;
+
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();
+    void onExit();
+    void update(float dt);
+
     CREATE_FUNC(GameScene);
 };
 

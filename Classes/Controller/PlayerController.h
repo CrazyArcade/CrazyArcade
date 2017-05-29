@@ -15,6 +15,7 @@ public:
 
     void setStatus(const std::string& id, Player::Status status);
     Player* getPlayer(const std::string& id);
+    Player* getLocalPlayer();
 
     void localPlayerMove();
 
@@ -26,5 +27,7 @@ private:
     Player* localPlayer;
 
     std::pair<cocos2d::Vec2, std::pair<cocos2d::Vec2, cocos2d::Vec2>> getNextPos(const cocos2d::Vec2& pos, Player::Direction direction);
+
+    void addCustomEvent();
 };
 #endif

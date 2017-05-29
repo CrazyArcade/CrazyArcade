@@ -10,23 +10,10 @@ bool PlayerController::init()
         return false;
     }
 
-    auto listener = EventListenerCustom::create("on_local_player_move", [=](EventCustom* event)
-    {
-        char* buf = static_cast<char*>(event->getUserData());
-        int mode;
-        int direction;
-        sscanf(buf, "%d %d", &mode, &direction);
-        if (mode)
-        {
-            localPlayer->setDirection(static_cast<Player::Direction>(direction));
-        }
-        else
-        {
-            localPlayer->removeDirection(static_cast<Player::Direction>(direction));
-        }
-    });
-    _eventDispatcher->addEventListenerWithFixedPriority(listener, 1);
+    addCustomEvent();
+
     scheduleUpdate();
+
     return true;
 }
 
@@ -49,6 +36,10 @@ Player* PlayerController::createPlayer(const std::string& id, const std::string&
 Player * PlayerController::createLocalPlayer(const std::string & id, const std::string & role)
 {
     localPlayer = createPlayer(id, role);
+    if (localPlayer)
+    {
+        this->_playerList.insert(id, localPlayer);
+    }
     return localPlayer;
 }
 
@@ -64,6 +55,11 @@ void PlayerController::setStatus(const std::string& id, Player::Status status)
 Player * PlayerController::getPlayer(const std::string& id)
 {
     return _playerList.at(id);
+}
+
+Player * PlayerController::getLocalPlayer()
+{
+    return localPlayer;
 }
 
 void PlayerController::localPlayerMove()
@@ -129,4 +125,24 @@ std::pair<cocos2d::Vec2, std::pair<cocos2d::Vec2, cocos2d::Vec2>> PlayerControll
         break;
     }
     return std::make_pair(nextPos, std::make_pair(logicPos1, logicPos2));
+}
+
+void PlayerController::addCustomEvent()
+{
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("on_local_player_move", [=](EventCustom* event)
+    {
+        char* buf = static_cast<char*>(event->getUserData());
+        int mode;
+        int direction;
+        sscanf(buf, "%d %d", &mode, &direction);
+        if (mode)
+        {
+            localPlayer->setDirection(static_cast<Player::Direction>(direction));
+        }
+        else
+        {
+            localPlayer->removeDirection(static_cast<Player::Direction>(direction));
+        }
+    }), this);
+
 }
