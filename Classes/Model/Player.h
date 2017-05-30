@@ -48,8 +48,10 @@ public:
     void setStatus(Status);
     Status getStatus();
 
+    void setDirectionByKey(Direction direction);
+    void removeDirectionByKey(Direction direction);
+    void updateDirection();
     void setDirection(Direction direction);
-    void removeDirection(Direction direction);
     Direction getDirection();
     
     // TODO
@@ -61,6 +63,7 @@ private:
     cocos2d::Size size;
     // record what time the direction was set
     time_t directions[4];
+    Direction direction;
 
     bool init();
     bool initWithRole(const std::string& role);

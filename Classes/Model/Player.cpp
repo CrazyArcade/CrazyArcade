@@ -23,6 +23,7 @@ bool Player::init()
     attr.speed = 3;
     attr.damage = 1;
     attr.bubble = 1;
+    direction = Direction::NONE;
     size = this->getContentSize();
     // set right anchor point.
     this->setAnchorPoint(Vec2(0.5, (Settings::Map::TileSize::height / 2 ) / size.height));
@@ -81,17 +82,19 @@ Player::Status Player::getStatus()
     return this->_status;
 }
 
-void Player::setDirection(Direction direction)
+void Player::setDirectionByKey(Direction direction)
 {
     directions[static_cast<int>(direction)] = time(nullptr);
+    updateDirection();
 }
 
-void Player::removeDirection(Direction direction)
+void Player::removeDirectionByKey(Direction direction)
 {
     directions[static_cast<int>(direction)] = 0;
+    updateDirection();
 }
 
-Player::Direction Player::getDirection()
+void Player::updateDirection()
 {
     Direction direction = Direction::NONE;
     time_t max = 0;
@@ -103,5 +106,15 @@ Player::Direction Player::getDirection()
             direction = static_cast<Direction>(i);
         }
     }
+    this->direction = direction;
+}
+
+void Player::setDirection(Direction direction)
+{
+    this->direction = direction;
+}
+
+Player::Direction Player::getDirection()
+{
     return direction;
 }
