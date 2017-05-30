@@ -33,7 +33,8 @@ public:
     {
         uint8_t speed;
         uint8_t damage;
-        uint8_t bubble;
+        uint8_t maxBubble;
+        uint8_t currentBubble;
     };
 
     uint8_t getSpeed();
@@ -48,12 +49,14 @@ public:
     void setStatus(Status);
     Status getStatus();
 
+    void setDirectionByKey(Direction direction);
+    void removeDirectionByKey(Direction direction);
+    void updateDirection();
     void setDirection(Direction direction);
-    void removeDirection(Direction direction);
     Direction getDirection();
     
     // TODO
-    // void setAnimation();
+    void setAnimation();
 
 private:
     Status _status;
@@ -61,9 +64,11 @@ private:
     cocos2d::Size size;
     // record what time the direction was set
     time_t directions[4];
+    Direction direction;
 
     bool init();
     bool initWithRole(const std::string& role);
+    bool initAnimation();
 
 };
 #endif

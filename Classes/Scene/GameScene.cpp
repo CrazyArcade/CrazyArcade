@@ -1,5 +1,6 @@
 #include "GameScene.h"
 #include "SimpleAudioEngine.h"
+#include "api_generated.h"
 
 USING_NS_CC;
 
@@ -27,6 +28,7 @@ bool GameScene::init()
     {
         return false;
     }
+
     auto visibleSize = Director::getInstance()->getVisibleSize();
 
     auto keyListener = EventListenerKeyboard::create();
@@ -43,38 +45,31 @@ bool GameScene::init()
     _playerController = PlayerController::create();
     addChild(_playerController, -1, "player_controller");
 
+#ifdef NETWORK
+    _client = Client::create();
+    addChild(_client);
+    //initEventListener();
+    float dur = 1 / 30;
+    schedule(schedule_selector(GameScene::syncPlayerPosition), dur);
+#else
+    auto player = _playerController->createLocalPlayer("local");
+    auto pos = _map->tileCoordToPosition(Vec2(0, 0));
+    player->setPosition(pos);
+    _map->addChild(player, 1);
+#endif // NETWORK
+
     //_bubbleController = BubbleController::create();
     //addChild(_bubbleController, -1, "bubble_controller");
-
-    auto player1 = _playerController->createLocalPlayer("test");
-    _map->addChild(player1, 1);
-    player1->setPosition(_map->tileCoordToPosition(Vec2(0, 0)));
-
+  
     return true;
 }
 
-cocos2d::Menu* GameScene::createText() {
-    const auto buttons = Menu::create();
-
-    const auto backButton = MenuItemLabel::create(
-        Label::createWithTTF("Back", Settings::Font::Type::base, Settings::Font::Size::label),
-        CC_CALLBACK_1(GameScene::menuBackCallback, this));
-
-    const auto visibleSize = Director::getInstance()->getVisibleSize();
-    const auto baseY = visibleSize.height * 0.85f;
-
-    backButton->setPosition(backButton->getContentSize().width / 2 + 30, baseY + 30);
-
-    buttons->addChild(backButton, 1);
-
-    buttons->setPosition(0, 0);
-
-    return buttons;
-}
-
-void GameScene::menuBackCallback(Ref* pSender)
+void GameScene::onExit()
 {
-    Director::getInstance()->popScene();
+    Layer::onExit();
+#ifdef NETWORK
+    _client->ws->close();
+#endif // NETWORK
 }
 
 void GameScene::keyPressedAct(EventKeyboard::KeyCode keyCode, Event* event)
@@ -120,5 +115,31 @@ void GameScene::keyReleasedAct(EventKeyboard::KeyCode keyCode, Event* event)
         break;
     }
     default: break;
+    }
+}
+
+void GameScene::initEventListener()
+{
+    //using namespace API;
+    //auto dispatcher = this->getEventDispatcher();
+}
+
+void GameScene::syncPlayerPosition(float dt)
+{
+    // update player pos
+    auto localPlayer = _playerController->getLocalPlayer();
+    if (localPlayer != nullptr)
+    {
+        using namespace API;
+        flatbuffers::FlatBufferBuilder builder;
+        auto localPlayer = _playerController->getLocalPlayer();
+        auto id = builder.CreateString(localPlayer->getID());
+        auto dir = static_cast<Direction>(localPlayer->getDirection());
+        auto pos = localPlayer->getPosition();
+        auto data = CreatePlayerPosChange(builder, id, dir, pos.x, pos.y);
+        auto msg = CreateMsg(builder, MsgType_PlayerPosChange, data.Union());
+        builder.Finish(msg);
+
+        _client->ws->send(builder.GetBufferPointer(), builder.GetSize());
     }
 }

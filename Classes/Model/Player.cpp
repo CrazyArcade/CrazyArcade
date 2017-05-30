@@ -22,7 +22,8 @@ bool Player::init()
     _status = Status::FREE;
     attr.speed = 3;
     attr.damage = 1;
-    attr.bubble = 1;
+    attr.currentBubble = attr.maxBubble = 1;
+    direction = Direction::NONE;
     size = this->getContentSize();
     // set right anchor point.
     this->setAnchorPoint(Vec2(0.5, (Settings::Map::TileSize::height / 2 ) / size.height));
@@ -39,6 +40,12 @@ bool Player::initWithRole(const std::string& role)
         return true;
     }
     return false;
+}
+
+bool Player::initAnimation()
+{
+    // TODO init Animation (move left, right ...)
+    return true;
 }
 
 uint8_t Player::getSpeed()
@@ -63,12 +70,12 @@ void Player::setDamage(uint8_t damage)
 
 uint8_t Player::getBubble()
 {
-    return attr.bubble;
+    return attr.currentBubble;
 }
 
-void Player::setBubble(uint8_t bubble)
+void Player::setBubble(uint8_t maxBubble)
 {
-    attr.bubble = bubble;
+    attr.maxBubble = maxBubble;
 }
 
 void Player::setStatus(Player::Status status)
@@ -81,17 +88,19 @@ Player::Status Player::getStatus()
     return this->_status;
 }
 
-void Player::setDirection(Direction direction)
+void Player::setDirectionByKey(Direction direction)
 {
     directions[static_cast<int>(direction)] = time(nullptr);
+    updateDirection();
 }
 
-void Player::removeDirection(Direction direction)
+void Player::removeDirectionByKey(Direction direction)
 {
     directions[static_cast<int>(direction)] = 0;
+    updateDirection();
 }
 
-Player::Direction Player::getDirection()
+void Player::updateDirection()
 {
     Direction direction = Direction::NONE;
     time_t max = 0;
@@ -103,5 +112,23 @@ Player::Direction Player::getDirection()
             direction = static_cast<Direction>(i);
         }
     }
+    setDirection(direction);
+
+}
+
+void Player::setDirection(Direction direction)
+{
+    this->direction = direction;
+    setAnimation();
+}
+
+Player::Direction Player::getDirection()
+{
     return direction;
+}
+
+void Player::setAnimation()
+{ 
+    Direction direction = Direction::NONE;
+    // TODO setPlayer Animation
 }
