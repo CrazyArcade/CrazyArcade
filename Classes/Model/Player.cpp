@@ -22,7 +22,6 @@ bool Player::init()
     _status = Status::FREE;
     attr.speed = 3;
     attr.damage = 1;
-    attr.bubble = 1;
     direction = Direction::NONE;
     size = this->getContentSize();
     // set right anchor point.
@@ -70,12 +69,11 @@ void Player::setDamage(uint8_t damage)
 
 uint8_t Player::getBubble()
 {
-    return attr.bubble;
 }
 
-void Player::setBubble(uint8_t bubble)
+void Player::setBubble(uint8_t maxBubble)
 {
-    attr.bubble = bubble;
+    attr.maxBubble = maxBubble;
 }
 
 void Player::setStatus(Player::Status status)

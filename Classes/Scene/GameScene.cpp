@@ -52,8 +52,8 @@ bool GameScene::init()
     float dur = 1 / 30;
     schedule(schedule_selector(GameScene::syncPlayerPosition), dur);
 #else
-    auto player = createLocalPlayer(data->id()->str());
-    auto pos = Vec2(0, 0);
+    auto player = _playerController->createLocalPlayer("local");
+    auto pos = _map->tileCoordToPosition(Vec2(0, 0));
     player->setPosition(pos);
     _map->addChild(player, 1);
 #endif // NETWORK
@@ -67,7 +67,9 @@ bool GameScene::init()
 void GameScene::onExit()
 {
     Layer::onExit();
+#ifdef NETWORK
     _client->ws->close();
+#endif // NETWORK
 }
 
 void GameScene::keyPressedAct(EventKeyboard::KeyCode keyCode, Event* event)

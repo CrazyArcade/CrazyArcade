@@ -33,7 +33,8 @@ public:
     {
         uint8_t speed;
         uint8_t damage;
-        uint8_t bubble;
+        uint8_t maxBubble;
+        uint8_t currentBubble;
     };
 
     uint8_t getSpeed();
