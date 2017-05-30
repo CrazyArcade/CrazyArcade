@@ -1,6 +1,6 @@
 #include "PlayerController.h"
 #include "Scene/UI/GameMap.h"
-
+#include "api_generated.h"
 USING_NS_CC;
 
 bool PlayerController::init()
@@ -85,7 +85,9 @@ void PlayerController::localPlayerMove()
 
 void PlayerController::update(float dt)
 {
-    if (localPlayer) localPlayerMove();
+    if (localPlayer) { 
+        localPlayerMove();
+    }
 }
 
 std::pair<cocos2d::Vec2, std::pair<cocos2d::Vec2, cocos2d::Vec2>> PlayerController::getNextPos(const cocos2d::Vec2& pos, Player::Direction direction)
@@ -129,7 +131,9 @@ std::pair<cocos2d::Vec2, std::pair<cocos2d::Vec2, cocos2d::Vec2>> PlayerControll
 
 void PlayerController::addCustomEvent()
 {
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("on_local_player_move", [=](EventCustom* event)
+    using namespace API;
+    auto dispatcher = this->getEventDispatcher();
+    dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("on_local_player_move", [=](EventCustom* event)
     {
         char* buf = static_cast<char*>(event->getUserData());
         int mode;
@@ -137,12 +141,34 @@ void PlayerController::addCustomEvent()
         sscanf(buf, "%d %d", &mode, &direction);
         if (mode)
         {
-            localPlayer->setDirection(static_cast<Player::Direction>(direction));
+            localPlayer->setDirectionByKey(static_cast<Player::Direction>(direction));
         }
         else
         {
-            localPlayer->removeDirection(static_cast<Player::Direction>(direction));
+            localPlayer->removeDirectionByKey(static_cast<Player::Direction>(direction));
         }
     }), this);
+#ifdef NETWORK  
+    dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("on_local_player_init", [=](EventCustom* event)
+    {
+        auto data = static_cast<API::PlayerJoin*>(event->getUserData());
+        auto player = createLocalPlayer(data->id()->str());
+        auto pos = Vec2(data->x(), data->y());
+        player->setPosition(pos);
+        GameMap::getCurrentMap()->addChild(player, 1);
+    }), this);
 
+    dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("on_other_player_move", [=](EventCustom* event)
+    {
+        auto data = static_cast<API::PlayerPosChange*>(event->getUserData());
+        auto player = getPlayer(data->id()->str());
+        if (player != localPlayer && player != nullptr)
+        {
+            auto pos = Vec2(data->x(), data->y());
+            auto dir = static_cast<Player::Direction>(data->direction());
+            player->setPosition(pos);
+            player->setDirection(dir);
+        }
+    }), this);
+#endif
 }

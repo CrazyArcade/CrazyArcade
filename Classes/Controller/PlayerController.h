@@ -24,7 +24,7 @@ public:
     CREATE_FUNC(PlayerController);
 private:
     cocos2d::Map<std::string, Player*> _playerList;
-    Player* localPlayer;
+    Player* localPlayer = nullptr;
 
     std::pair<cocos2d::Vec2, std::pair<cocos2d::Vec2, cocos2d::Vec2>> getNextPos(const cocos2d::Vec2& pos, Player::Direction direction);
 

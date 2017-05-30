@@ -28,7 +28,6 @@ bool GameScene::init()
     {
         return false;
     }
-    initEventListen();
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
 
@@ -46,42 +45,30 @@ bool GameScene::init()
     _playerController = PlayerController::create();
     addChild(_playerController, -1, "player_controller");
 
+#ifdef NETWORK
     _client = Client::create();
     addChild(_client);
+    //initEventListener();
+    float dur = 1 / 30;
+    schedule(schedule_selector(GameScene::syncPlayerPosition), dur);
+#else
+    auto player = createLocalPlayer(data->id()->str());
+    auto pos = Vec2(0, 0);
+    player->setPosition(pos);
+    _map->addChild(player, 1);
+#endif // NETWORK
 
     //_bubbleController = BubbleController::create();
     //addChild(_bubbleController, -1, "bubble_controller");
-
-    scheduleUpdate();
-    
+  
     return true;
 }
 
 void GameScene::onExit()
 {
+    Layer::onExit();
     _client->ws->close();
 }
-
-void GameScene::update(float dt)
-{
-    // update player pos
-    auto localPlayer = _playerController->getLocalPlayer();
-    if (localPlayer)
-    {
-        using namespace API;
-        flatbuffers::FlatBufferBuilder builder;
-        auto localPlayer = _playerController->getLocalPlayer();
-        auto id = builder.CreateString(localPlayer->getID());
-        auto dir = static_cast<Direction>(localPlayer->getDirection());
-        auto pos = localPlayer->getPosition();
-        auto data = CreatePlayerPosChange(builder, id, dir, pos.x, pos.y);
-        auto msg = CreateMsg(builder, MsgType_PlayerPosChange, data.Union());
-        builder.Finish(msg);
-
-        _client->ws->send(builder.GetBufferPointer(), builder.GetSize());
-    }
-}
-
 
 void GameScene::keyPressedAct(EventKeyboard::KeyCode keyCode, Event* event)
 {
@@ -129,30 +116,28 @@ void GameScene::keyReleasedAct(EventKeyboard::KeyCode keyCode, Event* event)
     }
 }
 
-void GameScene::initEventListen()
+void GameScene::initEventListener()
 {
-    using namespace API;
-    auto dispatcher = this->getEventDispatcher();
-    dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("on_local_player_init", [=](EventCustom* event)
-    {
-        auto data = static_cast<API::PlayerJoin*>(event->getUserData());
-        auto player = _playerController->createLocalPlayer(data->id()->str());
-        auto pos = Vec2(data->x(), data->y());
-        player->setPosition(pos);
-        _map->addChild(player, 1);
-    }), this);
+    //using namespace API;
+    //auto dispatcher = this->getEventDispatcher();
+}
 
-    dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("on_other_player_move", [=](EventCustom* event)
+void GameScene::syncPlayerPosition(float dt)
+{
+    // update player pos
+    auto localPlayer = _playerController->getLocalPlayer();
+    if (localPlayer != nullptr)
     {
-        auto data = static_cast<API::PlayerPosChange*>(event->getUserData());
-        auto player = _playerController->getPlayer(data->id()->str());
-        if (player != _playerController->getLocalPlayer() && player != nullptr)
-        {
-            auto pos = Vec2(data->x(), data->y());
-            auto dir = static_cast<Player::Direction>(data->direction());
-            player->setPosition(pos);
-            player->setDirection(dir);
-        }
+        using namespace API;
+        flatbuffers::FlatBufferBuilder builder;
+        auto localPlayer = _playerController->getLocalPlayer();
+        auto id = builder.CreateString(localPlayer->getID());
+        auto dir = static_cast<Direction>(localPlayer->getDirection());
+        auto pos = localPlayer->getPosition();
+        auto data = CreatePlayerPosChange(builder, id, dir, pos.x, pos.y);
+        auto msg = CreateMsg(builder, MsgType_PlayerPosChange, data.Union());
+        builder.Finish(msg);
 
-    }), this);
+        _client->ws->send(builder.GetBufferPointer(), builder.GetSize());
+    }
 }

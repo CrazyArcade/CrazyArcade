@@ -14,7 +14,9 @@ private:
     void keyPressedAct(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event* event);
     void keyReleasedAct(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event* event);
     
-    void initEventListen();
+    void initEventListener();
+
+    void syncPlayerPosition(float dt);
 
     cocos2d::TMXTiledMap *_tileMap;
 
@@ -27,7 +29,6 @@ public:
     static cocos2d::Scene* createScene();
     virtual bool init();
     void onExit();
-    void update(float dt);
 
     CREATE_FUNC(GameScene);
 };
