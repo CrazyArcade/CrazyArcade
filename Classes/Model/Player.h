@@ -55,7 +55,7 @@ public:
     Direction getDirection();
     
     // TODO
-    // void setAnimation();
+    void setAnimation();
 
 private:
     Status _status;
@@ -67,6 +67,7 @@ private:
 
     bool init();
     bool initWithRole(const std::string& role);
+    bool initAnimation();
 
 };
 #endif

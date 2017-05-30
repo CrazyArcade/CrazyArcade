@@ -42,6 +42,12 @@ bool Player::initWithRole(const std::string& role)
     return false;
 }
 
+bool Player::initAnimation()
+{
+    // TODO init Animation (move left, right ...)
+    return true;
+}
+
 uint8_t Player::getSpeed()
 {
     return attr.speed;
@@ -106,15 +112,23 @@ void Player::updateDirection()
             direction = static_cast<Direction>(i);
         }
     }
-    this->direction = direction;
+    setDirection(direction);
+
 }
 
 void Player::setDirection(Direction direction)
 {
     this->direction = direction;
+    setAnimation();
 }
 
 Player::Direction Player::getDirection()
 {
     return direction;
+}
+
+void Player::setAnimation()
+{ 
+    Direction direction = Direction::NONE;
+    // TODO setPlayer Animation
 }
