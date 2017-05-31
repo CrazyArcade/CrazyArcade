@@ -119,9 +119,6 @@ void GameScene::keyReleasedAct(EventKeyboard::KeyCode keyCode, Event* event)
         // TODO set bubble
         break;
     }
-    case EventKeyboard::KeyCode::KEY_ENTER: {
-        // TODO shift between chat and game
-    }
     default: break;
     }
 }
