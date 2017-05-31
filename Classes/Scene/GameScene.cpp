@@ -42,8 +42,13 @@ bool GameScene::init()
     _map->setMap("town_10");
     addChild(_map, -1);
 
+    _chatBox = ChatBox::create();
+    addChild(_chatBox, 2);
+
     _playerController = PlayerController::create();
     addChild(_playerController, -1, "player_controller");
+
+
 
 #ifdef NETWORK
     _client = Client::create();
@@ -60,7 +65,7 @@ bool GameScene::init()
 
     //_bubbleController = BubbleController::create();
     //addChild(_bubbleController, -1, "bubble_controller");
-  
+
     return true;
 }
 
@@ -113,6 +118,9 @@ void GameScene::keyReleasedAct(EventKeyboard::KeyCode keyCode, Event* event)
     case EventKeyboard::KeyCode::KEY_SPACE: {
         // TODO set bubble
         break;
+    }
+    case EventKeyboard::KeyCode::KEY_ENTER: {
+        // TODO shift between chat and game
     }
     default: break;
     }

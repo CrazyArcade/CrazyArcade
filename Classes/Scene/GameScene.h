@@ -7,13 +7,14 @@
 #include "Client.h"
 #include "Controller/PlayerController.h"
 #include "Controller/BubbleController.h"
+#include "UI/ChatBox.h"
 
 class GameScene : public cocos2d::Layer
 {
 private:
     void keyPressedAct(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event* event);
     void keyReleasedAct(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event* event);
-    
+
     void initEventListener();
 
     void syncPlayerPosition(float dt);
@@ -22,6 +23,7 @@ private:
 
     Client * _client;
     GameMap * _map;
+    ChatBox * _chatBox;
     PlayerController * _playerController;
     BubbleController * _bubbleController;
 

@@ -75,6 +75,9 @@
     <ClCompile Include="..\Classes\Scene\LoadingScene.cpp">
       <Filter>src\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Scene\UI\ChatBox.cpp">
+      <Filter>src\Scene\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -133,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\api_generated.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene\UI\ChatBox.h">
+      <Filter>src\Scene\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
