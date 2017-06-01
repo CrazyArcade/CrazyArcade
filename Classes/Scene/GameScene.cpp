@@ -43,7 +43,7 @@ bool GameScene::init()
     addChild(_map, -1);
 
     _chatBox = ChatBox::create();
-    addChild(_chatBox, 2);
+    addChild(_chatBox, 0);
 
     _playerController = PlayerController::create();
     addChild(_playerController, -1, "player_controller");
