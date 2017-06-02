@@ -5,27 +5,58 @@ USING_NS_CC;
 bool ChatBox::init()
 {
     auto visibleSize = Director::getInstance()->getVisibleSize();
-    auto boxInput = cocos2d::TextFieldTTF::textFieldWithPlaceHolder("Chat Here",
+    boxInput = cocos2d::ui::TextField::create("Chat Here",
         Settings::Font::Type::base, Settings::Font::Size::chat);
-    boxInput->setPosition(Vec2(visibleSize.width *0.1, visibleSize.height*0.2));
-    boxInput->setDelegate(boxInputDel);
 
+    auto keyListener = EventListenerKeyboard::create();
+    keyListener->onKeyReleased = CC_CALLBACK_2(ChatBox::keyReleasedAct, this);
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(keyListener, this);
+
+    //chat history display
     boxHistory = cocos2d::ui::RichText::create();
-    boxHistory->setPosition(Vec2(visibleSize.width *0.1, visibleSize.height*0.3));
-    boxHistory->setSize(Size(300,500));
+    boxHistory->ignoreContentAdaptWithSize(false);
+    boxHistory->setContentSize(Size(250, 800));
+    boxHistory->setWrapMode(cocos2d::ui::RichText::WrapMode::WRAP_PER_CHAR);
 
-    // Test text
-    auto chatHistory1 = cocos2d::ui::RichElementText::create(1, cocos2d::Color3B::YELLOW, 255, "这是白色的文字。 ", 
-        Settings::Font::Type::base, Settings::Font::Size::chat); 
-    auto chatHistory2 = cocos2d::ui::RichElementText::create(2, cocos2d::Color3B::YELLOW, 255, "这是白色的文字。 ",
-        Settings::Font::Type::base, Settings::Font::Size::chat); 
-    auto chatHistory3 = cocos2d::ui::RichElementText::create(3, cocos2d::Color3B::YELLOW, 255, "这是白色的文字。 ",
-        Settings::Font::Type::base, Settings::Font::Size::chat);
-    boxHistory->pushBackElement(chatHistory1);
-    boxHistory->pushBackElement(chatHistory2);
-    boxHistory->pushBackElement(chatHistory3);
+    boxInput->setPosition(Vec2(visibleSize.width *0.12, visibleSize.height*0.2));
+    boxHistory->setPosition(Vec2(visibleSize.width *0.12, visibleSize.height*0.2 + getContentSize().height / 2 + boxInput->getContentSize().height / 2 + 30));
 
     addChild(boxInput);
     addChild(boxHistory);
     return true;
+}
+
+void ChatBox::keyReleasedAct(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event * event)
+{
+    switch (keycode) {
+    case EventKeyboard::KeyCode::KEY_ENTER:
+        if (isInputing) {
+            static_cast<TextFieldTTF*>(boxInput->getVirtualRenderer())->detachWithIME();
+            if (!boxInput->getString().empty()) {
+                updateHistory(boxInput->getString());
+                boxInput->setString("");
+            }
+            isInputing = false;
+        }
+        else {
+            boxInput->attachWithIME();
+            isInputing = true;
+        }
+    }
+}
+
+void ChatBox::InputStart()
+{
+}
+
+void ChatBox::InputFinish()
+{
+}
+
+void ChatBox::updateHistory(std::string txt)
+{
+    boxHistory->pushBackElement(cocos2d::ui::RichElementText::create(1, cocos2d::Color3B::WHITE, 255, txt,
+        Settings::Font::Type::base, Settings::Font::Size::chat));
+    // TODO pop judge and richtext format
 }

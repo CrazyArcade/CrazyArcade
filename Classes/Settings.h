@@ -44,7 +44,7 @@ namespace Settings
     {
         constexpr char path[] = "GameItem/Player/bubble.png";
     }
-    namespace Sever
+    namespace Server
     {
         constexpr char addr[] = "ws://dev.server.crazyarcade.giuem.com:4000";
     }
