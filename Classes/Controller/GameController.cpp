@@ -33,12 +33,14 @@ void GameController::initListener()
     keyListener->onKeyReleased = CC_CALLBACK_2(GameController::onKeyReleased, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(keyListener, this);
 
+#ifdef NETWORK
     auto dispatcher = this->getEventDispatcher();
     dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("player_join", 
         CC_CALLBACK_1(GameController::onPlayerJoin, this)), this);
     dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("player_position_change", 
         CC_CALLBACK_1(GameController::onPlayerPositionChange, this)), this);
 
+#endif // NETWORK
 
 }
 
