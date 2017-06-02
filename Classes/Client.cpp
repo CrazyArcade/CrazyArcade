@@ -30,10 +30,10 @@ void Client::onMessage(cocos2d::network::WebSocket * ws, const cocos2d::network:
     switch (msg->data_type())
     {
     case MsgType_PlayerJoin:
-        event = "on_local_player_init";
+        event = "player_join";
         break;
     case MsgType_PlayerPosChange:
-        event = "on_other_player_move";
+        event = "player_position_change";
         break;
     }
     if (event.size() > 0)
