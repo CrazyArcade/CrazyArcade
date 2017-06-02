@@ -22,6 +22,9 @@
     <Filter Include="src\Scene\UI">
       <UniqueIdentifier>{742279ca-e7db-4163-abcf-e6dc4ca658df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Manager">
+      <UniqueIdentifier>{dad2f70e-6d37-4e86-9229-1743c1486586}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -41,15 +44,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Model\Prop.cpp">
       <Filter>src\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Controller\BubbleController.cpp">
-      <Filter>src\Controller</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Controller\PlayerController.cpp">
-      <Filter>src\Controller</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Controller\PropController.cpp">
-      <Filter>src\Controller</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Scene\GameScene.cpp">
       <Filter>src\Scene</Filter>
@@ -75,6 +69,18 @@
     <ClCompile Include="..\Classes\Scene\LoadingScene.cpp">
       <Filter>src\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Manager\PlayerManager.cpp">
+      <Filter>src\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Manager\PropManager.cpp">
+      <Filter>src\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Manager\BubbleManager.cpp">
+      <Filter>src\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Controller\GameController.cpp">
+      <Filter>src\Controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -97,15 +103,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Model\Prop.h">
       <Filter>src\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Controller\BubbleController.h">
-      <Filter>src\Controller</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Controller\PlayerController.h">
-      <Filter>src\Controller</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Controller\PropController.h">
-      <Filter>src\Controller</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Scene\GameScene.h">
       <Filter>src\Scene</Filter>
@@ -133,6 +130,18 @@
     </ClInclude>
     <ClInclude Include="..\Classes\api_generated.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Manager\BubbleManager.h">
+      <Filter>src\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Manager\PlayerManager.h">
+      <Filter>src\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Manager\PropManager.h">
+      <Filter>src\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Controller\GameController.h">
+      <Filter>src\Controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

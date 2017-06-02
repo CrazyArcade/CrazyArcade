@@ -1,14 +1,13 @@
-#ifndef __CONTROLLER_PLAYER_H__
-#define __CONTROLLER_PLAYER_H__
+#ifndef __MANAGER_PLAYER_H__
+#define __MANAGER_PLAYER_H__
 
 #include "cocos2d.h"
 #include "Model/Player.h"
 
-class PlayerController : public cocos2d::Layer
+class PlayerManager : public cocos2d::Layer
 {
 public:
     virtual bool init();
-    ~PlayerController();
     
     Player* createPlayer(const std::string& id, const std::string& role = "temp");
     Player* createLocalPlayer(const std::string& id, const std::string& role = "temp");
@@ -21,7 +20,7 @@ public:
 
     virtual void update(float dt);
 
-    CREATE_FUNC(PlayerController);
+    CREATE_FUNC(PlayerManager);
 private:
     cocos2d::Map<std::string, Player*> _playerList;
     Player* localPlayer = nullptr;
