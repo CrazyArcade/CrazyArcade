@@ -149,9 +149,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\Client.cpp" />
-    <ClCompile Include="..\Classes\Controller\BubbleController.cpp" />
-    <ClCompile Include="..\Classes\Controller\PlayerController.cpp" />
-    <ClCompile Include="..\Classes\Controller\PropController.cpp" />
+    <ClCompile Include="..\Classes\Controller\GameController.cpp" />
+    <ClCompile Include="..\Classes\Manager\BubbleManager.cpp" />
+    <ClCompile Include="..\Classes\Manager\PlayerManager.cpp" />
+    <ClCompile Include="..\Classes\Manager\PropManager.cpp" />
     <ClCompile Include="..\Classes\Model\Bubble.cpp" />
     <ClCompile Include="..\Classes\Model\Entity.cpp" />
     <ClCompile Include="..\Classes\Model\Player.cpp" />
@@ -170,9 +171,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\api_generated.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\Client.h" />
-    <ClInclude Include="..\Classes\Controller\BubbleController.h" />
-    <ClInclude Include="..\Classes\Controller\PlayerController.h" />
-    <ClInclude Include="..\Classes\Controller\PropController.h" />
+    <ClInclude Include="..\Classes\Controller\GameController.h" />
+    <ClInclude Include="..\Classes\Manager\BubbleManager.h" />
+    <ClInclude Include="..\Classes\Manager\PlayerManager.h" />
+    <ClInclude Include="..\Classes\Manager\PropManager.h" />
     <ClInclude Include="..\Classes\Model\Bubble.h" />
     <ClInclude Include="..\Classes\Model\Entity.h" />
     <ClInclude Include="..\Classes\Model\Player.h" />

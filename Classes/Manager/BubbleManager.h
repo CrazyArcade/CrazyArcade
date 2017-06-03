@@ -1,11 +1,11 @@
-#ifndef __CONTROLLER_BUBBLE_H__
-#define __CONTROLLER_BUBBLE_H__
+#ifndef __MANAGER_BUBBLE_H__
+#define __MANAGER_BUBBLE_H__
 
 #include "cocos2d.h"
 #include "Model/Bubble.h"
 
 
-class BubbleController : public cocos2d::Layer
+class BubbleManager : public cocos2d::Layer
 {
 public:
 
@@ -25,9 +25,11 @@ public:
     void boom(float dt, const std::string & id);
 
     virtual bool init();
-    CREATE_FUNC(BubbleController);
+    CREATE_FUNC(BubbleManager);
 
 private:
     cocos2d::Map<std::string, Bubble*> _bubbleList;
+
+    void addCustomEvent();
 };
 #endif

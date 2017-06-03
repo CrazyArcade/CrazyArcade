@@ -1,9 +1,9 @@
-#include "PlayerController.h"
+#include "PlayerManager.h"
 #include "Scene/UI/GameMap.h"
 #include "api_generated.h"
 USING_NS_CC;
 
-bool PlayerController::init()
+bool PlayerManager::init()
 {
     if (!Layer::init())
     {
@@ -17,12 +17,7 @@ bool PlayerController::init()
     return true;
 }
 
-PlayerController::~PlayerController()
-{
-
-}
-
-Player* PlayerController::createPlayer(const std::string& id, const std::string& role)
+Player* PlayerManager::createPlayer(const std::string& id, const std::string& role)
 {
     auto player = Player::create(id, role);
     if (player)
@@ -33,7 +28,7 @@ Player* PlayerController::createPlayer(const std::string& id, const std::string&
     return nullptr;
 }
 
-Player * PlayerController::createLocalPlayer(const std::string & id, const std::string & role)
+Player * PlayerManager::createLocalPlayer(const std::string & id, const std::string & role)
 {
     localPlayer = createPlayer(id, role);
     if (localPlayer)
@@ -43,7 +38,7 @@ Player * PlayerController::createLocalPlayer(const std::string & id, const std::
     return localPlayer;
 }
 
-void PlayerController::setStatus(const std::string& id, Player::Status status)
+void PlayerManager::setStatus(const std::string& id, Player::Status status)
 {
     auto player = this->getPlayer(id);
     if (player)
@@ -52,17 +47,17 @@ void PlayerController::setStatus(const std::string& id, Player::Status status)
     }
 }
 
-Player * PlayerController::getPlayer(const std::string& id)
+Player * PlayerManager::getPlayer(const std::string& id)
 {
     return _playerList.at(id);
 }
 
-Player * PlayerController::getLocalPlayer()
+Player * PlayerManager::getLocalPlayer()
 {
     return localPlayer;
 }
 
-void PlayerController::localPlayerMove()
+void PlayerManager::localPlayerMove()
 {
     if (localPlayer->getStatus() == Player::Status::FREE && localPlayer->getDirection() != Player::Direction::NONE)
     {
@@ -83,14 +78,14 @@ void PlayerController::localPlayerMove()
     }
 }
 
-void PlayerController::update(float dt)
+void PlayerManager::update(float dt)
 {
     if (localPlayer) { 
         localPlayerMove();
     }
 }
 
-std::pair<cocos2d::Vec2, std::pair<cocos2d::Vec2, cocos2d::Vec2>> PlayerController::getNextPos(const cocos2d::Vec2& pos, Player::Direction direction)
+std::pair<cocos2d::Vec2, std::pair<cocos2d::Vec2, cocos2d::Vec2>> PlayerManager::getNextPos(const cocos2d::Vec2& pos, Player::Direction direction)
 {
     int step = 1;
 
@@ -129,46 +124,7 @@ std::pair<cocos2d::Vec2, std::pair<cocos2d::Vec2, cocos2d::Vec2>> PlayerControll
     return std::make_pair(nextPos, std::make_pair(logicPos1, logicPos2));
 }
 
-void PlayerController::addCustomEvent()
+void PlayerManager::addCustomEvent()
 {
-    using namespace API;
-    auto dispatcher = this->getEventDispatcher();
-    dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("on_local_player_move", [=](EventCustom* event)
-    {
-        char* buf = static_cast<char*>(event->getUserData());
-        int mode;
-        int direction;
-        sscanf(buf, "%d %d", &mode, &direction);
-        if (mode)
-        {
-            localPlayer->setDirectionByKey(static_cast<Player::Direction>(direction));
-        }
-        else
-        {
-            localPlayer->removeDirectionByKey(static_cast<Player::Direction>(direction));
-        }
-    }), this);
-#ifdef NETWORK  
-    dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("on_local_player_init", [=](EventCustom* event)
-    {
-        auto data = static_cast<API::PlayerJoin*>(event->getUserData());
-        auto player = createLocalPlayer(data->id()->str());
-        auto pos = Vec2(data->x(), data->y());
-        player->setPosition(pos);
-        GameMap::getCurrentMap()->addChild(player, 1);
-    }), this);
 
-    dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("on_other_player_move", [=](EventCustom* event)
-    {
-        auto data = static_cast<API::PlayerPosChange*>(event->getUserData());
-        auto player = getPlayer(data->id()->str());
-        if (player != localPlayer && player != nullptr)
-        {
-            auto pos = Vec2(data->x(), data->y());
-            auto dir = static_cast<Player::Direction>(data->direction());
-            player->setPosition(pos);
-            player->setDirection(dir);
-        }
-    }), this);
-#endif
 }

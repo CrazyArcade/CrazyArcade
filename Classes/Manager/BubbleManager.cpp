@@ -1,9 +1,10 @@
-#include "BubbleController.h"
+#include "BubbleManager.h"
 #include "Scene/UI/GameMap.h"
+#include "api_generated.h"
 
 USING_NS_CC;
 
-Bubble * BubbleController::createBubble(const cocos2d::Vec2 & pos, const std::string & id, uint8_t damage)
+Bubble * BubbleManager::createBubble(const cocos2d::Vec2 & pos, const std::string & id, uint8_t damage)
 {
     auto bubble = Bubble::create(id, damage);
     if (bubble)
@@ -20,12 +21,12 @@ Bubble * BubbleController::createBubble(const cocos2d::Vec2 & pos, const std::st
     return nullptr;
 }
 
-Bubble * BubbleController::getBubble(const std::string & id)
+Bubble * BubbleManager::getBubble(const std::string & id)
 {
     return _bubbleList.at(id);
 }
 
-void BubbleController::boom(float dt, const std::string & id)
+void BubbleManager::boom(float dt, const std::string & id)
 {
     auto bubble = getBubble(id);
     auto damage = bubble->getDamage();
@@ -75,4 +76,24 @@ void BubbleController::boom(float dt, const std::string & id)
         }
     }
 
+}
+
+bool BubbleManager::init()
+{
+    if (!Layer::init())
+    {
+        return false;
+    }
+
+    return true;
+}
+
+void BubbleManager::addCustomEvent()
+{
+    auto dispatcher = this->getEventDispatcher();
+
+    dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("bubble_set", [=](EventCustom * event)
+    {
+        auto data = static_cast<API::BubbleSet*>(event->getUserData());
+    }), this);
 }
