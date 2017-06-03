@@ -41,5 +41,8 @@ bool GameScene::init()
 
     addChild(gameController, -1);
   
+    auto _chatBox = ChatBox::create();
+    addChild(_chatBox, 0);
+  
     return true;
 }

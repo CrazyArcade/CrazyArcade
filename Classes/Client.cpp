@@ -8,7 +8,7 @@ bool Client::init()
 {
     // create ws instance
     ws = new network::WebSocket();
-    if (!ws->init(*this, Settings::Sever::addr))
+    if (!ws->init(*this, Settings::Server::addr))
     {
         return false;
     }

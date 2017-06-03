@@ -12,6 +12,7 @@ namespace Settings
     {
         namespace Size
         {
+            constexpr int chat = 24;
             constexpr int title  = 60;
             constexpr int label  = 40;
             constexpr int normal = 32;
@@ -43,7 +44,7 @@ namespace Settings
     {
         constexpr char path[] = "GameItem/Player/bubble.png";
     }
-    namespace Sever
+    namespace Server
     {
         constexpr char addr[] = "ws://dev.server.crazyarcade.giuem.com:4000";
     }
