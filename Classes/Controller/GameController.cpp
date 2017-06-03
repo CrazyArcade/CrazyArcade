@@ -39,6 +39,8 @@ void GameController::initListener()
         CC_CALLBACK_1(GameController::onPlayerJoin, this)), this);
     dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("player_position_change", 
         CC_CALLBACK_1(GameController::onPlayerPositionChange, this)), this);
+    dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("bubble_set",
+        CC_CALLBACK_1(GameController::onBubbleSet, this)), this);
 
 #endif // NETWORK
 
@@ -75,6 +77,7 @@ void GameController::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, coco
         break;
     }
     case EventKeyboard::KeyCode::KEY_SPACE: {
+        onLocalPlayerSetBubble();
         break;
     }
     default: break;
@@ -87,9 +90,8 @@ void GameController::onEnter()
 #ifdef NETWORK
     client = Client::create();
     addChild(client);
-    //initEventListener();
     float dur = 1 / 30;
-    schedule(schedule_selector(GameScene::syncPlayerPosition), dur);
+    schedule(schedule_selector(GameController::syncLocalPlayerPosition), dur);
 #else
     auto player = playerManager->createLocalPlayer("local");
     auto pos = map->tileCoordToPosition(Vec2(0, 0));
@@ -103,7 +105,7 @@ void GameController::onExit()
 {
     Layer::onExit();
 #ifdef NETWORK
-    _client->ws->close();
+    client->ws->close();
 #endif // NETWORK
 }
 
@@ -151,5 +153,34 @@ void GameController::onPlayerPositionChange(cocos2d::EventCustom * event)
         auto dir = static_cast<Player::Direction>(data->direction());
         player->setPosition(pos);
         player->setDirection(dir);
+    }
+}
+
+void GameController::onLocalPlayerSetBubble()
+{
+    if (playerManager->getLocalPlayer()->isCanSetBubble())
+    {
+        using namespace API;
+        flatbuffers::FlatBufferBuilder builder;
+        auto data = CreatePlayerSetBubble(builder);
+        auto orc = CreateMsg(builder, MsgType_PlayerSetBubble, data.Union());
+        builder.Finish(orc);
+        client->ws->send(builder.GetBufferPointer(), builder.GetSize());
+    }
+}
+
+void GameController::onBubbleSet(cocos2d::EventCustom * event)
+{
+    auto data = static_cast<API::BubbleSet*>(event->getUserData());
+    auto id = data->id()->str();
+    auto playerID = data->player_id()->str();
+    auto x = data->x(), y = data->y();
+    auto damage = data->damage();
+    
+    playerManager->getPlayer(playerID)->setBubble();
+    auto bubble = bubbleManager->createBubble(id, playerID, Vec2(x, y), damage);
+    if (bubble)
+    {
+        map->addBubble(bubble);
     }
 }

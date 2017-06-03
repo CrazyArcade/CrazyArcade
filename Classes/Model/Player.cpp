@@ -73,9 +73,24 @@ uint8_t Player::getBubble()
     return attr.currentBubble;
 }
 
-void Player::setBubble(uint8_t maxBubble)
+void Player::setMaxBubble(uint8_t maxBubble)
 {
     attr.maxBubble = maxBubble;
+}
+
+bool Player::isCanSetBubble()
+{
+    return attr.currentBubble > 0;
+}
+
+void Player::setBubble()
+{
+    --attr.currentBubble;
+}
+
+void Player::boomBubble()
+{
+    if (attr.maxBubble > attr.currentBubble) ++attr.currentBubble;
 }
 
 void Player::setStatus(Player::Status status)

@@ -42,7 +42,8 @@ namespace Settings
     }
     namespace Bubble
     {
-        constexpr char path[] = "GameItem/Player/bubble.png";
+        constexpr char path[] = "GameItem/Bubble/bubble.png";
+        constexpr char alive[] = "GameItem/Bubble/Alive/alive.plist";
     }
     namespace Server
     {

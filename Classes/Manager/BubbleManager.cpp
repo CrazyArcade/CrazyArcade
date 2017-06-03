@@ -4,17 +4,13 @@
 
 USING_NS_CC;
 
-Bubble * BubbleManager::createBubble(const cocos2d::Vec2 & pos, const std::string & id, uint8_t damage)
+Bubble * BubbleManager::createBubble(const std::string & id, const std::string& playerID, const cocos2d::Vec2 & pos, uint8_t damage)
 {
-    auto bubble = Bubble::create(id, damage);
+    auto bubble = Bubble::create(id, playerID, damage);
     if (bubble)
     {
         bubble->setPosition(pos);
         _bubbleList.insert(id, bubble);
-
-        /*
-        scheduleOnce(CC_SCHEDULE_SELECTOR(BubbleController::boom), 3);
-        */
 
         return bubble;
     }

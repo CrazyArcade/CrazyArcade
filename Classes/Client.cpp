@@ -35,6 +35,9 @@ void Client::onMessage(cocos2d::network::WebSocket * ws, const cocos2d::network:
     case MsgType_PlayerPosChange:
         event = "player_position_change";
         break;
+    case MsgType_BubbleSet:
+        event = "bubble_set";
+        break;
     }
     if (event.size() > 0)
     {

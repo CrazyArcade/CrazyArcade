@@ -165,6 +165,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Scene\StartScene.cpp" />
     <ClCompile Include="..\Classes\Scene\UI\ChatBox.cpp" />
     <ClCompile Include="..\Classes\Scene\UI\GameMap.cpp" />
+    <ClCompile Include="..\Classes\Util\AnimationLoader.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -188,6 +189,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Scene\UI\ChatBox.h" />
     <ClInclude Include="..\Classes\Scene\UI\GameMap.h" />
     <ClInclude Include="..\Classes\Settings.h" />
+    <ClInclude Include="..\Classes\Util\AnimationLoader.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
