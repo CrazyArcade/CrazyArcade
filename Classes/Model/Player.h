@@ -44,7 +44,10 @@ public:
     void setDamage(uint8_t damage);
 
     uint8_t getBubble();
-    void setBubble(uint8_t bubble);
+    void setMaxBubble(uint8_t bubble);
+    bool isCanSetBubble();
+    void setBubble();
+    void boomBubble();
 
     void setStatus(Status);
     Status getStatus();

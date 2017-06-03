@@ -9,7 +9,7 @@ class BubbleManager : public cocos2d::Layer
 {
 public:
 
-    Bubble * createBubble(const cocos2d::Vec2 & pos, const std::string & id, uint8_t damage);
+    Bubble * createBubble(const std::string & id, const std::string& playerID, const cocos2d::Vec2 & pos, uint8_t damage);
 
     /**
      * get bubble by id

@@ -54,9 +54,10 @@ void ChatBox::InputFinish()
 {
 }
 
-void ChatBox::updateHistory(std::string txt)
+void ChatBox::updateHistory(const std::string& txt)
 {
-    boxHistory->pushBackElement(cocos2d::ui::RichElementText::create(1, cocos2d::Color3B::WHITE, 255, txt,
-        Settings::Font::Type::base, Settings::Font::Size::chat));
+    auto ret = cocos2d::ui::RichElementText::create(1, cocos2d::Color3B::WHITE, 255, txt,
+        Settings::Font::Type::base, Settings::Font::Size::chat);
+    boxHistory->pushBackElement(ret);
     // TODO pop judge and richtext format
 }
