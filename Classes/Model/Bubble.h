@@ -13,8 +13,7 @@ public:
         BOOM
     };
 
-
-    static Bubble * create(const std::string & id, uint8_t damage = 1);
+    static Bubble * create(const std::string & id, const std::string& playerID, uint8_t damage = 1);
 
     bool init();
 
@@ -24,5 +23,8 @@ public:
 private:
     Status _status;
     uint8_t _damage;
+    std::string _playerID;
+
+    void initAnimation();
 };
 #endif

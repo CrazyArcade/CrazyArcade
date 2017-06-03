@@ -1,4 +1,5 @@
 #include "Scene/LoadingScene.h"
+#include "Settings.h"
 
 USING_NS_CC;
 
@@ -25,12 +26,18 @@ void LoadingScene::endLoading(float dt) {
 void LoadingScene::loadSound()
 {
     audio = CocosDenshion::SimpleAudioEngine::getInstance();
-    audio->preloadEffect("GameAudio/bubble1.wav");
-    audio->preloadEffect("GameAudio/bubble2.wav");
+    //audio->preloadEffect("GameAudio/bubble1.wav");
+    //audio->preloadEffect("GameAudio/bubble2.wav");
 }
 
 void LoadingScene::loadImage() {
     //undefined
+}
+
+void LoadingScene::loadSpriteFrame()
+{
+    auto cache = SpriteFrameCache::getInstance();
+    cache->addSpriteFramesWithFile(Settings::Bubble::alive);
 }
 
 bool LoadingScene::init()
@@ -57,10 +64,13 @@ cocos2d::ui::LoadingBar* LoadingScene::createLoadingBar(){
     loadingBar->setPosition(Vec2(visibleSize.width / 2, baseY));
     loadingBar->setScale(0.5);
     loadingBar->setDirection(ui::LoadingBar::Direction::LEFT);
-    loadingBar->setPercent(33);
+    loadingBar->setPercent(10);
 
+    loadSpriteFrame();
+    loadingBar->setPercent(40);
+    
     loadImage();
-    loadingBar->setPercent(67);
+    loadingBar->setPercent(70);
 
     loadSound();
     loadingBar->setPercent(100);
