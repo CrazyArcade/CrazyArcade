@@ -1,4 +1,6 @@
 #include "GameMap.h"
+#include <json/filereadstream.h>
+#include <json/document.h> 
 
 USING_NS_CC;
 
@@ -11,8 +13,8 @@ bool GameMap::init()
 void GameMap::readMapInfo(const char * mapName)
 {
     using namespace rapidjson;
-
-    auto path = Settings::Map::path + std::string{ mapName } +".json";
+    
+    auto path = Settings::Map::path + std::string{ mapName } + ".json";
     FILE* fp = fopen(path.c_str(), "rb");
     char readBuffer[500];
     FileReadStream is(fp, readBuffer, sizeof(readBuffer)); 
@@ -49,21 +51,33 @@ void GameMap::setMap(const char * mapName)
     this->setPosition(Vec2(visibleSize.width * 0.25, visibleSize.height * 0.05));
 }
 
-void GameMap::addEntity(const cocos2d::Vec2& pos)
+int GameMap::at(const cocos2d::Vec2 & tilecoord) const
 {
-    //layers[GameMap::ObjectLayer]->add
-    // TODO
+    return mapInfo[tilecoord.y][tilecoord.x];
+}
+
+int & GameMap::at(const cocos2d::Vec2 & tilecoord)
+{
+    return mapInfo[tilecoord.y][tilecoord.x];
+}
+
+void GameMap::addEntity(const cocos2d::Vec2& pos, int tileType)
+{
+    auto coord = positionToTileCoord(pos);
+    at(coord) = tileType;
 }
 
 void GameMap::removeEntity(const cocos2d::Vec2 & pos)
 {
-    entityLayer->removeTileAt(pos);
+    auto coord = positionToTileCoord(pos);
+    at(coord) = TILE_EMPTY;
 }
 
 void GameMap::removeBox(const cocos2d::Vec2& pos)
 {
-    mapInfo[pos.x][pos.y] = 0; 
-    //boxLayer->removeTileAt(pos);
+    auto coord = positionToTileCoord(pos);
+    at(coord) = TILE_EMPTY;
+    boxLayer->removeTileAt(coord);
 }
 
 cocos2d::Vec2 GameMap::tileCoordToPosition(const cocos2d::Vec2 & coord)
@@ -99,7 +113,7 @@ bool GameMap::isCanAccess(const cocos2d::Vec2 & pos)
 {
     auto coord = positionToTileCoord(pos);
     // log("%f %f", coord.x, coord.y);
-    if (isInMap(pos) && boxLayer->getTileGIDAt(coord) == 0)
+    if (isInMap(pos) && at(coord) == TILE_EMPTY)
     {
         return true;
     }
@@ -116,8 +130,14 @@ bool GameMap::isInMap(const cocos2d::Vec2 & pos)
 
 bool GameMap::isBoomable(const cocos2d::Vec2 & pos)
 {
-    auto Pos = positionToTileCoord(pos);
-    return isInMap(pos) && (mapInfo[Pos.x][Pos.y] == 1 || mapInfo[Pos.x][Pos.y] == 2);
+    auto tilecoord = positionToTileCoord(pos);
+    return isInMap(pos) && (at(tilecoord) == TILE_BOX1 || at(tilecoord) == TILE_BOX2);
+}
+
+void GameMap::addBubble(Bubble * bubble)
+{
+    this->addChild(bubble);
+    addEntity(bubble->getPosition(), TILE_BUBBLE);
 }
 
 GameMap * GameMap::getCurrentMap()

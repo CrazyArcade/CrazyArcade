@@ -24,7 +24,7 @@ private:
     void InputStart();
     void InputFinish();
     bool isInputing = false;
-    void updateHistory(std::string txt);
+    void updateHistory(const std::string& txt);
 };
 
 #endif

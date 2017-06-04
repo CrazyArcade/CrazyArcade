@@ -32,8 +32,13 @@ private:
 
     void syncLocalPlayerPosition(float dt);
 
-    virtual void onPlayerJoin(cocos2d::EventCustom* event);
-    virtual void onPlayerPositionChange(cocos2d::EventCustom* event);
+    void onPlayerJoin(cocos2d::EventCustom* event);
+    void onPlayerPositionChange(cocos2d::EventCustom* event);
+
+    void onLocalPlayerSetBubble();
+
+    void onBubbleSet(cocos2d::EventCustom* event);
+
 };
 
 #endif // !__GAME_CONTROLLER_H__

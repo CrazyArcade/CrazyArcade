@@ -2,9 +2,10 @@
 #define __MODEL_ENTITY_H__
 
 #include "cocos2d.h"
+#include "Util/AnimationLoader.h"
 #include <string>
 
-class Entity : public cocos2d::Sprite
+class Entity : public cocos2d::Sprite, public AnimationLoader
 {
 public:
     Entity() = default;
@@ -16,7 +17,6 @@ public:
     // virtual void setStatus();
 
 protected:
-    std::string _id;
-    
+    std::string _id;    
 };
 #endif

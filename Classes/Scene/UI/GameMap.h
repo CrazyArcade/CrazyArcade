@@ -3,18 +3,26 @@
 
 #include "cocos2d.h"
 #include "Settings.h"
+#include "Model/Bubble.h"
 #include <vector>
-#include <json/filereadstream.h>
-#include <json/document.h> 
+
 
 class GameMap : public cocos2d::Layer
 {
 public:
+    enum
+    {
+        TILE_EMPTY = 0,
+        TILE_BOX1,
+        TILE_BOX2,
+        TILE_WALL,
+        TILE_BUBBLE,
+
+    };
     virtual bool init();
     void readMapInfo(const char * mapName);
     void setMap(const char * mapName);
-    // add an entity to map
-    void addEntity(const cocos2d::Vec2& pos);
+
     // remove an entity from map
     void removeEntity(const cocos2d::Vec2& pos);
     // remove a box from map
@@ -35,6 +43,8 @@ public:
     bool isInMap(const cocos2d::Vec2& pos);
     bool isBoomable(const cocos2d::Vec2& pos);
 
+    void addBubble(Bubble * bubble);
+
     static GameMap * GameMap::getCurrentMap();
 
 private:
@@ -44,6 +54,12 @@ private:
     cocos2d::TMXLayer * boxLayer;
     // ObjectLayer that store prop, bubble (player?)
     cocos2d::TMXLayer * entityLayer;
+
+    int at(const cocos2d::Vec2& tilecoord) const;
+    int & at(const cocos2d::Vec2& tilecoord);
+
+    // add an entity to map
+    void addEntity(const cocos2d::Vec2& pos, int tileType);
 };
 
 #endif

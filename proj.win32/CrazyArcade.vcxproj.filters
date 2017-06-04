@@ -25,6 +25,9 @@
     <Filter Include="src\Manager">
       <UniqueIdentifier>{dad2f70e-6d37-4e86-9229-1743c1486586}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Util">
+      <UniqueIdentifier>{d0c443b6-768b-4b38-87b2-51f647ae641a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -83,6 +86,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Scene\UI\ChatBox.cpp">
       <Filter>src\Scene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Util\AnimationLoader.cpp">
+      <Filter>src\Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Scene\UI\ChatBox.h">
       <Filter>src\Scene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Util\AnimationLoader.h">
+      <Filter>src\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

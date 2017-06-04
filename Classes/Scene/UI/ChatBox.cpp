@@ -68,7 +68,7 @@ void ChatBox::InputFinish()
 {
 }
 
-void ChatBox::updateHistory(std::string txt)
+void ChatBox::updateHistory(const std::string& txt)
 {
     auto text = cocos2d::ui::Text::create(txt, Settings::Font::Type::base, Settings::Font::Size::chat);
     text->ignoreContentAdaptWithSize(false);
@@ -76,5 +76,9 @@ void ChatBox::updateHistory(std::string txt)
     text->setContentSize(Size(270, 35 * (1 + width / 270)));
     boxHistory->pushBackCustomItem(text);
     boxHistory->jumpToBottom();
+    
+    //auto ret = cocos2d::ui::RichElementText::create(1, cocos2d::Color3B::WHITE, 255, txt,
+    //    Settings::Font::Type::base, Settings::Font::Size::chat);
+    //boxHistory->pushBackElement(ret);
     // TODO pop judge and richtext format
 }

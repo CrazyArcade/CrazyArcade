@@ -315,16 +315,9 @@ namespace API
 
     struct PlayerSetBubble FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table
     {
-        enum
-        {
-            VT_ID = 4
-        };
-        const flatbuffers::String *id() const { return GetPointer<const flatbuffers::String *>(VT_ID); }
         bool Verify(flatbuffers::Verifier &verifier) const
         {
             return VerifyTableStart(verifier) &&
-                VerifyField<flatbuffers::uoffset_t>(verifier, VT_ID) &&
-                verifier.Verify(id()) &&
                 verifier.EndTable();
         }
     };
@@ -333,28 +326,19 @@ namespace API
     {
         flatbuffers::FlatBufferBuilder &fbb_;
         flatbuffers::uoffset_t start_;
-        void add_id(flatbuffers::Offset<flatbuffers::String> id) { fbb_.AddOffset(PlayerSetBubble::VT_ID, id); }
         PlayerSetBubbleBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
         PlayerSetBubbleBuilder &operator=(const PlayerSetBubbleBuilder &);
         flatbuffers::Offset<PlayerSetBubble> Finish()
         {
-            auto o = flatbuffers::Offset<PlayerSetBubble>(fbb_.EndTable(start_, 1));
+            auto o = flatbuffers::Offset<PlayerSetBubble>(fbb_.EndTable(start_, 0));
             return o;
         }
     };
 
-    inline flatbuffers::Offset<PlayerSetBubble> CreatePlayerSetBubble(flatbuffers::FlatBufferBuilder &_fbb,
-        flatbuffers::Offset<flatbuffers::String> id = 0)
+    inline flatbuffers::Offset<PlayerSetBubble> CreatePlayerSetBubble(flatbuffers::FlatBufferBuilder &_fbb)
     {
         PlayerSetBubbleBuilder builder_(_fbb);
-        builder_.add_id(id);
         return builder_.Finish();
-    }
-
-    inline flatbuffers::Offset<PlayerSetBubble> CreatePlayerSetBubbleDirect(flatbuffers::FlatBufferBuilder &_fbb,
-        const char *id = nullptr)
-    {
-        return CreatePlayerSetBubble(_fbb, id ? _fbb.CreateString(id) : 0);
     }
 
     struct BubbleSet FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table
