@@ -177,6 +177,7 @@ void GameController::onLocalPlayerSetBubble()
             scheduleOnce([&](float dt)
             {
                 bubbleManager->boom("test");
+                playerManager->getLocalPlayer()->boomBubble();
             }, 2.0f, "bubble");
         }
 #endif // NETWORK
