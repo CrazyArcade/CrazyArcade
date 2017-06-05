@@ -10,8 +10,15 @@ void AnimationLoader::runAnimation(const std::string& animationName, cocos2d::Sp
     {
         auto animate = Animate::create(animation);
         auto repeat = RepeatForever::create(animate);
+        int tag = getAnimationTag(animationName);
+        repeat->setTag(tag);
         sprite->runAction(repeat);
     }
+}
+
+void AnimationLoader::stopAnimation(cocos2d::Sprite * sprite)
+{
+    sprite->stopAllActions();
 }
 
 cocos2d::Animation * AnimationLoader::getAnimation(const std::string & animationName)
@@ -34,4 +41,9 @@ void AnimationLoader::loadAnimation(const std::string & animationName, float del
     animation->setRestoreOriginalFrame(true);
 
     animationList.insert(animationName, animation);
+}
+
+int AnimationLoader::getAnimationTag(const std::string & animationName)
+{
+    return animationList.bucket(animationName);
 }

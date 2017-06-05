@@ -11,6 +11,8 @@ public:
      * @param sprite normally just pass `this`
      */
     void runAnimation(const std::string& animationName, cocos2d::Sprite * sprite);
+
+    void stopAnimation(cocos2d::Sprite * sprite);
     
     /**
      * get animation by name, you must load it first.
@@ -28,6 +30,9 @@ protected:
 private:
     // store animation
     cocos2d::Map<std::string, cocos2d::Animation *> animationList;
+
+    // get animation index in map
+    int getAnimationTag(const std::string& animationName);
 };
 
 #endif

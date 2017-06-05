@@ -9,6 +9,10 @@ class SettingsScene : public cocos2d::Layer
 {
 private:
     void menuBackCallback(cocos2d::Ref* pSender);
+	void menuSoundToggleCallback(cocos2d::Ref *pSender);
+	void menuMusicToggleCallback(cocos2d::Ref *pSender);
+	void menuOkCallback(cocos2d::Ref *pSender);
+
     cocos2d::Menu* createText();
 public:
     static cocos2d::Scene* createScene();
