@@ -46,50 +46,11 @@ bool Player::initAnimation()
 {
     // TODO init Animation (move left, right ...)
 
-	//collect the list
-	Vector<SpriteFrame*> animFramaes(25);
-
-	char str[50] = { 0 };
-	for (int i = 1; i < 7; i++) {
-		sprintf(str, "player2_left_0%d.png", i);
-		auto left_frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(str);
-		animFramaes.pushBack(left_frame);
-	}
-	for (int i = 1;i < 7;i++)
-	{
-		sprintf(str, "player2_right_0%d.png", i);
-		auto right_frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(str);
-		animFramaes.pushBack(right_frame);
-	}
-	for (int i = 1;i < 7;i++)
-	{
-		sprintf(str, "player2_up_0%d.png", i);
-		auto up_frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(str);
-		animFramaes.pushBack(up_frame);
-	}
-	for (int i = 1;i < 7;i++)
-	{
-		sprintf(str, "player2_down_0%d.png", i);
-		auto down_frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(str);
-		animFramaes.pushBack(down_frame);
-	}
-	//create the cartoon
-	auto initainimation = Animation::createWithSpriteFrames(animFramaes, 0.1f);
-
-	auto winSize = Director::getInstance()->getWinSize();
-	_player2 = Sprite::createWithSpriteFrameName("player2_left_01.png");
-
-	_player2->cocos2d::Node::setPosition(Point(winSize.width / 2, winSize.height / 2));
-	_walkAction = RepeatForever::create(Animate::create(initainimation));
-	_player2->runAction(_walkAction);
-
-	spriteSheet->addChild(_player2);
-	/*	void HelloWorld::minipMoveEnded() {
-	_minip->stopAction(_walkAction);
-	_moving = false;
-
-	}
-	*/
+	constexpr float delay = 0.1f;
+	loadAnimation("player2_left", delay, 6);
+	loadAnimation("player2_right", delay, 6);
+	loadAnimation("player2_up", delay, 6);
+	loadAnimation("player2_down", delay, 6);
 	
     return true;
 }
@@ -142,6 +103,26 @@ void Player::boomBubble()
 void Player::setStatus(Player::Status status)
 {
     this->_status = status;
+	if (status == Status::FREE) {
+		if (this->getDirection() == Direction::LEFT) {
+			runAnimation("player2_left", this);
+		}
+		else if (this->getDirection() == Direction::RIGHT) {
+			runAnimation("player2_right", this);
+		}
+		else if (this->getDirection() == Direction::UP) {
+			runAnimation("player2_up", this);
+		}
+		else if (this->getDirection() == Direction::DOWN) {
+			runAnimation("player2_down", this);
+		}
+		else {
+
+		}
+	}
+	else if (status == Status::FREEZE) {
+
+	}
 }
 
 Player::Status Player::getStatus()

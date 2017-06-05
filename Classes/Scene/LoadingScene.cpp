@@ -39,8 +39,8 @@ void LoadingScene::loadSpriteFrame()
     auto cache = SpriteFrameCache::getInstance();
     cache->addSpriteFramesWithFile(Settings::Bubble::alive);
 
-	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("player2.plist");
-	auto spriteSheet = SpriteBatchNode::create("player2.png");
+	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("GameItem/Player/player2.plist");
+	auto spriteSheet = SpriteBatchNode::create("GameItem/Player/player2.png");
 	this->addChild(spriteSheet);
 
 	return;
