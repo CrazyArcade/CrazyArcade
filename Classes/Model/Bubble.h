@@ -21,7 +21,6 @@ public:
 
     void setStatus(Status status);
 private:
-    Status _status;
     uint8_t _damage;
     std::string _playerID;
 

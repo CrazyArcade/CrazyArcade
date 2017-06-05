@@ -9,6 +9,10 @@ class LoadingScene : public cocos2d::Layer
 {
 private:
     CocosDenshion::SimpleAudioEngine* audio;
+	cocos2d::Sprite *_player2;
+	cocos2d::Action *_walkAction;
+	cocos2d::Action *_moveAction;
+	bool _moving;
     void endLoading(float dt);
     void loadSound();
     void loadImage();

@@ -35,7 +35,6 @@ uint8_t Bubble::getDamage()
 
 void Bubble::setStatus(Status status)
 {
-    // this->_status = status;
     if (status == Status::ALIVE)
     {
         runAnimation("alive", this);
