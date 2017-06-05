@@ -26,7 +26,7 @@ bool SettingsScene::init()
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	Sprite * bg = Sprite::create("SettingsScene/setting-back.png");
+	Sprite * bg = Sprite::create("SettingsScene/background1.jpg");
 	bg->setPosition(Vec2(origin.x + visibleSize.width / 2,
 		origin.y + visibleSize.height / 2));
 	this->addChild(bg);
@@ -40,10 +40,11 @@ bool SettingsScene::init()
 	auto soundOffMenuItem = MenuItemImage::create(
 		"SettingsScene/sound-off.png",
 		"SettingsScene/sound-off.png");
-	auto soundToggleMenuItem = MenuItemToggle::createWithCallback(CC_CALLBACK_1(SettingsScene::menuSoundToggleCallback, this),
+	auto soundToggleMenuItem = MenuItemToggle::createWithCallback(
+		CC_CALLBACK_1(SettingsScene::menuSoundToggleCallback, this),
 		soundOnMenuItem,
 		soundOffMenuItem, NULL);
-	soundToggleMenuItem->setPosition(Director::getInstance()->convertToGL(Vec2(818, 220)));
+	soundToggleMenuItem->setPosition(Director::getInstance()->convertToGL(Vec2(visibleSize.width*0.75f, visibleSize.height*0.3f)));
 
 	//the music
 	auto musicOnMenuItem = MenuItemImage::create(
@@ -52,20 +53,21 @@ bool SettingsScene::init()
 	auto musicOffMenuItem = MenuItemImage::create(
 		"SettingsScene/music-off.png",
 		"SettingsScene/music-off.png");
-	auto musicToggleMenuItem = MenuItemToggle::createWithCallback(CC_CALLBACK_1(SettingsScene::menuMusicToggleCallback, this),
+	auto musicToggleMenuItem = MenuItemToggle::createWithCallback(
+		CC_CALLBACK_1(SettingsScene::menuMusicToggleCallback, this),
 		musicOnMenuItem,
 		musicOffMenuItem,
 		NULL);
-	musicToggleMenuItem->setPosition(Director::getInstance()->convertToGL(Vec2(818, 362)));
+	musicToggleMenuItem->setPosition(Director::getInstance()->convertToGL(Vec2(visibleSize.width*0.75f, visibleSize.height*0.4f)));
 
 
 	//OK button
 	auto okMenuItem = MenuItemImage::create(
-		"SettingsScene/ok-down.png",
-		"SettingsScene/ok-up.png",
-		CC_CALLBACK_1(SettingsScene::menuOkCallback, this));
+		"SettingsScene/ok.png",
+		"SettingsScene/ok.png",
+		CC_CALLBACK_1(SettingsScene::menuBackCallback, this));
 
-	okMenuItem->setPosition(Director::getInstance()->convertToGL(Vec2(600, 510)));
+	okMenuItem->setPosition(Director::getInstance()->convertToGL(Vec2(visibleSize.width*0.5f, visibleSize.height*0.5f)));
 
 	Menu * mn = Menu::create(soundToggleMenuItem,
 		musicToggleMenuItem, okMenuItem, NULL);
@@ -73,6 +75,7 @@ bool SettingsScene::init()
 	this->addChild(mn);
 
     addChild(createText());
+	
 
     return true;
 }
@@ -102,13 +105,18 @@ void SettingsScene::menuBackCallback(Ref* pSender)
 }
 void SettingsScene::menuSoundToggleCallback(cocos2d::Ref * pSender) 
 {
-
+	//const auto scene = HelpScene::createScene();
+	//Director::getInstance()->pushScene(scene);
 }
 void SettingsScene::menuMusicToggleCallback(cocos2d::Ref * pSender) 
 {
-
+	//const auto scene = HelpScene::createScene();
+	//Director::getInstance()->pushScene(scene);
+	auto scene = StartScene::createScene();
+	
 }
 void SettingsScene::menuOkCallback(cocos2d::Ref * pSender)
 {
-	Director::getInstance()->popScene();
+	const auto scene = StartScene::createScene();
+	Director::getInstance()->pushScene(scene);
 }

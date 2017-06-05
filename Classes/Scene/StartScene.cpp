@@ -25,6 +25,14 @@ bool StartScene::init()
         return false;
     }
 
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+	Sprite * bg = Sprite::create("SettingsScene/background3.jpg");
+	bg->setPosition(Vec2(origin.x + visibleSize.width / 2,
+		origin.y + visibleSize.height / 2));
+	this->addChild(bg);
+
     addChild(createText());
     addChild(musicInit());
 
@@ -50,7 +58,7 @@ cocos2d::Menu* StartScene::musicInit() {
     const auto musicButton = MenuItemToggle::createWithCallback(
         CC_CALLBACK_1(StartScene::musicPP, this),
         MenuItemLabel::create(Label::createWithTTF(musicOn ? "Music on" : "Music off", Settings::Font::Type::base, Settings::Font::Size::light)),
-        MenuItemLabel::create(Label::createWithTTF(musicOn ? "Music off" : "music on", Settings::Font::Type::base, Settings::Font::Size::light)),
+        MenuItemLabel::create(Label::createWithTTF(musicOn ? "Music off" : "Music on", Settings::Font::Type::base, Settings::Font::Size::light)),
         nullptr);
 
     const auto visibleSize = Director::getInstance()->getVisibleSize();

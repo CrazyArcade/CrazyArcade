@@ -14,6 +14,8 @@ private:
 	void menuOkCallback(cocos2d::Ref *pSender);
 
     cocos2d::Menu* createText();
+
+	bool okOn = true;
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();
