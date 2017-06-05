@@ -73,5 +73,10 @@ private:
     bool initWithRole(const std::string& role);
     bool initAnimation();
 
+	cocos2d::Sprite *_player2;
+	cocos2d::Action *_walkAction;
+	cocos2d::Action *_moveAction;
+	bool _moving;
+
 };
 #endif

@@ -20,7 +20,7 @@ Player * Player::create(const std::string& id, const std::string& role)
 bool Player::init()
 {
     _status = Status::FREE;
-    attr.speed = 3;
+    attr.speed = 2;
     attr.damage = 1;
     attr.currentBubble = attr.maxBubble = 1;
     direction = Direction::NONE;
@@ -34,9 +34,9 @@ bool Player::initWithRole(const std::string& role)
 {
     auto file = Settings::Player::path + role + ".png";
     if (this->initWithFile(file) && this->init())
-    {
+    { 
         // do something here
-        // ...
+        initAnimation();
         return true;
     }
     return false;
@@ -44,7 +44,12 @@ bool Player::initWithRole(const std::string& role)
 
 bool Player::initAnimation()
 {
-    // TODO init Animation (move left, right ...)
+	constexpr float delay = 0.1f;
+	loadAnimation("player2_left", delay, 6);
+	loadAnimation("player2_right", delay, 6);
+	loadAnimation("player2_up", delay, 6);
+	loadAnimation("player2_down", delay, 6);
+	
     return true;
 }
 
@@ -96,6 +101,7 @@ void Player::boomBubble()
 void Player::setStatus(Player::Status status)
 {
     this->_status = status;
+    setAnimation();
 }
 
 Player::Status Player::getStatus()
@@ -128,7 +134,6 @@ void Player::updateDirection()
         }
     }
     setDirection(direction);
-
 }
 
 void Player::setDirection(Direction direction)
@@ -143,7 +148,29 @@ Player::Direction Player::getDirection()
 }
 
 void Player::setAnimation()
-{ 
-    Direction direction = Direction::NONE;
-    // TODO setPlayer Animation
+{
+    if (_status == Status::FREE)
+    {
+        stopAnimation(this);
+        if (this->direction == Direction::LEFT)
+        {
+            runAnimation("player2_left", this);
+        }
+        else if (this->direction == Direction::RIGHT)
+        {
+            runAnimation("player2_right", this);
+        }
+        else if (this->direction == Direction::UP)
+        {
+            runAnimation("player2_up", this);
+        }
+        else if (this->direction == Direction::DOWN)
+        {
+            runAnimation("player2_down", this);
+        }
+    }
+    else if (_status == Status::FREEZE)
+    {
+
+    }
 }

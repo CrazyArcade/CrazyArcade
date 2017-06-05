@@ -36,6 +36,12 @@ bool HelloWorld::init()
     //    you may modify it.
 
     // add a "close" icon to exit the progress. it's an autorelease object
+
+	Sprite *bg = Sprite::create("background.jpg");
+	bg->setPosition(Vec2(origin.x + visibleSize.width / 2,
+		origin.y + visibleSize.height / 2));
+	this->addChild(bg);
+
     auto closeItem = MenuItemImage::create(
                                            "CloseNormal.png",
                                            "CloseSelected.png",
@@ -72,6 +78,7 @@ bool HelloWorld::init()
 
     // add the sprite as a child to this layer
     this->addChild(sprite, 0);
+
     
     return true;
 }
@@ -92,4 +99,13 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
     //_eventDispatcher->dispatchEvent(&customEndEvent);
     
     
+}
+void HelloWorld::menuItemHelpCallback(cocos2d::Ref *pSender) {
+
+}
+void HelloWorld::menuItemSettingsCallback(cocos2d::Ref * pSender) {
+
+}
+void HelloWorld::menuItemStartCallback(cocos2d::Ref *pSender) {
+
 }
