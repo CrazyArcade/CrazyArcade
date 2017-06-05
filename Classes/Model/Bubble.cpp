@@ -47,6 +47,10 @@ void Bubble::setStatus(Status status)
 
 void Bubble::initAnimation()
 {
-    constexpr float delay = 0.3f;
-    loadAnimation("alive", delay, 3);
+    constexpr float stayDelay = 0.3f;
+    constexpr float explodeDelay = 0.02f;
+    loadAnimation("alive", stayDelay, 3);
+    loadAnimation("ExplosionHorizontal", explodeDelay, 14);
+    loadAnimation("ExplosionVerticalLeft", explodeDelay, 14);
+    loadAnimation("ExplosionVerticalRight", explodeDelay, 14);
 }

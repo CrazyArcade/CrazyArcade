@@ -44,6 +44,9 @@ namespace Settings
     {
         constexpr char path[] = "GameItem/Bubble/bubble.png";
         constexpr char alive[] = "GameItem/Bubble/Alive/alive.plist";
+        constexpr char explosionHorizontal[] = "GameItem/Bubble/ExplosionHorizontal/ExplosionHorizontal.plist";
+        constexpr char exlposionLeft[] = "GameItem/Bubble/ExplosionVerticalLeft/ExplosionVerticalLeft.plist";
+        constexpr char exlposionRight[] = "GameItem/Bubble/ExplosionVerticalRight/ExplosionVerticalRight.plist";
     }
     namespace Server
     {
