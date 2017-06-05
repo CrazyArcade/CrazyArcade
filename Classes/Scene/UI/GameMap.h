@@ -44,6 +44,7 @@ public:
     bool isBoomable(const cocos2d::Vec2& pos);
 
     void addBubble(Bubble * bubble);
+    void removeBubble(Bubble * bubble);
 
     static GameMap * GameMap::getCurrentMap();
 

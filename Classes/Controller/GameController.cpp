@@ -32,18 +32,17 @@ void GameController::initListener()
     keyListener->onKeyPressed = CC_CALLBACK_2(GameController::onKeyPressed, this);
     keyListener->onKeyReleased = CC_CALLBACK_2(GameController::onKeyReleased, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(keyListener, this);
-
-#ifdef NETWORK
     auto dispatcher = this->getEventDispatcher();
+#ifdef NETWORK
     dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("player_join", 
         CC_CALLBACK_1(GameController::onPlayerJoin, this)), this);
     dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("player_position_change", 
         CC_CALLBACK_1(GameController::onPlayerPositionChange, this)), this);
     dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("bubble_set",
         CC_CALLBACK_1(GameController::onBubbleSet, this)), this);
-
 #endif // NETWORK
-
+    dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("bubble_boom",
+        CC_CALLBACK_1(GameController::onBubbleBoom, this)), this);
 }
 
 void GameController::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event * event)
@@ -158,14 +157,30 @@ void GameController::onPlayerPositionChange(cocos2d::EventCustom * event)
 
 void GameController::onLocalPlayerSetBubble()
 {
-    if (playerManager->getLocalPlayer()->isCanSetBubble())
+    auto localPlayer = playerManager->getLocalPlayer();
+    if (localPlayer->isCanSetBubble())
     {
+        localPlayer->setBubble();
+#ifdef NETWORK
         using namespace API;
         flatbuffers::FlatBufferBuilder builder;
         auto data = CreatePlayerSetBubble(builder);
         auto orc = CreateMsg(builder, MsgType_PlayerSetBubble, data.Union());
         builder.Finish(orc);
         client->ws->send(builder.GetBufferPointer(), builder.GetSize());
+#else
+        auto pos = map->centrePos(localPlayer->getPosition());
+        auto bubble = bubbleManager->createBubble("test", localPlayer->getID(), pos, 1);
+        if (bubble)
+        {
+            map->addBubble(bubble);
+            scheduleOnce([&](float dt)
+            {
+                bubbleManager->boom("test");
+                playerManager->getLocalPlayer()->boomBubble();
+            }, 2.0f, "bubble");
+        }
+#endif // NETWORK
     }
 }
 
@@ -177,10 +192,13 @@ void GameController::onBubbleSet(cocos2d::EventCustom * event)
     auto x = data->x(), y = data->y();
     auto damage = data->damage();
     
-    playerManager->getPlayer(playerID)->setBubble();
     auto bubble = bubbleManager->createBubble(id, playerID, Vec2(x, y), damage);
     if (bubble)
     {
         map->addBubble(bubble);
     }
+}
+
+void GameController::onBubbleBoom(cocos2d::EventCustom * event)
+{
 }

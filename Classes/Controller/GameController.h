@@ -38,6 +38,7 @@ private:
     void onLocalPlayerSetBubble();
 
     void onBubbleSet(cocos2d::EventCustom* event);
+    void onBubbleBoom(cocos2d::EventCustom* event);
 
 };
 
