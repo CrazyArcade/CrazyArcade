@@ -24,6 +24,22 @@ private:
     uint8_t _damage;
     std::string _playerID;
 
+    // LEFT, RIGHT, UP, DOWN
+    BubbleWave* _bubbleWave[4];
+
+    void initAnimation();
+};
+
+class BubbleWave :public Entity {
+public:
+    bool init();
+
+    static BubbleWave* create(std::string Dir, Bubble* bubble);
+
+    std::string dir;
+private:
+    uint8_t range[4];
+
     void initAnimation();
 };
 #endif

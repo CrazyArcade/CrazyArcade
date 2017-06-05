@@ -4,213 +4,213 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>Explosion_31.png</key>
+            <key>ExplosionVerticalUp_01.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{40,38}</string>
+                <string>{38,40}</string>
                 <key>spriteSourceSize</key>
-                <string>{40,38}</string>
+                <string>{38,40}</string>
                 <key>textureRect</key>
-                <string>{{1,1},{40,38}}</string>
-                <key>textureRotated</key>
-                <true/>
-            </dict>
-            <key>Explosion_32.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{0,0}</string>
-                <key>spriteSize</key>
-                <string>{40,38}</string>
-                <key>spriteSourceSize</key>
-                <string>{40,38}</string>
-                <key>textureRect</key>
-                <string>{{1,43},{40,38}}</string>
-                <key>textureRotated</key>
-                <true/>
-            </dict>
-            <key>Explosion_33.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{0,0}</string>
-                <key>spriteSize</key>
-                <string>{40,38}</string>
-                <key>spriteSourceSize</key>
-                <string>{40,38}</string>
-                <key>textureRect</key>
-                <string>{{41,1},{40,38}}</string>
-                <key>textureRotated</key>
-                <true/>
-            </dict>
-            <key>Explosion_34.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{0,0}</string>
-                <key>spriteSize</key>
-                <string>{40,38}</string>
-                <key>spriteSourceSize</key>
-                <string>{40,38}</string>
-                <key>textureRect</key>
-                <string>{{41,43},{40,38}}</string>
-                <key>textureRotated</key>
-                <true/>
-            </dict>
-            <key>Explosion_35.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{0,0}</string>
-                <key>spriteSize</key>
-                <string>{40,38}</string>
-                <key>spriteSourceSize</key>
-                <string>{40,38}</string>
-                <key>textureRect</key>
-                <string>{{81,1},{40,38}}</string>
+                <string>{{1,1},{38,40}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>Explosion_36.png</key>
+            <key>ExplosionVerticalUp_02.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{40,38}</string>
+                <string>{38,40}</string>
                 <key>spriteSourceSize</key>
-                <string>{40,38}</string>
+                <string>{38,40}</string>
                 <key>textureRect</key>
-                <string>{{123,1},{40,38}}</string>
+                <string>{{1,43},{38,40}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>Explosion_37.png</key>
+            <key>ExplosionVerticalUp_03.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-1,0}</string>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{38,40}</string>
+                <key>spriteSourceSize</key>
+                <string>{38,40}</string>
+                <key>textureRect</key>
+                <string>{{1,85},{38,40}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>ExplosionVerticalUp_04.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{38,40}</string>
+                <key>spriteSourceSize</key>
+                <string>{38,40}</string>
+                <key>textureRect</key>
+                <string>{{41,1},{38,40}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>ExplosionVerticalUp_05.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{38,40}</string>
+                <key>spriteSourceSize</key>
+                <string>{38,40}</string>
+                <key>textureRect</key>
+                <string>{{41,43},{38,40}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>ExplosionVerticalUp_06.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{38,40}</string>
+                <key>spriteSourceSize</key>
+                <string>{38,40}</string>
+                <key>textureRect</key>
+                <string>{{41,85},{38,40}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>ExplosionVerticalUp_07.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,-1}</string>
                 <key>spriteSize</key>
                 <string>{38,38}</string>
                 <key>spriteSourceSize</key>
-                <string>{40,38}</string>
+                <string>{38,40}</string>
                 <key>textureRect</key>
-                <string>{{121,41},{38,38}}</string>
+                <string>{{81,43},{38,38}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>Explosion_38.png</key>
+            <key>ExplosionVerticalUp_08.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-3,0}</string>
+                <string>{0,-3}</string>
                 <key>spriteSize</key>
-                <string>{34,38}</string>
+                <string>{38,34}</string>
                 <key>spriteSourceSize</key>
-                <string>{40,38}</string>
+                <string>{38,40}</string>
                 <key>textureRect</key>
-                <string>{{1,85},{34,38}}</string>
+                <string>{{121,41},{38,34}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>Explosion_39.png</key>
+            <key>ExplosionVerticalUp_09.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-2,0}</string>
+                <string>{0,-2}</string>
                 <key>spriteSize</key>
-                <string>{36,38}</string>
+                <string>{38,36}</string>
                 <key>spriteSourceSize</key>
-                <string>{40,38}</string>
+                <string>{38,40}</string>
                 <key>textureRect</key>
-                <string>{{81,83},{36,38}}</string>
+                <string>{{81,83},{38,36}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>Explosion_40.png</key>
+            <key>ExplosionVerticalUp_10.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{40,38}</string>
+                <string>{38,40}</string>
                 <key>spriteSourceSize</key>
-                <string>{40,38}</string>
+                <string>{38,40}</string>
                 <key>textureRect</key>
-                <string>{{81,41},{40,38}}</string>
+                <string>{{81,1},{38,40}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>ExplosionVerticalUp_11.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,-2}</string>
+                <key>spriteSize</key>
+                <string>{38,36}</string>
+                <key>spriteSourceSize</key>
+                <string>{38,40}</string>
+                <key>textureRect</key>
+                <string>{{119,83},{38,36}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>Explosion_41.png</key>
+            <key>ExplosionVerticalUp_12.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-2,0}</string>
+                <string>{0,-2}</string>
                 <key>spriteSize</key>
-                <string>{36,38}</string>
+                <string>{38,36}</string>
                 <key>spriteSourceSize</key>
-                <string>{40,38}</string>
+                <string>{38,40}</string>
                 <key>textureRect</key>
-                <string>{{121,81},{36,38}}</string>
+                <string>{{121,1},{38,36}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
-            <key>Explosion_42.png</key>
+            <key>ExplosionVerticalUp_13.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-2,0}</string>
+                <string>{0,-4}</string>
                 <key>spriteSize</key>
-                <string>{36,38}</string>
+                <string>{38,32}</string>
                 <key>spriteSourceSize</key>
-                <string>{40,38}</string>
+                <string>{38,40}</string>
                 <key>textureRect</key>
-                <string>{{159,81},{36,38}}</string>
+                <string>{{159,1},{38,32}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
-            <key>Explosion_43.png</key>
+            <key>ExplosionVerticalUp_14.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-4,0}</string>
+                <string>{0,-3}</string>
                 <key>spriteSize</key>
-                <string>{32,38}</string>
+                <string>{38,34}</string>
                 <key>spriteSourceSize</key>
-                <string>{40,38}</string>
+                <string>{38,40}</string>
                 <key>textureRect</key>
-                <string>{{161,41},{32,38}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>Explosion_44.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-3,0}</string>
-                <key>spriteSize</key>
-                <string>{34,38}</string>
-                <key>spriteSourceSize</key>
-                <string>{40,38}</string>
-                <key>textureRect</key>
-                <string>{{41,85},{34,38}}</string>
+                <string>{{157,41},{38,34}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -224,13 +224,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>ExplosionVerticalRight.png</string>
+            <string>ExplosionVerticalUp.png</string>
             <key>size</key>
-            <string>{196,120}</string>
+            <string>{192,126}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:bc645a5e72b7f18b873ae1bea1cd5d3f:d24923f16726f8fd91a73d4bd3c5d412:52e8c20005c7fd82606eec1bc053136b$</string>
+            <string>$TexturePacker:SmartUpdate:3d113827293f8bbb2a404e02344a8e02:fdae9d78d4dfe8d6e75ad40851ea5931:422b8cb33fc7cce7f67519f9fa920d8a$</string>
             <key>textureFileName</key>
-            <string>ExplosionVerticalRight.png</string>
+            <string>ExplosionVerticalUp.png</string>
         </dict>
     </dict>
 </plist>

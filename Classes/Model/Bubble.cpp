@@ -23,6 +23,10 @@ bool Bubble::init()
     {
         return false;
     }
+    _bubbleWave[0] = BubbleWave::create("ExplosionHorizontalLeft",this);
+    _bubbleWave[1] = BubbleWave::create("ExplosionHorizontalRight", this);
+    _bubbleWave[2] = BubbleWave::create("ExplosionVerticalUp", this);
+    _bubbleWave[3] = BubbleWave::create("ExplosionVerticalDown", this);
     initAnimation();
     setStatus(Status::ALIVE);
     return true;
@@ -41,16 +45,30 @@ void Bubble::setStatus(Status status)
     }
     else if (status == Status::BOOM)
     {
-        // TODO animation
+        for (int i = 0; i < 4; i++) {
+            _bubbleWave[i]->runAnimation(_bubbleWave[i]->dir, this);
+        }
     }
 }
 
 void Bubble::initAnimation()
 {
     constexpr float stayDelay = 0.3f;
-    constexpr float explodeDelay = 0.02f;
     loadAnimation("alive", stayDelay, 3);
-    loadAnimation("ExplosionHorizontal", explodeDelay, 14);
-    loadAnimation("ExplosionVerticalLeft", explodeDelay, 14);
-    loadAnimation("ExplosionVerticalRight", explodeDelay, 14);
+}
+
+bool BubbleWave::init()
+{
+    if (!this->initWithFile((Settings::Bubble::explosionPath + dir + "/" + dir + ".png").c_str))
+    {
+        return false;
+    }
+    initAnimation();
+    return true;
+}
+
+void BubbleWave::initAnimation()
+{
+    constexpr float explodeDelay = 0.02f;
+    loadAnimation(dir, explodeDelay, 14);
 }
