@@ -328,7 +328,7 @@
             <key>smartupdate</key>
             <string>$TexturePacker:SmartUpdate:aad3be2b371cea6f58264ab7002a3121:1/1$</string>
             <key>textureFileName</key>
-            <string>player2.png</string>
+            <string>animation.png</string>
         </dict>
     </dict>
 </plist>

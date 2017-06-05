@@ -9,8 +9,8 @@ class PlayerManager : public cocos2d::Layer
 public:
     virtual bool init();
     
-    Player* createPlayer(const std::string& id, const std::string& role = "temp");
-    Player* createLocalPlayer(const std::string& id, const std::string& role = "temp");
+    Player* createPlayer(const std::string& id, const std::string& role = "Player2");
+    Player* createLocalPlayer(const std::string& id, const std::string& role = "Player2");
 
     void setStatus(const std::string& id, Player::Status status);
     Player* getPlayer(const std::string& id);

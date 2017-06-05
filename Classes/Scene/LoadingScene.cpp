@@ -37,9 +37,9 @@ void LoadingScene::loadImage() {
 void LoadingScene::loadSpriteFrame()
 {
     auto cache = SpriteFrameCache::getInstance();
-    cache->addSpriteFramesWithFile(Settings::Bubble::alive);
-
-	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("GameItem/Player/player2.plist");
+    
+    cache->addSpriteFramesWithFile(Settings::Bubble::aliveAnimation);
+    cache->addSpriteFramesWithFile(Settings::Player::player2Animation);
 
 	return;
 	
