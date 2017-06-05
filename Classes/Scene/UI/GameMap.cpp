@@ -140,6 +140,12 @@ void GameMap::addBubble(Bubble * bubble)
     addEntity(bubble->getPosition(), TILE_BUBBLE);
 }
 
+void GameMap::removeBubble(Bubble * bubble)
+{
+    this->removeChild(bubble);
+    removeEntity(bubble->getPosition());
+}
+
 GameMap * GameMap::getCurrentMap()
 {
     auto map = dynamic_cast<GameMap*>(cocos2d::Director::getInstance()->getRunningScene()->getChildByName("root")->getChildByName("map"));

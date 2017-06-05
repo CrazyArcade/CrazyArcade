@@ -22,56 +22,47 @@ Bubble * BubbleManager::getBubble(const std::string & id)
     return _bubbleList.at(id);
 }
 
-void BubbleManager::boom(float dt, const std::string & id)
+void BubbleManager::boom(const std::string & id)
 {
-    auto bubble = getBubble(id);
-    auto damage = bubble->getDamage();
     auto map = GameMap::getCurrentMap();
     if (map == nullptr) return;
 
+    auto bubble = getBubble(id);
+    auto damage = bubble->getDamage();
     auto pos = map->positionToTileCoord(bubble->getPosition());
-
-    for (uint8_t i = 1; i <= damage; i++) {     //right
-        Vec2 Pos(pos.x + i, pos.y);
-        if (map->isBoomable(map->tileCoordToPosition(Pos))) {
-            map->removeBox(Pos);
-            break;
+    const std::vector<Vec2> dirs = {
+        Vec2(-1, 0), // left
+        Vec2(1, 0), // right
+        Vec2(0, 1), // top
+        Vec2(0, -1), // bottom
+    };
+    bool isEnd[4] = { false, false, false, false };
+    
+    auto removeBox = [&map](const Vec2& coord, bool& isEnd)
+    {
+        auto pos = map->tileCoordToPosition(coord);
+        if (map->isBoomable(pos))
+        {
+            map->removeBox(pos);
         }
-        else {
-            //TODO player death judge
+        else
+        {
+            isEnd = true;
         }
-    }
-    for (uint8_t i = 1; i <= damage; i++) {     //left
-        Vec2 Pos(pos.x - i, pos.y);
-        if (map->isBoomable(map->tileCoordToPosition(Pos))) {
-            map->removeBox(Pos);
-            break;
-        }
-        else {
-            //TODO player death judge
-        }
-    }
-    for (uint8_t i = 1; i <= damage; i++) {     //up
-        Vec2 Pos(pos.x, pos.y - i);
-        if (map->isBoomable(map->tileCoordToPosition(Pos))) {
-            map->removeBox(Pos);
-            break;
-        }
-        else {
-            //TODO player death judge
-        }
-    }
-    for (uint8_t i = 1; i <= damage; i++) {     //down
-        Vec2 Pos(pos.x, pos.y + i);
-        if (map->isBoomable(map->tileCoordToPosition(Pos))) {
-            map->removeBox(Pos);
-            break;
-        }
-        else {
-            //TODO player death judge
+    };
+    
+    for (uint8_t i = 1; i <= damage; i++)
+    {
+        for (int j = 0; j < 4; ++j)
+        {
+            if (isEnd[j]) continue;
+            auto nextPos = pos + dirs[j] * i;
+            removeBox(nextPos, isEnd[j]);
         }
     }
-
+    // remove
+    map->removeBubble(bubble);
+    _bubbleList.erase(id);
 }
 
 bool BubbleManager::init()
