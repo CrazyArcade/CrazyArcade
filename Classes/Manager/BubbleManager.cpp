@@ -33,8 +33,8 @@ void BubbleManager::boom(const std::string & id)
     const std::vector<Vec2> dirs = {
         Vec2(-1, 0), // left
         Vec2(1, 0), // right
-        Vec2(0, 1), // top
-        Vec2(0, -1), // bottom
+        Vec2(0, -1), // top
+        Vec2(0, 1), // bottom
     };
     bool isEnd[4] = { false, false, false, false };
     
