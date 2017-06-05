@@ -6,19 +6,27 @@
  <tileset firstgid="8" name="Tileset" tilewidth="40" tileheight="67" tilecount="8" columns="8">
   <image source="town_10/tileset.png" width="320" height="67"/>
  </tileset>
+ <tileset firstgid="16" name="tiles" tilewidth="40" tileheight="40" tilecount="16" columns="8">
+  <image source="town_10/tiles.png" width="320" height="80"/>
+ </tileset>
  <layer name="Background" width="15" height="13">
   <data encoding="base64" compression="zlib">
    eJxjZGBgYMSCmYGYDUpjk8eHKdHLgoTpae+o3tH4BQDg2wE5
   </data>
  </layer>
- <layer name="Entity" width="15" height="13">
-  <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUgAAAAwwAAQ==
-  </data>
- </layer>
  <layer name="Box" width="15" height="13">
   <data encoding="base64" compression="zlib">
-   eJyNkdsKwCAMQ/voZc7//9vtIWEhRFhBDtPas9aqqvauLrzri4HvhbOFffJCDrlBxpbaKdRN7zDvCPzj9b5OPPXr3gafkl51J8dGXad7U16qxzvab8d/KSfylGnOaTZpL805vcfEefJqv15fw+enc05e+kj2n7zJ+QAYlgaO
+   eJylkQsKwCAMQz1G1U3vf8spJBBKJoMVSvy1b81K+RfXyiY6oYy9ryvjpT7kfuCsIff+xjrrF672PumQuhM3wFMlV9mOMdE3a+a6d64fa3Teiu9S7Xin6nx23rgz57P7Hx33jqvz5v4a2T/12XHJo3J+x3XMB4bfDxY=
+  </data>
+ </layer>
+ <layer name="BoxOutOfMap" width="15" height="13">
+  <data encoding="base64" compression="zlib">
+   eJxjYGBg4ABiTiSajwEBuKB8XqgcL1Scl2EUjILhBQBiNwB5
+  </data>
+ </layer>
+ <layer name="BoxTop" width="15" height="13">
+  <data encoding="base64" compression="zlib">
+   eJydkQsKwCAMQ3sEP5ve/6ZTSCCUTMYKJX77bIyIuFY20Qll7HldWcJHkf2BtYbc8xvjrF+4WvukQ+6duAU8VXKV7RgTdbNmrjvn6vGO9lvxLtWOc6rOZ+eNYzqf3X907Duu9puZGtk/9dlxyaOyf8d9Y/6NB4lvCoY=
   </data>
  </layer>
 </map>

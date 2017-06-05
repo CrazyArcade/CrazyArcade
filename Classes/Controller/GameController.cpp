@@ -95,7 +95,7 @@ void GameController::onEnter()
     auto player = playerManager->createLocalPlayer("local");
     auto pos = map->tileCoordToPosition(Vec2(0, 0));
     player->setPosition(pos);
-    map->addChild(player, 1);
+    map->addPlayer(player);
 #endif // NETWORK
     initListener();
 }
@@ -139,7 +139,7 @@ void GameController::onPlayerJoin(cocos2d::EventCustom * event)
     auto pos = Vec2(data->x(), data->y());
     player->setPosition(pos);
 
-    map->addChild(player, 1);
+    map->addPlayer(player);
 }
 
 void GameController::onPlayerPositionChange(cocos2d::EventCustom * event)

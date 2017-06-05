@@ -44,7 +44,12 @@ void GameMap::setMap(const char * mapName)
     addChild(tileMap, -1);
 
     boxLayer = tileMap->getLayer("Box");
-    entityLayer = tileMap->getLayer("Entity");
+    boxTop = tileMap->getLayer("BoxTop");
+    boxOutOfMap = tileMap->getLayer("BoxOutOfMap");
+
+    boxTop->setLocalZOrder(10);
+    boxLayer->setLocalZOrder(5);
+    boxOutOfMap->setLocalZOrder(5);
 
     readMapInfo(mapName);
 
@@ -76,8 +81,16 @@ void GameMap::removeEntity(const cocos2d::Vec2 & pos)
 void GameMap::removeBox(const cocos2d::Vec2& pos)
 {
     auto coord = positionToTileCoord(pos);
+    if (coord.y == 0)
+    {
+        boxOutOfMap->removeTileAt(coord);
+    }
+    else
+    {
+        boxLayer->removeTileAt(coord);
+        boxTop->removeTileAt(coord + Vec2(0, -1));
+    }
     at(coord) = TILE_EMPTY;
-    boxLayer->removeTileAt(coord);
 }
 
 cocos2d::Vec2 GameMap::tileCoordToPosition(const cocos2d::Vec2 & coord)
@@ -134,16 +147,36 @@ bool GameMap::isBoomable(const cocos2d::Vec2 & pos)
     return isInMap(pos) && (at(tilecoord) == TILE_BOX1 || at(tilecoord) == TILE_BOX2);
 }
 
-void GameMap::addBubble(Bubble * bubble)
+void GameMap::addBubble(cocos2d::Sprite * bubble)
 {
-    this->addChild(bubble);
+    bubble->setLocalZOrder(2);
+    tileMap->addChild(bubble);
     addEntity(bubble->getPosition(), TILE_BUBBLE);
 }
 
-void GameMap::removeBubble(Bubble * bubble)
+void GameMap::removeBubble(cocos2d::Sprite * bubble)
 {
-    this->removeChild(bubble);
+    tileMap->removeChild(bubble);
     removeEntity(bubble->getPosition());
+}
+
+void GameMap::addPlayer(cocos2d::Sprite * player)
+{
+    player->setLocalZOrder(6);
+    tileMap->addChild(player);
+}
+
+void GameMap::addProp(cocos2d::Sprite * prop)
+{
+    prop->setLocalZOrder(1);
+    tileMap->addChild(prop);
+    //addEntity(prop->getPosition(), /*TODO*/);
+}
+
+void GameMap::removeProp(cocos2d::Sprite * prop)
+{
+    tileMap->removeChild(prop);
+    removeEntity(prop->getPosition());
 }
 
 GameMap * GameMap::getCurrentMap()
