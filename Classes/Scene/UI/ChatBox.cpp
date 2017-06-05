@@ -56,7 +56,7 @@ void ChatBox::boxHistoryInit()
 
     boxInput->setPosition(Vec2(visibleSize.width *0.03 + boxInput->getContentSize().width / 2, visibleSize.height*0.2));
     boxHistory->setPosition(Vec2(visibleSize.width *0.03, visibleSize.height*0.2 + getContentSize().height / 2 + boxInput->getContentSize().height / 2 + 30));
-    
+
     addChild(boxHistory);
 }
 
@@ -70,13 +70,14 @@ void ChatBox::InputFinish()
 
 void ChatBox::updateHistory(const std::string& txt)
 {
-    auto text = cocos2d::ui::Text::create(txt, Settings::Font::Type::base, Settings::Font::Size::chat);
+    auto text = cocos2d::ui::Text::create("[Me]:" + txt, Settings::Font::Type::base, Settings::Font::Size::chat);
     text->ignoreContentAdaptWithSize(false);
+    text->setColor(cocos2d::Color3B::GREEN);
     auto width = text->getContentSize().width;
-    text->setContentSize(Size(270, 35 * (1 + width / 270)));
+    text->setContentSize(Size(270, 26 * (1 + (width + 60) / 270)));
     boxHistory->pushBackCustomItem(text);
     boxHistory->jumpToBottom();
-    
+
     //auto ret = cocos2d::ui::RichElementText::create(1, cocos2d::Color3B::WHITE, 255, txt,
     //    Settings::Font::Type::base, Settings::Font::Size::chat);
     //boxHistory->pushBackElement(ret);
