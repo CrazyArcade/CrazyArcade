@@ -39,6 +39,7 @@ namespace Settings
     namespace Player
     {
         constexpr char path[] = "GameItem/Player/";
+        constexpr char player2Animation[] = "GameItem/Player/Player2/animation.plist";
     }
     namespace Bubble
     {
@@ -54,6 +55,16 @@ namespace Settings
             "GameItem/Bubble/ExplosionWaveRIGHT/ExplosionWaveRIGHT.plist",
             "GameItem/Bubble/ExplosionWaveUP/ExplosionWaveUP.plist",
             "GameItem/Bubble/ExplosionWaveDOWN/ExplosionWaveDOWN.plist",
+        };
+        constexpr char aliveAnimation[] = "GameItem/Bubble/Alive/alive.plist";
+    }
+    namespace Prop
+    {
+        constexpr char path[] = "GameItem/Prop/";
+        constexpr char * name[] = {
+            "speed.png",
+            "bubble.png",
+            "damage.png"
         };
     }
     namespace Server

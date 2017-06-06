@@ -59,7 +59,7 @@ void BubbleManager::boom(const std::string & id)
             isEnd = true;
         }
         if (bubbleWave) {
-            bubbleWave->setPosition(pos);
+            bubbleWave->setPosition(pos.x-20,pos.y-20);
             map->addChild(bubbleWave);
         }
     };

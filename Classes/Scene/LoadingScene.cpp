@@ -43,6 +43,9 @@ void LoadingScene::loadSpriteFrame()
 
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("GameItem/Player/player2.plist");
 
+    cache->addSpriteFramesWithFile(Settings::Bubble::aliveAnimation);
+    cache->addSpriteFramesWithFile(Settings::Player::player2Animation);
+
 	return;
 }
 

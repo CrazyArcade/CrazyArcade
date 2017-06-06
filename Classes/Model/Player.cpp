@@ -32,7 +32,7 @@ bool Player::init()
 
 bool Player::initWithRole(const std::string& role)
 {
-    auto file = Settings::Player::path + role + ".png";
+    auto file = Settings::Player::path + role + "/default.png";
     if (this->initWithFile(file) && this->init())
     { 
         // do something here
@@ -152,6 +152,7 @@ void Player::setAnimation()
     if (_status == Status::FREE)
     {
         stopAnimation(this);
+        
         if (this->direction == Direction::LEFT)
         {
             runAnimation("player2_left", this);

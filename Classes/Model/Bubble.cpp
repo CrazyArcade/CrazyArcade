@@ -59,7 +59,7 @@ void BubbleWave::onEnter(PosInWave pos, Direction direction)
 bool BubbleWave::init(BubbleWave::PosInWave pos, Direction direction)
 {
     initAnimation(pos, direction);
-    //setDisplayFrameWithAnimationName(getExplosionString(pos, direction), 0);
+    setDisplayFrameWithAnimationName(getExplosionString(pos, direction), 0);
     return true;
 }
 
@@ -77,7 +77,7 @@ BubbleWave * BubbleWave::create(BubbleWave::PosInWave pos, Direction direction)
 
 void BubbleWave::initAnimation(PosInWave pos, Direction direction)
 {
-    constexpr float explosionDelay = 0.1f;
+    constexpr float explosionDelay = 0.3f;
     loadAnimation(getExplosionString(pos, direction), explosionDelay, 3);
 }
 

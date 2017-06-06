@@ -1,10 +1,24 @@
 #ifndef __MODEL_PROP_H__
 #define __MODEL_PROP_H__
 
-class Prop
+#include "cocos2d.h"
+#include "Entity.h"
+
+class Prop : public Entity
 {
 public:
-    Prop();
-    ~Prop();
+    enum class Type
+    {
+        EMPTY = 0,
+        SPEED = 100,
+        BUBBLE,
+        DAMAGE
+    };
+    
+    static Prop * create(const std::string& id, Type type);
+
+    bool init();
+private:
+    Type type;
 };
 #endif

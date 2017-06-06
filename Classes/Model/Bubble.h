@@ -44,7 +44,7 @@ public:
 
     void onEnter(PosInWave pos, Direction direction);
 
-    bool init(PosInWave pos, Direction direction);
+    bool init(PosInWave pos, Direction direction); 
 
     static BubbleWave* create(PosInWave pos, Direction direction);
 private:

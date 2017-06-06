@@ -9,5 +9,12 @@ class PropManager : public cocos2d::Layer
 public:
     virtual bool init();
     CREATE_FUNC(PropManager);
+
+    Prop * createProp(const std::string& id, Prop::Type type, const cocos2d::Vec2 & pos);
+
+private:
+    cocos2d::Map<std::string, Prop*> _propList;
+    
+    void addCustomEvent();
 };
 #endif
