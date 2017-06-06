@@ -47,6 +47,10 @@ bool SettingsScene::init()
 	soundToggleMenuItem->setPosition(Director::getInstance()->convertToGL(Vec2(visibleSize.width*0.75f, visibleSize.height*0.3f)));
 
 	//the music
+	const auto music = Menu::create();
+	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("StartScene/bgmusic.mp3");
+	musicOn = UserDefault::getInstance()->getBoolForKey("musicOn", true);
+
 	auto musicOnMenuItem = MenuItemImage::create(
 		"SettingsScene/music-on.png",
 		"SettingsScene/music-on.png");
@@ -99,6 +103,15 @@ cocos2d::Menu* SettingsScene::createText() {
     return buttons;
 }
 
+void SettingsScene::musicPP(cocos2d::Ref * pSender) {
+	if (musicOn)
+		CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+	else
+		CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+	musicOn = !musicOn;
+	UserDefault::getInstance()->setBoolForKey("musicOn", musicOn);
+}
+
 void SettingsScene::menuBackCallback(Ref* pSender)
 {
     Director::getInstance()->popScene();
@@ -107,12 +120,14 @@ void SettingsScene::menuSoundToggleCallback(cocos2d::Ref * pSender)
 {
 	//const auto scene = HelpScene::createScene();
 	//Director::getInstance()->pushScene(scene);
+	
 }
 void SettingsScene::menuMusicToggleCallback(cocos2d::Ref * pSender) 
 {
 	//const auto scene = HelpScene::createScene();
 	//Director::getInstance()->pushScene(scene);
 	auto scene = StartScene::createScene();
+	musicPP(pSender);
 	
 }
 void SettingsScene::menuOkCallback(cocos2d::Ref * pSender)

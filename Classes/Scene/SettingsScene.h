@@ -16,6 +16,9 @@ private:
     cocos2d::Menu* createText();
 
 	bool okOn = true;
+	bool musicOn = true;
+
+	void musicPP(cocos2d::Ref * pSender);
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();
