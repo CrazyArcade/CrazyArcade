@@ -26,7 +26,10 @@ public:
         TILE_BOX2,
         TILE_WALL,
         TILE_BUBBLE,
-
+        // prop
+        TILE_PROP_SPEED = 100,
+        TILE_PROP_BUBBLE,
+        TILE_PROP_DAMAGE
     };
     virtual bool init();
     void readMapInfo(const char * mapName);

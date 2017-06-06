@@ -6,6 +6,7 @@
 class AnimationLoader
 {
 public:
+    AnimationLoader();
     /**
      * @param animationName
      * @param sprite normally just pass `this`
@@ -13,14 +14,18 @@ public:
     void runAnimation(const std::string& animationName, cocos2d::Sprite * sprite);
 
     void stopAnimation(cocos2d::Sprite * sprite);
+
+    void stopAnimation(const std::string& animationName, cocos2d::Sprite * sprite);
     
     /**
-     * get animation by name, you must load it first.
-     * @return animation point if found, nullptr else
+     * get animation by name
+     * @param animationName
+     * @return cocos2d::Animation * or nullptr
      */
-    cocos2d::Animation * getAnimation(const std::string& animationName);
-protected:
+    cocos2d::Animation * AnimationLoader::getAnimation(const std::string & animationName);
     
+protected:
+
     /**
      * @param animationName the name must be equal to file prefix (e.g. alive_01.png, then you must pass "alive")
      * @param delay time per frame play
@@ -28,11 +33,13 @@ protected:
      */
     void loadAnimation(const std::string& animationName, float delay, int num);
 private:
-    // store animation
-    cocos2d::Map<std::string, cocos2d::Animation *> animationList;
 
-    // get animation index in map
-    int getAnimationTag(const std::string& animationName);
+    cocos2d::AnimationCache * animationCache;
+
+    /**
+     * get animation hash
+     */
+    unsigned int getFlag(const std::string & animationName);
 };
 
 #endif
