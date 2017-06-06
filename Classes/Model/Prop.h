@@ -9,10 +9,12 @@ class Prop : public Entity
 public:
     enum class Type
     {
-        SPEED,
+        EMPTY = 0,
+        SPEED = 100,
         BUBBLE,
         DAMAGE
     };
+    
     static Prop * create(const std::string& id, Type type);
 
     bool init();

@@ -152,6 +152,7 @@ void Player::setAnimation()
     if (_status == Status::FREE)
     {
         stopAnimation(this);
+        
         if (this->direction == Direction::LEFT)
         {
             runAnimation("player2_left", this);
