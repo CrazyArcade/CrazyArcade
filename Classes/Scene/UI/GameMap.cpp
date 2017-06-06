@@ -126,7 +126,7 @@ bool GameMap::isCanAccess(const cocos2d::Vec2 & pos)
 {
     auto coord = positionToTileCoord(pos);
     // log("%f %f", coord.x, coord.y);
-    if (isInMap(pos) && at(coord) == TILE_EMPTY)
+    if (isInMap(pos) && (at(coord) == TILE_EMPTY || at(coord) >= 100))
     {
         return true;
     }
@@ -166,11 +166,11 @@ void GameMap::addPlayer(cocos2d::Sprite * player)
     tileMap->addChild(player);
 }
 
-void GameMap::addProp(cocos2d::Sprite * prop)
+void GameMap::addProp(cocos2d::Sprite * prop, int type)
 {
     prop->setLocalZOrder(1);
     tileMap->addChild(prop);
-    //addEntity(prop->getPosition(), /*TODO*/);
+    addEntity(prop->getPosition(), type);
 }
 
 void GameMap::removeProp(cocos2d::Sprite * prop)

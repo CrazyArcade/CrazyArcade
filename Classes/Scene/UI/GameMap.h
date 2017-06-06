@@ -60,7 +60,7 @@ public:
 
     void addPlayer(cocos2d::Sprite * player);
 
-    void addProp(cocos2d::Sprite * prop);
+    void addProp(cocos2d::Sprite * prop, int type);
     void removeProp(cocos2d::Sprite * prop);
 
     static GameMap * GameMap::getCurrentMap();

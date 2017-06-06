@@ -96,6 +96,10 @@ void GameController::onEnter()
     auto pos = map->tileCoordToPosition(Vec2(0, 0));
     player->setPosition(pos);
     map->addPlayer(player);
+
+    auto pos1 = map->tileCoordToPosition(Vec2(0, 1));
+    auto prop = propManager->createProp("bubble", Prop::Type::BUBBLE, pos1);
+    map->addProp(prop, prop->getType());
 #endif // NETWORK
     initListener();
 }
