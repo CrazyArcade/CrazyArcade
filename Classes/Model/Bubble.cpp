@@ -65,7 +65,7 @@ bool BubbleWave::init(BubbleWave::PosInWave pos, Direction direction)
     runAction(Sequence::create(Animate::create(animation), CallFuncN::create([](Node * node) {
         node->removeFromParentAndCleanup(true);
     }), NULL));
-    
+
     return true;
 }
 
