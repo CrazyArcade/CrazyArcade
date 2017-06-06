@@ -1,6 +1,8 @@
 #include "Bubble.h"
 #include "Settings.h"
 
+USING_NS_CC;
+
 Bubble * Bubble::create(const std::string & id, const std::string& playerID, uint8_t damage)
 {
     auto bubble = new (std::nothrow) Bubble();
@@ -41,12 +43,77 @@ void Bubble::setStatus(Status status)
     }
     else if (status == Status::BOOM)
     {
-        // TODO animation
+        // TODO
     }
 }
 
 void Bubble::initAnimation()
 {
-    constexpr float delay = 0.3f;
-    loadAnimation("alive", delay, 3);
+    constexpr float stayDelay = 0.3f;
+    loadAnimation("alive", stayDelay, 3);
+}
+
+
+bool BubbleWave::init(BubbleWave::PosInWave pos, Direction direction)
+{
+    setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    
+    initAnimation(pos, direction);
+
+    setDisplayFrameWithAnimationName(animationName, 0);
+    auto animation = getAnimation(animationName);
+    runAction(Sequence::create(Animate::create(animation), CallFuncN::create([](Node * node) {
+        node->removeFromParentAndCleanup(true);
+    }), NULL));
+
+    return true;
+}
+
+BubbleWave * BubbleWave::create(BubbleWave::PosInWave pos, Direction direction)
+{
+    auto bubbleWave = new (std::nothrow) BubbleWave();
+    if (bubbleWave && bubbleWave->init(pos, direction))
+    {
+        bubbleWave->autorelease();
+        return bubbleWave;
+    }
+    CC_SAFE_DELETE(bubbleWave);
+    return nullptr;
+}
+
+void BubbleWave::initAnimation(PosInWave pos, Direction direction)
+{
+    constexpr float explosionDelay = 0.1f;
+    loadAnimation(getExplosionString(pos, direction), explosionDelay, 3);
+}
+
+std::string BubbleWave::getExplosionString(PosInWave pos, Direction direction)
+{
+    std::string explosionParam("Explosion");
+
+    if (pos == CENTER) {
+        explosionParam += "Center";
+    }
+    else {
+        if (pos == MIDDLE)
+            explosionParam += "Wave";
+        switch (direction)
+        {
+        case LEFT:
+            explosionParam += "LEFT";
+            break;
+        case RIGHT:
+            explosionParam += "RIGHT";
+            break;
+        case UP:
+            explosionParam += "UP";
+            break;
+        case DOWN:
+            explosionParam += "DOWN";
+        default:
+            break;
+        }
+    }
+    animationName = explosionParam;
+    return explosionParam;
 }

@@ -11,6 +11,7 @@
  * 10: The top of box
  * 6 : Player
  * 5 : Box
+ * 3 : Bubble Wave
  * 2 : Bubble
  * 1 : Prop
  * 0 : background
@@ -62,6 +63,8 @@ public:
 
     void addProp(cocos2d::Sprite * prop);
     void removeProp(cocos2d::Sprite * prop);
+
+    void addSprite(cocos2d::Sprite * sprite, int zOrder);
 
     static GameMap * GameMap::getCurrentMap();
 

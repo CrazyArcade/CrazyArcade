@@ -25,6 +25,7 @@ bool StartScene::init()
         return false;
     }
 
+    addChild(createBGImage());
     addChild(createText());
     addChild(musicInit());
 
@@ -47,10 +48,14 @@ cocos2d::Menu* StartScene::musicInit() {
     if (!musicOn)
         CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
 
+    auto labelDef = Label::createWithTTF(musicOn ? "Music on" : "Music off", Settings::Font::Type::base, Settings::Font::Size::light);
+    auto labelSwi = Label::createWithTTF(musicOn ? "Music off" : "music on", Settings::Font::Type::base, Settings::Font::Size::light);
+    labelDef->setColor(cocos2d::Color3B::BLACK);
+    labelSwi->setColor(cocos2d::Color3B::BLACK);
     const auto musicButton = MenuItemToggle::createWithCallback(
         CC_CALLBACK_1(StartScene::musicPP, this),
-        MenuItemLabel::create(Label::createWithTTF(musicOn ? "Music on" : "Music off", Settings::Font::Type::base, Settings::Font::Size::light)),
-        MenuItemLabel::create(Label::createWithTTF(musicOn ? "Music off" : "music on", Settings::Font::Type::base, Settings::Font::Size::light)),
+        MenuItemLabel::create(labelDef),
+        MenuItemLabel::create(labelSwi),
         nullptr);
 
     const auto visibleSize = Director::getInstance()->getVisibleSize();
@@ -62,18 +67,15 @@ cocos2d::Menu* StartScene::musicInit() {
 }
 
 void StartScene::menuPlayCallback(cocos2d::Ref * pSender) {
-    const auto scene = GameScene::createScene();
-    Director::getInstance()->pushScene(scene);
+    Director::getInstance()->pushScene(TransitionFade::create(1, GameScene::createScene()));
 }
 
 void StartScene::menuSettingsCallback(cocos2d::Ref * pSender) {
-    const auto scene = SettingsScene::createScene();
-    Director::getInstance()->pushScene(scene);
+    Director::getInstance()->pushScene(TransitionFade::create(1, SettingsScene::createScene()));
 }
 
 void StartScene::menuHelpCallback(cocos2d::Ref * pSender) {
-    const auto scene = HelpScene::createScene();
-    Director::getInstance()->pushScene(scene);
+    Director::getInstance()->pushScene(TransitionFade::create(1, HelpScene::createScene()));
 }
 
 void StartScene::menuExitCallback(Ref* pSender)
@@ -113,6 +115,12 @@ cocos2d::Menu* StartScene::createText() {                                //creat
     label3->setPosition(label3->getContentSize().width / 2 + 60, baseY - 320);
     closeItem->setPosition(closeItem->getContentSize().width / 2 + 60, baseY - 380);
 
+    title->setColor(cocos2d::Color3B::BLACK);
+    label1->setColor(cocos2d::Color3B::BLACK);
+    label2->setColor(cocos2d::Color3B::BLACK);
+    label3->setColor(cocos2d::Color3B::BLACK);
+    closeItem->setColor(cocos2d::Color3B::BLACK);
+
     buttons->addChild(title, 1);
     buttons->addChild(label1, 1);
     buttons->addChild(label2, 1);
@@ -124,3 +132,11 @@ cocos2d::Menu* StartScene::createText() {                                //creat
     return buttons;
 }
 
+cocos2d::Sprite* StartScene::createBGImage() {
+    auto size = Director::getInstance()->getVisibleSize();
+    auto bgImage = Sprite::create("Scene/backgroundimage.jpg");
+    bgImage->setScale(1.25);
+    bgImage->setZOrder(-1);
+    bgImage->setPosition(size.width / 2, size.height / 2);
+    return bgImage;
+}
