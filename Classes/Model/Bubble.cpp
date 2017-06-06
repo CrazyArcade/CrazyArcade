@@ -59,6 +59,7 @@ void BubbleWave::onEnter(PosInWave pos, Direction direction)
 bool BubbleWave::init(BubbleWave::PosInWave pos, Direction direction)
 {
     initAnimation(pos, direction);
+    onEnter(pos, direction);
     setDisplayFrameWithAnimationName(getExplosionString(pos, direction), 0);
     return true;
 }
