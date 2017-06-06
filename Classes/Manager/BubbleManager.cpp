@@ -38,7 +38,7 @@ void BubbleManager::boom(const std::string & id)
     };
     bool isEnd[4] = { false, false, false, false };
 
-    auto removeBox = [&map](const Vec2& coord, bool& isEnd, BubbleWave::Direction direction, bool isTerminal)
+    auto removeBox = [map](const Vec2& coord, bool& isEnd, BubbleWave::Direction direction, bool isTerminal)
     {
         BubbleWave* bubbleWave = nullptr;
         auto pos = map->tileCoordToPosition(coord);
@@ -59,8 +59,8 @@ void BubbleManager::boom(const std::string & id)
             isEnd = true;
         }
         if (bubbleWave) {
-            bubbleWave->setPosition(pos.x-20,pos.y-20);
-            map->addChild(bubbleWave);
+            bubbleWave->setPosition(pos.x,pos.y);
+            map->addSprite(bubbleWave, 3);
         }
     };
 

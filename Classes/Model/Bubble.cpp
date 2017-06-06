@@ -1,6 +1,8 @@
 #include "Bubble.h"
 #include "Settings.h"
 
+USING_NS_CC;
+
 Bubble * Bubble::create(const std::string & id, const std::string& playerID, uint8_t damage)
 {
     auto bubble = new (std::nothrow) Bubble();
@@ -51,15 +53,19 @@ void Bubble::initAnimation()
     loadAnimation("alive", stayDelay, 3);
 }
 
-void BubbleWave::onEnter(PosInWave pos, Direction direction)
-{
-    runAnimation(getExplosionString(pos, direction), this);
-}
 
 bool BubbleWave::init(BubbleWave::PosInWave pos, Direction direction)
 {
+    setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    
     initAnimation(pos, direction);
-    setDisplayFrameWithAnimationName(getExplosionString(pos, direction), 0);
+
+    setDisplayFrameWithAnimationName(animationName, 0);
+    auto animation = getAnimation(animationName);
+    runAction(Sequence::create(Animate::create(animation), CallFuncN::create([](Node * node) {
+        node->removeFromParentAndCleanup(true);
+    }), NULL));
+    
     return true;
 }
 
@@ -77,7 +83,7 @@ BubbleWave * BubbleWave::create(BubbleWave::PosInWave pos, Direction direction)
 
 void BubbleWave::initAnimation(PosInWave pos, Direction direction)
 {
-    constexpr float explosionDelay = 0.3f;
+    constexpr float explosionDelay = 0.1f;
     loadAnimation(getExplosionString(pos, direction), explosionDelay, 3);
 }
 
@@ -108,5 +114,6 @@ std::string BubbleWave::getExplosionString(PosInWave pos, Direction direction)
             break;
         }
     }
+    animationName = explosionParam;
     return explosionParam;
 }
