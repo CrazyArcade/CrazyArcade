@@ -24,22 +24,32 @@ private:
     uint8_t _damage;
     std::string _playerID;
 
-    // LEFT, RIGHT, UP, DOWN
-    BubbleWave* _bubbleWave[4];
-
     void initAnimation();
 };
 
 class BubbleWave :public Entity {
 public:
-    bool init();
+    enum PosInWave {
+        CENTER,
+        MIDDLE,
+        TERMINAL
+    };
 
-    static BubbleWave* create(std::string Dir, Bubble* bubble);
+    enum Direction {
+        LEFT,
+        RIGHT,
+        UP,
+        DOWN
+    };
 
-    std::string dir;
+    void onEnter(PosInWave pos, Direction direction);
+
+    bool init(PosInWave pos, Direction direction);
+
+    static BubbleWave* create(PosInWave pos, Direction direction);
 private:
-    uint8_t range[4];
+    std::string getExplosionString(PosInWave pos, Direction direction);
 
-    void initAnimation();
+    void initAnimation(PosInWave pos, Direction direction);
 };
 #endif

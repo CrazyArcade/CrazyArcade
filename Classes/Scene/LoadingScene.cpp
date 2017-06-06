@@ -38,9 +38,8 @@ void LoadingScene::loadSpriteFrame()
 {
     auto cache = SpriteFrameCache::getInstance();
     cache->addSpriteFramesWithFile(Settings::Bubble::alive);
-    cache->addSpriteFramesWithFile(Settings::Bubble::explosionHorizontal);
-    cache->addSpriteFramesWithFile(Settings::Bubble::exlposionLeft);
-    cache->addSpriteFramesWithFile(Settings::Bubble::exlposionRight);
+    for (int i = 0; i < 9; i++) 
+        cache->addSpriteFramesWithFile(Settings::Bubble::explosionPath[i]);
 
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("GameItem/Player/player2.plist");
 

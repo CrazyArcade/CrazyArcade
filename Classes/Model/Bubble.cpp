@@ -23,10 +23,6 @@ bool Bubble::init()
     {
         return false;
     }
-    _bubbleWave[0] = BubbleWave::create("ExplosionHorizontalLeft",this);
-    _bubbleWave[1] = BubbleWave::create("ExplosionHorizontalRight", this);
-    _bubbleWave[2] = BubbleWave::create("ExplosionVerticalUp", this);
-    _bubbleWave[3] = BubbleWave::create("ExplosionVerticalDown", this);
     initAnimation();
     setStatus(Status::ALIVE);
     return true;
@@ -45,9 +41,7 @@ void Bubble::setStatus(Status status)
     }
     else if (status == Status::BOOM)
     {
-        for (int i = 0; i < 4; i++) {
-            _bubbleWave[i]->runAnimation(_bubbleWave[i]->dir, this);
-        }
+        // TODO
     }
 }
 
@@ -57,18 +51,62 @@ void Bubble::initAnimation()
     loadAnimation("alive", stayDelay, 3);
 }
 
-bool BubbleWave::init()
+void BubbleWave::onEnter(PosInWave pos, Direction direction)
 {
-    if (!this->initWithFile((Settings::Bubble::explosionPath + dir + "/" + dir + ".png").c_str))
-    {
-        return false;
-    }
-    initAnimation();
+    runAnimation(getExplosionString(pos, direction), this);
+}
+
+bool BubbleWave::init(BubbleWave::PosInWave pos, Direction direction)
+{
+    initAnimation(pos, direction);
+    //setDisplayFrameWithAnimationName(getExplosionString(pos, direction), 0);
     return true;
 }
 
-void BubbleWave::initAnimation()
+BubbleWave * BubbleWave::create(BubbleWave::PosInWave pos, Direction direction)
 {
-    constexpr float explodeDelay = 0.02f;
-    loadAnimation(dir, explodeDelay, 14);
+    auto bubbleWave = new (std::nothrow) BubbleWave();
+    if (bubbleWave && bubbleWave->init(pos, direction))
+    {
+        bubbleWave->autorelease();
+        return bubbleWave;
+    }
+    CC_SAFE_DELETE(bubbleWave);
+    return nullptr;
+}
+
+void BubbleWave::initAnimation(PosInWave pos, Direction direction)
+{
+    constexpr float explosionDelay = 0.1f;
+    loadAnimation(getExplosionString(pos, direction), explosionDelay, 3);
+}
+
+std::string BubbleWave::getExplosionString(PosInWave pos, Direction direction)
+{
+    std::string explosionParam("Explosion");
+
+    if (pos == CENTER) {
+        explosionParam += "Center";
+    }
+    else {
+        if (pos == MIDDLE)
+            explosionParam += "Wave";
+        switch (direction)
+        {
+        case LEFT:
+            explosionParam += "LEFT";
+            break;
+        case RIGHT:
+            explosionParam += "RIGHT";
+            break;
+        case UP:
+            explosionParam += "UP";
+            break;
+        case DOWN:
+            explosionParam += "DOWN";
+        default:
+            break;
+        }
+    }
+    return explosionParam;
 }

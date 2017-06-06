@@ -37,27 +37,40 @@ void BubbleManager::boom(const std::string & id)
         Vec2(0, 1), // bottom
     };
     bool isEnd[4] = { false, false, false, false };
-    
-    auto removeBox = [&map](const Vec2& coord, bool& isEnd)
+
+    auto removeBox = [&map](const Vec2& coord, bool& isEnd, BubbleWave::Direction direction, bool isTerminal)
     {
+        BubbleWave* bubbleWave = nullptr;
         auto pos = map->tileCoordToPosition(coord);
-        if (map->isBoomable(pos))
+        if (map->isCanAccess(pos)) {
+            if (isTerminal)
+                bubbleWave = BubbleWave::create(BubbleWave::PosInWave::TERMINAL, direction);
+            else
+                bubbleWave = BubbleWave::create(BubbleWave::PosInWave::MIDDLE, direction);
+        }
+        else if (map->isBoomable(pos))
         {
             map->removeBox(pos);
+            bubbleWave = BubbleWave::create(BubbleWave::PosInWave::TERMINAL, direction);
+            isEnd = true;
         }
         else
         {
             isEnd = true;
         }
+        if (bubbleWave) {
+            bubbleWave->setPosition(pos);
+            map->addChild(bubbleWave);
+        }
     };
-    
+
     for (uint8_t i = 1; i <= damage; i++)
     {
         for (int j = 0; j < 4; ++j)
         {
             if (isEnd[j]) continue;
             auto nextPos = pos + dirs[j] * i;
-            removeBox(nextPos, isEnd[j]);
+            removeBox(nextPos, isEnd[j], static_cast<BubbleWave::Direction>(j), i == damage);
         }
     }
     // remove
