@@ -58,6 +58,7 @@ bool BubbleWave::init(BubbleWave::PosInWave pos, Direction direction)
 {
     setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     
+    getExplosionString(pos, direction);
     initAnimation(pos, direction);
 
     setDisplayFrameWithAnimationName(animationName, 0);
@@ -84,10 +85,10 @@ BubbleWave * BubbleWave::create(BubbleWave::PosInWave pos, Direction direction)
 void BubbleWave::initAnimation(PosInWave pos, Direction direction)
 {
     constexpr float explosionDelay = 0.1f;
-    loadAnimation(getExplosionString(pos, direction), explosionDelay, 3);
+    loadAnimation(animationName, explosionDelay, 3);
 }
 
-std::string BubbleWave::getExplosionString(PosInWave pos, Direction direction)
+void BubbleWave::getExplosionString(PosInWave pos, Direction direction)
 {
     std::string explosionParam("Explosion");
 
@@ -115,5 +116,4 @@ std::string BubbleWave::getExplosionString(PosInWave pos, Direction direction)
         }
     }
     animationName = explosionParam;
-    return explosionParam;
 }

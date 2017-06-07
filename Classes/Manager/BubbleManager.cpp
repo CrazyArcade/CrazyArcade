@@ -64,6 +64,15 @@ void BubbleManager::boom(const std::string & id)
         }
     };
 
+    {
+        auto Pos = map->tileCoordToPosition(pos);
+        auto bubbleWave = BubbleWave::create(BubbleWave::PosInWave::CENTER, BubbleWave::Direction::NONE);
+        if (bubbleWave) {
+            bubbleWave->setPosition(Pos.x, Pos.y);
+            map->addChild(bubbleWave, 3);
+        }
+    }
+
     for (uint8_t i = 1; i <= damage; i++)
     {
         for (int j = 0; j < 4; ++j)
