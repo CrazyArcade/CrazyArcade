@@ -61,10 +61,13 @@ bool BubbleWave::init(BubbleWave::PosInWave pos, Direction direction)
     getExplosionString(pos, direction);
     initAnimation(pos, direction);
 
-    setDisplayFrameWithAnimationName(animationName, 0);
     auto animation = getAnimation(animationName);
-    runAction(Sequence::create(Animate::create(animation), CallFuncN::create([](Node * node) {
-        node->removeFromParentAndCleanup(true);
+    auto frame = animation->getFrames().at(0)->getSpriteFrame();
+
+    initWithSpriteFrame(frame);
+
+    this->runAction(Sequence::create(Animate::create(animation), CallFuncN::create([](Node * node) {
+        node->removeFromParent();
     }), NULL));
 
     return true;

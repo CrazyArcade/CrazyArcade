@@ -170,15 +170,16 @@ void GameController::onLocalPlayerSetBubble()
         client->ws->send(builder.GetBufferPointer(), builder.GetSize());
 #else
         auto pos = map->centrePos(localPlayer->getPosition());
-        auto bubble = bubbleManager->createBubble("test", localPlayer->getID(), pos, 1);
+        std::string id = "bubble_test" + std::to_string(time(0));
+        auto bubble = bubbleManager->createBubble(id, localPlayer->getID(), pos, localPlayer->getDamage());
         if (bubble)
         {
             map->addBubble(bubble);
-            scheduleOnce([&](float dt)
+            scheduleOnce([=](float dt)
             {
-                bubbleManager->boom("test");
+                bubbleManager->boom(id);
                 playerManager->getLocalPlayer()->boomBubble();
-            }, 2.0f, "bubble");
+            }, 3.0f, id);
         }
 #endif // NETWORK
     }

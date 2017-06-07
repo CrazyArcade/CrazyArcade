@@ -59,18 +59,16 @@ void BubbleManager::boom(const std::string & id)
             isEnd = true;
         }
         if (bubbleWave) {
-            bubbleWave->setPosition(pos.x,pos.y);
+            bubbleWave->setPosition(pos);
             map->addSprite(bubbleWave, 3);
         }
     };
-
+    
+    auto bubbleWaveCenter = BubbleWave::create(BubbleWave::PosInWave::CENTER, BubbleWave::Direction::NONE);
+    if (bubbleWaveCenter)
     {
-        auto Pos = map->tileCoordToPosition(pos);
-        auto bubbleWave = BubbleWave::create(BubbleWave::PosInWave::CENTER, BubbleWave::Direction::NONE);
-        if (bubbleWave) {
-            bubbleWave->setPosition(Pos.x, Pos.y);
-            map->addChild(bubbleWave, 3);
-        }
+        bubbleWaveCenter->setPosition(bubble->getPosition());
+        map->addSprite(bubbleWaveCenter, 3);
     }
 
     for (uint8_t i = 1; i <= damage; i++)
