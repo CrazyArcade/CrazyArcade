@@ -1,5 +1,6 @@
 #include "Bubble.h"
 #include "Settings.h"
+#include "Scene/UI/GameMap.h"
 
 USING_NS_CC;
 
@@ -83,6 +84,26 @@ BubbleWave * BubbleWave::create(BubbleWave::PosInWave pos, Direction direction)
     }
     CC_SAFE_DELETE(bubbleWave);
     return nullptr;
+}
+
+bool BubbleWave::isExplosionEdge(const cocos2d::Vec2& coord, Direction direction)
+{
+    switch (direction) {
+    case LEFT:
+        if (coord.x == 0)
+            return true;
+    case RIGHT:
+        if (coord.x == GameMap::getCurrentMap()->getMapSize().width - 1)
+            return true;
+    case UP:
+        if (coord.y == 0)
+            return true;
+    case DOWN:
+        if (coord.y == GameMap::getCurrentMap()->getMapSize().height - 1)
+            return true;
+    default:
+        return false;
+    }
 }
 
 void BubbleWave::initAnimation(PosInWave pos, Direction direction)
