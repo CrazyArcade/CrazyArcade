@@ -60,7 +60,9 @@ bool BubbleWave::init(BubbleWave::PosInWave pos, Direction direction)
     setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     
     getExplosionString(pos, direction);
-    initAnimation(pos, direction);
+    
+    constexpr float explosionDelay = 0.1f;
+    loadAnimation(animationName, explosionDelay, 3);
 
     auto animation = getAnimation(animationName);
     auto frame = animation->getFrames().at(0)->getSpriteFrame();
@@ -84,32 +86,6 @@ BubbleWave * BubbleWave::create(BubbleWave::PosInWave pos, Direction direction)
     }
     CC_SAFE_DELETE(bubbleWave);
     return nullptr;
-}
-
-bool BubbleWave::isExplosionEdge(const cocos2d::Vec2& coord, Direction direction)
-{
-    switch (direction) {
-    case LEFT:
-        if (coord.x == 0)
-            return true;
-    case RIGHT:
-        if (coord.x == GameMap::getCurrentMap()->getMapSize().width - 1)
-            return true;
-    case UP:
-        if (coord.y == 0)
-            return true;
-    case DOWN:
-        if (coord.y == GameMap::getCurrentMap()->getMapSize().height - 1)
-            return true;
-    default:
-        return false;
-    }
-}
-
-void BubbleWave::initAnimation(PosInWave pos, Direction direction)
-{
-    constexpr float explosionDelay = 0.1f;
-    loadAnimation(animationName, explosionDelay, 3);
 }
 
 void BubbleWave::getExplosionString(PosInWave pos, Direction direction)

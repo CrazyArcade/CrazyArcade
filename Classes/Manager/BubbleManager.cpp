@@ -42,14 +42,18 @@ void BubbleManager::boom(const std::string & id)
     {
         BubbleWave* bubbleWave = nullptr;
         auto pos = map->tileCoordToPosition(coord);
-            if (map->isCanAccess(pos)) {
-            if (isTerminal)
+        if (map->isCanAccess(pos)) 
+        {
+            if ((direction == BubbleWave::Direction::LEFT && coord.x == 0) ||
+                (direction == BubbleWave::Direction::RIGHT && coord.x == map->getMapSize().width - 1) ||
+                (direction == BubbleWave::Direction::UP && coord.y == 0) ||
+                (direction == BubbleWave::Direction::DOWN && coord.y == map->getMapSize().height - 1) || isTerminal)
+            {
                 bubbleWave = BubbleWave::create(BubbleWave::PosInWave::TERMINAL, direction);
-            else {
-                if (bubbleWave->isExplosionEdge(coord, direction))
-                    bubbleWave = BubbleWave::create(BubbleWave::PosInWave::TERMINAL, direction);
-                else
-                    bubbleWave = BubbleWave::create(BubbleWave::PosInWave::MIDDLE, direction);
+            }
+            else
+            {
+                bubbleWave = BubbleWave::create(BubbleWave::PosInWave::MIDDLE, direction);
             }
         }
         else if (map->isBoomable(pos))
