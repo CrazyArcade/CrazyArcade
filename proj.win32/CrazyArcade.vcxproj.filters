@@ -110,9 +110,6 @@
     <ClInclude Include="..\Classes\Model\Player.h">
       <Filter>src\Model</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Model\Prop.h">
-      <Filter>src\Model</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Scene\GameScene.h">
       <Filter>src\Scene</Filter>
     </ClInclude>
@@ -157,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Util\AnimationLoader.h">
       <Filter>src\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Prop.h">
+      <Filter>src\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

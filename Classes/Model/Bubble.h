@@ -39,14 +39,18 @@ public:
         LEFT,
         RIGHT,
         UP,
-        DOWN
+        DOWN,
+        NONE
     };
 
     bool init(PosInWave pos, Direction direction); 
 
     static BubbleWave* create(PosInWave pos, Direction direction);
+
+    bool isExplosionEdge(const cocos2d::Vec2& coord, Direction direction);
 private:
-    std::string getExplosionString(PosInWave pos, Direction direction);
+
+    void getExplosionString(PosInWave pos, Direction direction);
     
     std::string animationName;
 

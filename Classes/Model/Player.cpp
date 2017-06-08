@@ -21,8 +21,8 @@ bool Player::init()
 {
     _status = Status::FREE;
     attr.speed = 2;
-    attr.damage = 1;
-    attr.currentBubble = attr.maxBubble = 1;
+    attr.damage = 4;
+    attr.currentBubble = attr.maxBubble = 3;
     direction = Direction::NONE;
     size = this->getContentSize();
     // set right anchor point.

@@ -1,5 +1,6 @@
 #include "Bubble.h"
 #include "Settings.h"
+#include "Scene/UI/GameMap.h"
 
 USING_NS_CC;
 
@@ -58,12 +59,16 @@ bool BubbleWave::init(BubbleWave::PosInWave pos, Direction direction)
 {
     setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     
+    getExplosionString(pos, direction);
     initAnimation(pos, direction);
 
-    setDisplayFrameWithAnimationName(animationName, 0);
     auto animation = getAnimation(animationName);
-    runAction(Sequence::create(Animate::create(animation), CallFuncN::create([](Node * node) {
-        node->removeFromParentAndCleanup(true);
+    auto frame = animation->getFrames().at(0)->getSpriteFrame();
+
+    initWithSpriteFrame(frame);
+
+    this->runAction(Sequence::create(Animate::create(animation), CallFuncN::create([](Node * node) {
+        node->removeFromParent();
     }), NULL));
 
     return true;
@@ -81,13 +86,33 @@ BubbleWave * BubbleWave::create(BubbleWave::PosInWave pos, Direction direction)
     return nullptr;
 }
 
+bool BubbleWave::isExplosionEdge(const cocos2d::Vec2& coord, Direction direction)
+{
+    switch (direction) {
+    case LEFT:
+        if (coord.x == 0)
+            return true;
+    case RIGHT:
+        if (coord.x == GameMap::getCurrentMap()->getMapSize().width - 1)
+            return true;
+    case UP:
+        if (coord.y == 0)
+            return true;
+    case DOWN:
+        if (coord.y == GameMap::getCurrentMap()->getMapSize().height - 1)
+            return true;
+    default:
+        return false;
+    }
+}
+
 void BubbleWave::initAnimation(PosInWave pos, Direction direction)
 {
     constexpr float explosionDelay = 0.1f;
-    loadAnimation(getExplosionString(pos, direction), explosionDelay, 3);
+    loadAnimation(animationName, explosionDelay, 3);
 }
 
-std::string BubbleWave::getExplosionString(PosInWave pos, Direction direction)
+void BubbleWave::getExplosionString(PosInWave pos, Direction direction)
 {
     std::string explosionParam("Explosion");
 
@@ -115,5 +140,4 @@ std::string BubbleWave::getExplosionString(PosInWave pos, Direction direction)
         }
     }
     animationName = explosionParam;
-    return explosionParam;
 }
