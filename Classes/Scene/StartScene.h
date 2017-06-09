@@ -7,6 +7,7 @@
 #include "GameScene.h"
 #include "HelpScene.h"
 #include "SettingsScene.h"
+#include "Scene/RoomScene.h"
 
 class StartScene : public cocos2d::Layer
 {
