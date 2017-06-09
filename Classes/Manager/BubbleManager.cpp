@@ -42,7 +42,13 @@ void BubbleManager::boom(const std::string & id)
     {
         BubbleWave* bubbleWave = nullptr;
         auto pos = map->tileCoordToPosition(coord);
-        if (map->isCanAccess(pos)) 
+        if (!map->isInMap(pos))
+        {
+            isEnd = true;
+            return;
+        }
+        auto tileType = map->at(coord);
+        if (tileType == map->TILE_EMPTY || tileType == map->TILE_BUBBLE || tileType >= 100)
         {
             if ((direction == BubbleWave::Direction::LEFT && coord.x == 0) ||
                 (direction == BubbleWave::Direction::RIGHT && coord.x == map->getMapSize().width - 1) ||
@@ -56,7 +62,7 @@ void BubbleManager::boom(const std::string & id)
                 bubbleWave = BubbleWave::create(BubbleWave::PosInWave::MIDDLE, direction);
             }
         }
-        else if (map->isBoomable(pos))
+        else if (tileType == map->TILE_BOX1 || tileType == map->TILE_BOX2)
         {
             map->removeBox(pos);
             bubbleWave = BubbleWave::create(BubbleWave::PosInWave::TERMINAL, direction);
