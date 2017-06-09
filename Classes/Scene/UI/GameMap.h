@@ -55,6 +55,7 @@ public:
     bool isCanAccess(const cocos2d::Vec2& pos);
     bool isInMap(const cocos2d::Vec2& pos);
     bool isBoomable(const cocos2d::Vec2& pos);
+    bool isInSameTile(const cocos2d::Vec2& pos1, const cocos2d::Vec2& pos2);
 
     void addBubble(cocos2d::Sprite * bubble);
     void removeBubble(cocos2d::Sprite * bubble);
