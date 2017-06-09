@@ -90,7 +90,7 @@
     <ClCompile Include="..\Classes\Util\AnimationLoader.cpp">
       <Filter>src\Util</Filter>
     </ClCompile>
-    <ClCompile Include="RoomScene.cpp">
+    <ClCompile Include="..\Classes\Scene\RoomScene.cpp">
       <Filter>src\Scene</Filter>
     </ClCompile>
   </ItemGroup>
@@ -161,7 +161,7 @@
     <ClInclude Include="..\Classes\Util\AnimationLoader.h">
       <Filter>src\Util</Filter>
     </ClInclude>
-    <ClInclude Include="RoomScene.h">
+    <ClInclude Include="..\Classes\Scene\RoomScene.h">
       <Filter>src\Scene</Filter>
     </ClInclude>
   </ItemGroup>

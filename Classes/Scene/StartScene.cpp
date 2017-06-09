@@ -70,7 +70,7 @@ cocos2d::Menu* StartScene::musicInit() {
 }
 
 void StartScene::menuPlayCallback(cocos2d::Ref * pSender) {
-    const auto scene = GameScene::createScene();
+	const auto scene = RoomScene::createScene();
     Director::getInstance()->pushScene(scene);
 }
 
