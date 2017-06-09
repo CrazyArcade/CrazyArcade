@@ -179,6 +179,11 @@ void GameMap::removeProp(cocos2d::Sprite * prop)
     removeEntity(prop->getPosition());
 }
 
+void GameMap::addSprite(cocos2d::Sprite * sprite, int zOrder)
+{
+    tileMap->addChild(sprite, zOrder);
+}
+
 GameMap * GameMap::getCurrentMap()
 {
     auto map = dynamic_cast<GameMap*>(cocos2d::Director::getInstance()->getRunningScene()->getChildByName("root")->getChildByName("map"));

@@ -37,7 +37,7 @@ bool HelloWorld::init()
 
     // add a "close" icon to exit the progress. it's an autorelease object
 
-	Sprite *bg = Sprite::create("background.jpg");
+	Sprite *bg = Sprite::create("SettingsScene/background3.jpg");
 	bg->setPosition(Vec2(origin.x + visibleSize.width / 2,
 		origin.y + visibleSize.height / 2));
 	this->addChild(bg);

@@ -14,7 +14,7 @@
     <ProjectGuid>{76A39BB2-9B84-4C65-98A5-654D86B86F2A}</ProjectGuid>
     <RootNamespace>test_win32</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -161,8 +161,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Scene\HelloWorldScene.cpp" />
     <ClCompile Include="..\Classes\Scene\HelpScene.cpp" />
     <ClCompile Include="..\Classes\Scene\LoadingScene.cpp" />
+    <ClCompile Include="..\Classes\Scene\RoomScene.cpp" />
     <ClCompile Include="..\Classes\Scene\SettingsScene.cpp" />
-    <ClCompile Include="..\Classes\Scene\StartScene.cpp" />
+    <ClCompile Include="..\Classes\Scene\StartScene.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Classes\Scene\UI\ChatBox.cpp" />
     <ClCompile Include="..\Classes\Scene\UI\GameMap.cpp" />
     <ClCompile Include="..\Classes\Util\AnimationLoader.cpp" />
@@ -184,6 +187,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Scene\HelloWorldScene.h" />
     <ClInclude Include="..\Classes\Scene\HelpScene.h" />
     <ClInclude Include="..\Classes\Scene\LoadingScene.h" />
+    <ClInclude Include="..\Classes\Scene\RoomScene.h" />
     <ClInclude Include="..\Classes\Scene\SettingsScene.h" />
     <ClInclude Include="..\Classes\Scene\StartScene.h" />
     <ClInclude Include="..\Classes\Scene\UI\ChatBox.h" />

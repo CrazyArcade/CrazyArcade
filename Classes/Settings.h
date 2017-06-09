@@ -44,6 +44,18 @@ namespace Settings
     namespace Bubble
     {
         constexpr char path[] = "GameItem/Bubble/bubble.png";
+        constexpr char alive[] = "GameItem/Bubble/Alive/alive.plist";
+        constexpr char* explosionPath[9]{
+            "GameItem/Bubble/ExplosionCenter/ExplosionCenter.plist",
+            "GameItem/Bubble/ExplosionLEFT/ExplosionLEFT.plist",
+            "GameItem/Bubble/ExplosionRIGHT/ExplosionRIGHT.plist",
+            "GameItem/Bubble/ExplosionUP/ExplosionUP.plist",
+            "GameItem/Bubble/ExplosionDOWN/ExplosionDOWN.plist",
+            "GameItem/Bubble/ExplosionWaveLEFT/ExplosionWaveLEFT.plist",
+            "GameItem/Bubble/ExplosionWaveRIGHT/ExplosionWaveRIGHT.plist",
+            "GameItem/Bubble/ExplosionWaveUP/ExplosionWaveUP.plist",
+            "GameItem/Bubble/ExplosionWaveDOWN/ExplosionWaveDOWN.plist",
+        };
         constexpr char aliveAnimation[] = "GameItem/Bubble/Alive/alive.plist";
     }
     namespace Prop

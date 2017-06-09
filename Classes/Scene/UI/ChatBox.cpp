@@ -4,26 +4,13 @@ USING_NS_CC;
 
 bool ChatBox::init()
 {
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    boxInput = cocos2d::ui::TextField::create("Chat Here",
-        Settings::Font::Type::base, Settings::Font::Size::chat);
+    boxInputInit();
+    boxHistoryInit();
 
     auto keyListener = EventListenerKeyboard::create();
     keyListener->onKeyReleased = CC_CALLBACK_2(ChatBox::keyReleasedAct, this);
 
     _eventDispatcher->addEventListenerWithSceneGraphPriority(keyListener, this);
-
-    //chat history display
-    boxHistory = cocos2d::ui::RichText::create();
-    boxHistory->ignoreContentAdaptWithSize(false);
-    boxHistory->setContentSize(Size(250, 800));
-    boxHistory->setWrapMode(cocos2d::ui::RichText::WrapMode::WRAP_PER_CHAR);
-
-    boxInput->setPosition(Vec2(visibleSize.width *0.12, visibleSize.height*0.2));
-    boxHistory->setPosition(Vec2(visibleSize.width *0.12, visibleSize.height*0.2 + getContentSize().height / 2 + boxInput->getContentSize().height / 2 + 30));
-
-    addChild(boxInput);
-    addChild(boxHistory);
     return true;
 }
 
@@ -46,6 +33,33 @@ void ChatBox::keyReleasedAct(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::E
     }
 }
 
+void ChatBox::boxInputInit()
+{
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+
+    boxInput = cocos2d::ui::TextField::create("Chat Here",
+        Settings::Font::Type::base, Settings::Font::Size::chat);
+    boxInput->setCursorEnabled(true);
+    boxInput->setCursorChar('|');
+    boxInput->setTextHorizontalAlignment(cocos2d::TextHAlignment::LEFT);
+
+    addChild(boxInput);
+}
+
+void ChatBox::boxHistoryInit()
+{
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+
+    boxHistory = cocos2d::ui::ListView::create();
+    boxHistory->setDirection(cocos2d::ui::ScrollView::Direction::VERTICAL);
+    boxHistory->setContentSize(Size(270, 350));
+
+    boxInput->setPosition(Vec2(visibleSize.width *0.03 + boxInput->getContentSize().width / 2, visibleSize.height*0.2));
+    boxHistory->setPosition(Vec2(visibleSize.width *0.03, visibleSize.height*0.2 + getContentSize().height / 2 + boxInput->getContentSize().height / 2 + 30));
+
+    addChild(boxHistory);
+}
+
 void ChatBox::InputStart()
 {
 }
@@ -56,8 +70,16 @@ void ChatBox::InputFinish()
 
 void ChatBox::updateHistory(const std::string& txt)
 {
-    auto ret = cocos2d::ui::RichElementText::create(1, cocos2d::Color3B::WHITE, 255, txt,
-        Settings::Font::Type::base, Settings::Font::Size::chat);
-    boxHistory->pushBackElement(ret);
+    auto text = cocos2d::ui::Text::create("[Me]:" + txt, Settings::Font::Type::base, Settings::Font::Size::chat);
+    text->ignoreContentAdaptWithSize(false);
+    text->setColor(cocos2d::Color3B::GREEN);
+    auto width = text->getContentSize().width;
+    text->setContentSize(Size(270, 26 * (1 + (width + 60) / 270)));
+    boxHistory->pushBackCustomItem(text);
+    boxHistory->jumpToBottom();
+
+    //auto ret = cocos2d::ui::RichElementText::create(1, cocos2d::Color3B::WHITE, 255, txt,
+    //    Settings::Font::Type::base, Settings::Font::Size::chat);
+    //boxHistory->pushBackElement(ret);
     // TODO pop judge and richtext format
 }
