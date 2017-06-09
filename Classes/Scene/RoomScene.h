@@ -7,6 +7,7 @@
 #include"Settings.h"
 #include"Scene/GameScene.h"
 #include"Scene/StartScene.h"
+#include"UI/CocosGUI.h"
 
 class RoomScene :public cocos2d::Layer
 {
