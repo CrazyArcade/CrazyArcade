@@ -33,6 +33,7 @@ Player * PlayerManager::createLocalPlayer(const std::string & id, const std::str
     localPlayer = createPlayer(id, role);
     if (localPlayer)
     {
+        localPlayer->isLocal(true);
         this->_playerList.insert(id, localPlayer);
     }
     return localPlayer;

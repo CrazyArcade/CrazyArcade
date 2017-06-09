@@ -36,6 +36,11 @@ uint8_t Bubble::getDamage()
     return _damage;
 }
 
+std::string Bubble::getPlayerID()
+{
+    return _playerID;
+}
+
 void Bubble::setStatus(Status status)
 {
     if (status == Status::ALIVE)

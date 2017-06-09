@@ -21,8 +21,8 @@ bool Player::init()
 {
     _status = Status::FREE;
     attr.speed = 2;
-    attr.damage = 4;
-    attr.currentBubble = attr.maxBubble = 3;
+    attr.damage = 1;
+    attr.currentBubble = attr.maxBubble = 1;
     direction = Direction::NONE;
     size = this->getContentSize();
     // set right anchor point.
@@ -107,6 +107,16 @@ void Player::setStatus(Player::Status status)
 Player::Status Player::getStatus()
 {
     return this->_status;
+}
+
+void Player::isLocal(bool a)
+{
+    this->_isLocal = a;
+}
+
+bool Player::isLocal()
+{
+    return _isLocal;
 }
 
 void Player::setDirectionByKey(Direction direction)

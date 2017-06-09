@@ -52,6 +52,9 @@ public:
     void setStatus(Status);
     Status getStatus();
 
+    void isLocal(bool a);
+    bool isLocal();
+
     void setDirectionByKey(Direction direction);
     void removeDirectionByKey(Direction direction);
     void updateDirection();
@@ -69,14 +72,11 @@ private:
     time_t directions[4];
     Direction direction;
 
+    bool _isLocal;
+
     bool init();
     bool initWithRole(const std::string& role);
     bool initAnimation();
-
-	cocos2d::Sprite *_player2;
-	cocos2d::Action *_walkAction;
-	cocos2d::Action *_moveAction;
-	bool _moving;
 
 };
 #endif

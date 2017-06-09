@@ -19,6 +19,8 @@ public:
 
     uint8_t getDamage();
 
+    std::string getPlayerID();
+
     void setStatus(Status status);
 private:
     uint8_t _damage;
