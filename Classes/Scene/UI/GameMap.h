@@ -3,9 +3,19 @@
 
 #include "cocos2d.h"
 #include "Settings.h"
-#include "Model/Bubble.h"
 #include <vector>
 
+
+/*
+ * ZOrder:
+ * 10: The top of box
+ * 6 : Player
+ * 5 : Box
+ * 3 : Bubble Wave
+ * 2 : Bubble
+ * 1 : Prop
+ * 0 : background
+ **/
 
 class GameMap : public cocos2d::Layer
 {
@@ -17,7 +27,10 @@ public:
         TILE_BOX2,
         TILE_WALL,
         TILE_BUBBLE,
-
+        // prop
+        TILE_PROP_SPEED = 100,
+        TILE_PROP_BUBBLE,
+        TILE_PROP_DAMAGE
     };
     virtual bool init();
     void readMapInfo(const char * mapName);
@@ -43,7 +56,15 @@ public:
     bool isInMap(const cocos2d::Vec2& pos);
     bool isBoomable(const cocos2d::Vec2& pos);
 
-    void addBubble(Bubble * bubble);
+    void addBubble(cocos2d::Sprite * bubble);
+    void removeBubble(cocos2d::Sprite * bubble);
+
+    void addPlayer(cocos2d::Sprite * player);
+
+    void addProp(cocos2d::Sprite * prop);
+    void removeProp(cocos2d::Sprite * prop);
+
+    void addSprite(cocos2d::Sprite * sprite, int zOrder);
 
     static GameMap * GameMap::getCurrentMap();
 
@@ -52,8 +73,10 @@ private:
     cocos2d::TMXTiledMap * tileMap;
     // ObjectLayer that store wall, box ...
     cocos2d::TMXLayer * boxLayer;
-    // ObjectLayer that store prop, bubble (player?)
-    cocos2d::TMXLayer * entityLayer;
+    // The rest of box
+    cocos2d::TMXLayer * boxTop;
+    // The box which is out of map 
+    cocos2d::TMXLayer * boxOutOfMap;
 
     int at(const cocos2d::Vec2& tilecoord) const;
     int & at(const cocos2d::Vec2& tilecoord);

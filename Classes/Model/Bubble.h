@@ -26,4 +26,34 @@ private:
 
     void initAnimation();
 };
+
+class BubbleWave : public Entity {
+public:
+    enum PosInWave {
+        CENTER,
+        MIDDLE,
+        TERMINAL
+    };
+
+    enum Direction {
+        LEFT,
+        RIGHT,
+        UP,
+        DOWN,
+        NONE
+    };
+
+    bool init(PosInWave pos, Direction direction); 
+
+    static BubbleWave* create(PosInWave pos, Direction direction);
+
+    bool isExplosionEdge(const cocos2d::Vec2& coord, Direction direction);
+private:
+
+    void getExplosionString(PosInWave pos, Direction direction);
+    
+    std::string animationName;
+
+    void initAnimation(PosInWave pos, Direction direction);
+};
 #endif
