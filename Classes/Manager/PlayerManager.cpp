@@ -67,12 +67,23 @@ void PlayerManager::localPlayerMove()
         const auto speed = localPlayer->getSpeed();
         for (uint8_t i = 0; i < speed; ++i)
         {
-            auto pair = getNextPos(localPlayer->getPosition(), localPlayer->getDirection());
+            auto currentPos = localPlayer->getPosition();
+            auto pair = getNextPos(currentPos, localPlayer->getDirection());
             auto nextPos = pair.first, logicPos1 = pair.second.first, logicPos2 = pair.second.second;
+            
+            if (!map->isInMap(logicPos1) || !map->isInMap(logicPos2)) break;
 
-            if (map->isCanAccess(logicPos1) && map->isCanAccess(logicPos2))
+            if (map->isInSameTile(currentPos, logicPos1) && map->isInSameTile(currentPos, logicPos2))
             {
                 localPlayer->setPosition(nextPos);
+            } 
+            else if (map->isCanAccess(logicPos1) && map->isCanAccess(logicPos2))
+            {
+                localPlayer->setPosition(nextPos);
+            }
+            else
+            {
+                break;
             }
         }
     }

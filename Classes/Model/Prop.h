@@ -17,7 +17,10 @@ public:
     
     static Prop * create(const std::string& id, Type type);
 
-    bool init();
+    bool init(Type type);
+
+    int getType();
+
 private:
     Type type;
 };

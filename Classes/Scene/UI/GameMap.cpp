@@ -126,7 +126,7 @@ bool GameMap::isCanAccess(const cocos2d::Vec2 & pos)
 {
     auto coord = positionToTileCoord(pos);
     // log("%f %f", coord.x, coord.y);
-    if (isInMap(pos) && at(coord) == TILE_EMPTY)
+    if (at(coord) == TILE_EMPTY || at(coord) >= 100)
     {
         return true;
     }
@@ -145,6 +145,11 @@ bool GameMap::isBoomable(const cocos2d::Vec2 & pos)
 {
     auto tilecoord = positionToTileCoord(pos);
     return isInMap(pos) && (at(tilecoord) == TILE_BOX1 || at(tilecoord) == TILE_BOX2);
+}
+
+bool GameMap::isInSameTile(const cocos2d::Vec2 & pos1, const cocos2d::Vec2 & pos2)
+{
+    return positionToTileCoord(pos1) == positionToTileCoord(pos2);
 }
 
 void GameMap::addBubble(cocos2d::Sprite * bubble)
@@ -166,11 +171,11 @@ void GameMap::addPlayer(cocos2d::Sprite * player)
     tileMap->addChild(player);
 }
 
-void GameMap::addProp(cocos2d::Sprite * prop)
+void GameMap::addProp(cocos2d::Sprite * prop, int type)
 {
     prop->setLocalZOrder(1);
     tileMap->addChild(prop);
-    //addEntity(prop->getPosition(), /*TODO*/);
+    addEntity(prop->getPosition(), type);
 }
 
 void GameMap::removeProp(cocos2d::Sprite * prop)
