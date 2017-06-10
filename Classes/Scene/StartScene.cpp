@@ -67,7 +67,7 @@ cocos2d::Menu* StartScene::musicInit() {
 }
 
 void StartScene::menuPlayCallback(cocos2d::Ref * pSender) {
-    Director::getInstance()->pushScene(TransitionFade::create(1, GameScene::createScene()));
+    Director::getInstance()->pushScene(TransitionFade::create(1, RoomScene::createScene()));
 }
 
 void StartScene::menuSettingsCallback(cocos2d::Ref * pSender) {

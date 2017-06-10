@@ -5,10 +5,9 @@ USING_NS_CC;
 Prop * Prop::create(const std::string& id, Type type)
 {
     auto prop = new (std::nothrow) Prop();
-    if (prop && prop->init())
+    if (prop && prop->init(type))
     {
         prop->_id = id;
-        prop->type = type;
         prop->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
         prop->autorelease();
         return prop;
@@ -17,13 +16,23 @@ Prop * Prop::create(const std::string& id, Type type)
     return nullptr;
 }
 
-bool Prop::init()
+bool Prop::init(Type type)
 {
+    if (type == Type::EMPTY)
+    {
+        return false;
+    }
+    this->type = type;
     std::string path = "GameItem/Prop/";
-    path.append(Settings::Prop::name[static_cast<int>(type)]);
+    path += Settings::Prop::name[getType() - 100];
     if (!initWithFile(path))
     {
         return false;
     }
     return true;
+}
+
+int Prop::getType()
+{
+    return static_cast<int>(type);
 }

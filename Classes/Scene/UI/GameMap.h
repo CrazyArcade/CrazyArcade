@@ -55,13 +55,14 @@ public:
     bool isCanAccess(const cocos2d::Vec2& pos);
     bool isInMap(const cocos2d::Vec2& pos);
     bool isBoomable(const cocos2d::Vec2& pos);
+    bool isInSameTile(const cocos2d::Vec2& pos1, const cocos2d::Vec2& pos2);
 
     void addBubble(cocos2d::Sprite * bubble);
     void removeBubble(cocos2d::Sprite * bubble);
 
     void addPlayer(cocos2d::Sprite * player);
 
-    void addProp(cocos2d::Sprite * prop);
+    void addProp(cocos2d::Sprite * prop, int type);
     void removeProp(cocos2d::Sprite * prop);
 
     void addSprite(cocos2d::Sprite * sprite, int zOrder);
