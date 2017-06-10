@@ -14,6 +14,7 @@ class StartScene : public cocos2d::Layer
 private:
     bool musicOn = true; 
     cocos2d::Menu* createText();
+    cocos2d::Sprite* createBGImage();
     void menuExitCallback(cocos2d::Ref* pSender);
     void menuPlayCallback(cocos2d::Ref* pSender);
     void menuHelpCallback(cocos2d::Ref * pSender);

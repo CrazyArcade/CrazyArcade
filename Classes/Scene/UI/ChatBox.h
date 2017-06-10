@@ -5,6 +5,8 @@
 #include "Settings.h"
 #include "cocos2d/cocos/ui/UIRichText.h"
 #include "cocos2d/cocos/ui/UITextField.h"
+#include "cocos2d/cocos/ui/UIText.h"
+#include "cocos2d/cocos/ui/UIListView.h"
 
 class ChatBox :public cocos2d::Layer {
 public:
@@ -14,9 +16,11 @@ public:
 
     CREATE_FUNC(ChatBox);
 private:
-    cocos2d::ui::RichText *boxHistory;
+    cocos2d::ui::ListView *boxHistory;
     cocos2d::ui::TextField *boxInput;
 
+    void boxInputInit();
+    void boxHistoryInit();
     void InputStart();
     void InputFinish();
     bool isInputing = false;

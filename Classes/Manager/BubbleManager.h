@@ -22,7 +22,7 @@ public:
      * boom a bubble by id
      * @param string id
      */
-    void boom(float dt, const std::string & id);
+    void boom(const std::string & id);
 
     virtual bool init();
     CREATE_FUNC(BubbleManager);
