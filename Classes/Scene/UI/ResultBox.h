@@ -18,9 +18,8 @@ public:
     CREATE_FUNC(ResultBox);
 
     void setResult(Result result);
-private:
-    cocos2d::Label* label;
 
+private:
     cocos2d::Sprite* pad;
 };
 
