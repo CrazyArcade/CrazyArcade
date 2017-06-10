@@ -56,10 +56,15 @@ void BubbleManager::boom(const std::string & id)
                 (direction == BubbleWave::Direction::DOWN && coord.y == map->getMapSize().height - 1) || isTerminal)
             {
                 bubbleWave = BubbleWave::create(BubbleWave::PosInWave::TERMINAL, direction);
+                isEnd = true;
             }
             else
             {
                 bubbleWave = BubbleWave::create(BubbleWave::PosInWave::MIDDLE, direction);
+            }
+            if (tileType >= 100)
+            {
+                // TODO remove prop
             }
         }
         else if (tileType == map->TILE_BOX1 || tileType == map->TILE_BOX2)
@@ -112,9 +117,4 @@ bool BubbleManager::init()
 void BubbleManager::addCustomEvent()
 {
     auto dispatcher = this->getEventDispatcher();
-
-    dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("bubble_set", [=](EventCustom * event)
-    {
-        auto data = static_cast<API::BubbleSet*>(event->getUserData());
-    }), this);
 }
