@@ -38,6 +38,9 @@ void Client::onMessage(cocos2d::network::WebSocket * ws, const cocos2d::network:
     case MsgType_BubbleSet:
         event = "bubble_set";
         break;
+    case MsgType_BubbleBoom:
+        event = "bubble_boom";
+        break;
     }
     if (event.size() > 0)
     {

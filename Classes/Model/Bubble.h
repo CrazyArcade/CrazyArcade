@@ -19,6 +19,8 @@ public:
 
     uint8_t getDamage();
 
+    std::string getPlayerID();
+
     void setStatus(Status status);
 private:
     uint8_t _damage;
@@ -47,13 +49,10 @@ public:
 
     static BubbleWave* create(PosInWave pos, Direction direction);
 
-    bool isExplosionEdge(const cocos2d::Vec2& coord, Direction direction);
 private:
 
     void getExplosionString(PosInWave pos, Direction direction);
     
     std::string animationName;
-
-    void initAnimation(PosInWave pos, Direction direction);
 };
 #endif

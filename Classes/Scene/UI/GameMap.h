@@ -55,16 +55,20 @@ public:
     bool isCanAccess(const cocos2d::Vec2& pos);
     bool isInMap(const cocos2d::Vec2& pos);
     bool isBoomable(const cocos2d::Vec2& pos);
+    bool isInSameTile(const cocos2d::Vec2& pos1, const cocos2d::Vec2& pos2);
 
     void addBubble(cocos2d::Sprite * bubble);
     void removeBubble(cocos2d::Sprite * bubble);
 
     void addPlayer(cocos2d::Sprite * player);
 
-    void addProp(cocos2d::Sprite * prop);
+    void addProp(cocos2d::Sprite * prop, int type);
     void removeProp(cocos2d::Sprite * prop);
 
     void addSprite(cocos2d::Sprite * sprite, int zOrder);
+
+    int at(const cocos2d::Vec2& tilecoord) const;
+    int & at(const cocos2d::Vec2& tilecoord);
 
     static GameMap * GameMap::getCurrentMap();
 
@@ -77,9 +81,6 @@ private:
     cocos2d::TMXLayer * boxTop;
     // The box which is out of map 
     cocos2d::TMXLayer * boxOutOfMap;
-
-    int at(const cocos2d::Vec2& tilecoord) const;
-    int & at(const cocos2d::Vec2& tilecoord);
 
     // add an entity to map
     void addEntity(const cocos2d::Vec2& pos, int tileType);

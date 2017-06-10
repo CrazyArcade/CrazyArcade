@@ -40,9 +40,9 @@ void GameController::initListener()
         CC_CALLBACK_1(GameController::onPlayerPositionChange, this)), this);
     dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("bubble_set",
         CC_CALLBACK_1(GameController::onBubbleSet, this)), this);
-#endif // NETWORK
     dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("bubble_boom",
         CC_CALLBACK_1(GameController::onBubbleBoom, this)), this);
+#endif // NETWORK
 }
 
 void GameController::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event * event)
@@ -96,6 +96,10 @@ void GameController::onEnter()
     auto pos = map->tileCoordToPosition(Vec2(0, 0));
     player->setPosition(pos);
     map->addPlayer(player);
+
+    auto pos1 = map->tileCoordToPosition(Vec2(0, 1));
+    auto prop = propManager->createProp("bubble", Prop::Type::BUBBLE, pos1);
+    map->addProp(prop, prop->getType());
 #endif // NETWORK
     initListener();
 }
@@ -202,4 +206,16 @@ void GameController::onBubbleSet(cocos2d::EventCustom * event)
 
 void GameController::onBubbleBoom(cocos2d::EventCustom * event)
 {
+    auto data = static_cast<API::BubbleBoom*>(event->getUserData());
+    auto id = data->id()->str();
+    auto playerID = bubbleManager->getBubble(id)->getPlayerID();
+
+    auto player = playerManager->getPlayer(playerID);
+
+    if (player && player->isLocal())
+    {
+        player->boomBubble();
+    }
+
+    bubbleManager->boom(id);
 }
