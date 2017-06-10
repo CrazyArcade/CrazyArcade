@@ -43,6 +43,8 @@ void LoadingScene::loadSpriteFrame()
     for (int i = 0; i < 9; i++) 
         cache->addSpriteFramesWithFile(Settings::Bubble::explosionPath[i]);
 
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("GameItem/Player/player1/animation.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("GameItem/Player/player2/animation.plist");
 
     cache->addSpriteFramesWithFile(Settings::Bubble::aliveAnimation);
     cache->addSpriteFramesWithFile(Settings::Player::player2Animation);
