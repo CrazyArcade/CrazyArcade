@@ -67,6 +67,9 @@ public:
 
     void addSprite(cocos2d::Sprite * sprite, int zOrder);
 
+    int at(const cocos2d::Vec2& tilecoord) const;
+    int & at(const cocos2d::Vec2& tilecoord);
+
     static GameMap * GameMap::getCurrentMap();
 
 private:
@@ -78,9 +81,6 @@ private:
     cocos2d::TMXLayer * boxTop;
     // The box which is out of map 
     cocos2d::TMXLayer * boxOutOfMap;
-
-    int at(const cocos2d::Vec2& tilecoord) const;
-    int & at(const cocos2d::Vec2& tilecoord);
 
     // add an entity to map
     void addEntity(const cocos2d::Vec2& pos, int tileType);
