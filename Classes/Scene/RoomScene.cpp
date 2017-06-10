@@ -43,39 +43,6 @@ bool RoomScene::init()
 		origin.y + visibleSize.height / 2));
 	this->addChild(bg);
 
-	/*//the room list
-	auto label1 = Label::createWithTTF("roomlist", Settings::Font::Type::base, Settings::Font::Size::label);
-		label1->setPosition(Vec2(visibleSize.width*0.25f, visibleSize.height - label->getContentSize().height * 2));
-	label1->enableShadow();
-	this->addChild(label1,1);
-
-	Vector<Sprite*> roomlist;
-	for (int i = 1;i < 5;++i) {
-		Sprite* room = Sprite::create("RoomScene/c3.png");
-		room->setPosition(Vec2(visibleSize.width * 0.25f, visibleSize.height - room->getContentSize().height*2.5*(i + 1)));
-		room->setScale(2.5);
-		roomlist.pushBack(room);
-		this->addChild(room);
-	}
-	
-
-
-	//show the property of the player
-	Vector<Sprite*> proplist;
-	for (int i = 1;i < 5;++i) {
-		Sprite* prop = Sprite::create("RoomScene/teamBackground_0.png");
-		prop->setPosition(Vec2(visibleSize.width*0.5f + origin.x + prop->getContentSize().width, visibleSize.height - prop->getContentSize().height * 2.5*(i+1)));
-		prop->setScale(2.5);
-		proplist.pushBack(prop);
-		this->addChild(prop);
-	}
-	auto propiter = proplist.begin();
-	auto prop = *propiter;
-	auto label2 = Label::createWithTTF("proplist", Settings::Font::Type::base, Settings::Font::Size::normal);
-	label2->setPosition(Vec2(visibleSize.width*0.6f + origin.x, visibleSize.height - prop->getContentSize().height * 2));
-	label2->enableGlow(Color4B::BLUE);
-	this->addChild(label2, 1);
-	*/
 	//playercaselist
 	Vector<Sprite*> roomCase1list;
 	Vector<Sprite*> roomCase2list;
