@@ -37,14 +37,20 @@ void LoadingScene::loadImage() {
 void LoadingScene::loadSpriteFrame()
 {
     auto cache = SpriteFrameCache::getInstance();
+    
     cache->addSpriteFramesWithFile(Settings::Bubble::alive);
+   
     for (int i = 0; i < 9; i++) 
         cache->addSpriteFramesWithFile(Settings::Bubble::explosionPath[i]);
 
-	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("GameItem/Player/player2.plist");
 
     cache->addSpriteFramesWithFile(Settings::Bubble::aliveAnimation);
     cache->addSpriteFramesWithFile(Settings::Player::player2Animation);
+    cache->addSpriteFramesWithFile(Settings::Player::player2Die);
+    cache->addSpriteFramesWithFile(Settings::Player::player2Danger);
+    cache->addSpriteFramesWithFile(Settings::Player::player1Animation);
+    cache->addSpriteFramesWithFile(Settings::Player::player1Die);
+    cache->addSpriteFramesWithFile(Settings::Player::player1Danger);
 
 	return;
 }

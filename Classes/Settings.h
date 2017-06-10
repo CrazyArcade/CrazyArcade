@@ -40,7 +40,12 @@ namespace Settings
     namespace Player
     {
         constexpr char path[] = "GameItem/Player/";
+        constexpr char player2Danger[] = "GameItem/Player/Player2/player2Danger/player2Danger.plist";
+        constexpr char player2Die[] = "GameItem/Player/Player2/player2Die/player2Die.plist";
         constexpr char player2Animation[] = "GameItem/Player/Player2/animation.plist";
+        constexpr char player1Danger[] = "GameItem/Player/Player1/player1Danger/player1Danger.plist";
+        constexpr char player1Die[] = "GameItem/Player/Player1/player1Die/player1Die.plist";
+        constexpr char player1Animation[] = "GameItem/Player/Player1/animation.plist";
     }
     namespace Bubble
     {

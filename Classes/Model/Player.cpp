@@ -44,11 +44,23 @@ bool Player::initWithRole(const std::string& role)
 
 bool Player::initAnimation()
 {
-	constexpr float delay = 0.1f;
-	loadAnimation("player2_left", delay, 6);
-	loadAnimation("player2_right", delay, 6);
-	loadAnimation("player2_up", delay, 6);
-	loadAnimation("player2_down", delay, 6);
+	constexpr float moveDelay = 0.1f;
+    loadAnimation("player1_left", moveDelay, 6);
+    loadAnimation("player1_right", moveDelay, 6);
+    loadAnimation("player1_up", moveDelay, 6);
+    loadAnimation("player1_down", moveDelay, 6);
+	loadAnimation("player2_left", moveDelay, 6);
+	loadAnimation("player2_right", moveDelay, 6);
+	loadAnimation("player2_up", moveDelay, 6);
+	loadAnimation("player2_down", moveDelay, 6);
+
+    constexpr float dangerDelay = 0.1f;
+    loadAnimation("player1Danger", dangerDelay, 3);
+    loadAnimation("player2Danger", dangerDelay, 3);
+
+    constexpr float dieDelay = 0.2f;
+    loadAnimation("player1_Die", dieDelay, 3);
+    loadAnimation("player2_Die", dieDelay, 3);
 	
     return true;
 }
