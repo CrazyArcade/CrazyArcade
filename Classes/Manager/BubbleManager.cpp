@@ -56,6 +56,7 @@ void BubbleManager::boom(const std::string & id)
                 (direction == BubbleWave::Direction::DOWN && coord.y == map->getMapSize().height - 1) || isTerminal)
             {
                 bubbleWave = BubbleWave::create(BubbleWave::PosInWave::TERMINAL, direction);
+                isEnd = true;
             }
             else
             {
@@ -116,9 +117,4 @@ bool BubbleManager::init()
 void BubbleManager::addCustomEvent()
 {
     auto dispatcher = this->getEventDispatcher();
-
-    dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("bubble_set", [=](EventCustom * event)
-    {
-        auto data = static_cast<API::BubbleSet*>(event->getUserData());
-    }), this);
 }

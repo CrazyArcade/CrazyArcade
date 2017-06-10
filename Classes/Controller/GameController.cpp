@@ -179,7 +179,7 @@ void GameController::onPlayerAttrChange(const void * msg)
 void GameController::onLocalPlayerSetBubble()
 {
     auto localPlayer = playerManager->getLocalPlayer();
-    if (localPlayer->isCanSetBubble())
+    if (localPlayer->isCanSetBubble() && map->at(map->positionToTileCoord(localPlayer->getPosition())) != map->TILE_BUBBLE)
     {
         localPlayer->setBubble();
 #ifdef NETWORK

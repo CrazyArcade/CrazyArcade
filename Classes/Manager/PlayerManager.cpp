@@ -86,6 +86,14 @@ void PlayerManager::localPlayerMove()
             {
                 break;
             }
+
+            if (map->at(map->positionToTileCoord(nextPos)) >= 100)
+            {
+                auto pos = new int[2];
+                pos[0] = nextPos.x, pos[1] = nextPos.y;
+                getParent()->getEventDispatcher()->dispatchCustomEvent("prop_eat", pos);
+                CC_SAFE_DELETE_ARRAY(pos);
+            }
         }
     }
 }

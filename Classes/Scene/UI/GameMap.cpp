@@ -178,7 +178,7 @@ void GameMap::addPlayer(cocos2d::Sprite * player)
 
 void GameMap::addProp(cocos2d::Sprite * prop, int type)
 {
-    prop->setLocalZOrder(5);
+    prop->setLocalZOrder(1);
     tileMap->addChild(prop);
     removeBox(prop->getPosition());
     addEntity(prop->getPosition(), type);
