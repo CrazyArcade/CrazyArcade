@@ -7,7 +7,6 @@
 #include "Client.h"
 #include "UI/ChatBox.h"
 
-
 class GameScene : public cocos2d::Layer
 {
 public:

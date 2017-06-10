@@ -93,6 +93,9 @@
     <ClCompile Include="..\Classes\Scene\RoomScene.cpp">
       <Filter>src\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Scene\UI\ResultBox.cpp">
+      <Filter>src\Scene\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -164,10 +167,17 @@
     <ClInclude Include="..\Classes\Scene\RoomScene.h">
       <Filter>src\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\Scene\UI\ResultBox.h">
+      <Filter>src\Scene\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Resources\Scene\PlayingPad.png" />
+    <Image Include="..\Resources\Scene\ResultPad.png" />
   </ItemGroup>
 </Project>
