@@ -47,7 +47,7 @@ bool GameScene::init()
 
     auto _resultBox = ResultBox::create();
     addChild(_resultBox, 1);
-    _resultBox->setResult(ResultBox::Result::VICTORY);
+    //_resultBox->setResult(ResultBox::Result::VICTORY);
   
     return true;
 }
