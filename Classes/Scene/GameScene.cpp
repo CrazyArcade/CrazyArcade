@@ -3,6 +3,7 @@
 #include "api_generated.h"
 #include "Controller/GameController.h"
 #include "Settings.h"
+#include "Scene/UI/ResultBox.h"
 
 USING_NS_CC;
 
@@ -44,6 +45,10 @@ bool GameScene::init()
   
     auto _chatBox = ChatBox::create();
     addChild(_chatBox, 0);
+
+    auto _resultBox = ResultBox::create();
+    addChild(_resultBox, 1);
+    //_resultBox->setResult(ResultBox::Result::VICTORY);
   
     return true;
 }

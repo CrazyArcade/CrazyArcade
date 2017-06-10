@@ -18,6 +18,7 @@ public:
 private:
     cocos2d::ui::ListView *boxHistory;
     cocos2d::ui::TextField *boxInput;
+    int tag = 1;
 
     void boxInputInit();
     void boxHistoryInit();

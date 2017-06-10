@@ -2,6 +2,8 @@
 
 USING_NS_CC;
 
+constexpr int MAX_MSG_NUM = 10;
+
 bool ChatBox::init()
 {
     boxInputInit();
@@ -52,7 +54,7 @@ void ChatBox::boxHistoryInit()
 
     boxHistory = cocos2d::ui::ListView::create();
     boxHistory->setDirection(cocos2d::ui::ScrollView::Direction::VERTICAL);
-    boxHistory->setContentSize(Size(270, 350));
+    boxHistory->setContentSize(Size(270, 380));
 
     boxInput->setPosition(Vec2(visibleSize.width *0.03 + boxInput->getContentSize().width / 2, visibleSize.height*0.2));
     boxHistory->setPosition(Vec2(visibleSize.width *0.03, visibleSize.height*0.2 + getContentSize().height / 2 + boxInput->getContentSize().height / 2 + 30));
@@ -75,7 +77,10 @@ void ChatBox::updateHistory(const std::string& txt)
     text->setColor(cocos2d::Color3B::GREEN);
     auto width = text->getContentSize().width;
     text->setContentSize(Size(270, 26 * (1 + (width + 60) / 270)));
-    boxHistory->pushBackCustomItem(text);
+    boxHistory->addChild(text, 0, tag);
+    if (boxHistory->getChildrenCount() > MAX_MSG_NUM)
+        boxHistory->removeChildByTag(tag - MAX_MSG_NUM);
+    tag++;
     boxHistory->jumpToBottom();
 
     //auto ret = cocos2d::ui::RichElementText::create(1, cocos2d::Color3B::WHITE, 255, txt,
