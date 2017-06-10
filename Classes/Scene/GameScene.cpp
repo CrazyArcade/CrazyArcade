@@ -2,6 +2,7 @@
 #include "SimpleAudioEngine.h"
 #include "api_generated.h"
 #include "Controller/GameController.h"
+#include "Settings.h"
 
 USING_NS_CC;
 

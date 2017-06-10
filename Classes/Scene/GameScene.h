@@ -2,9 +2,7 @@
 #define __SCENE_GAMESCENE_H__
 
 #include "cocos2d.h"
-#include "Settings.h"
 #include "UI/GameMap.h"
-#include "Client.h"
 #include "UI/ChatBox.h"
 
 

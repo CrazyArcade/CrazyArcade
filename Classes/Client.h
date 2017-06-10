@@ -2,20 +2,43 @@
 #define __CLIENT_H__
 
 #include "cocos2d.h"
-#include "Settings.h"
 #include "network/WebSocket.h"
+#include "api_generated.h"
+#include <unordered_map>
 
-class Client : public cocos2d::Layer, public cocos2d::network::WebSocket::Delegate
+
+class Client : public cocos2d::network::WebSocket::Delegate
 {
 public:
-    virtual bool init();
-    CREATE_FUNC(Client);
+    using WebSocket = cocos2d::network::WebSocket;
+    using Callback = std::function<void(const void*)>;
 
-    void onOpen(cocos2d::network::WebSocket* ws);
-    void onMessage(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::Data& data);
-    void onClose(cocos2d::network::WebSocket* ws);
-    void onError(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::ErrorCode& error);
-    cocos2d::network::WebSocket* ws;
+    Client(Client const &) = delete;
+    void operator=(Client const &) = delete;
+
+    static Client * getInstance();
+
+    bool connect(const std::string& addr = "");
+    bool isConnected();
+
+    void onOpen(WebSocket* ws);
+    void onMessage(WebSocket* ws, const WebSocket::Data& data);
+    void onClose(WebSocket* ws);
+    void onError(WebSocket* ws, const WebSocket::ErrorCode& error);
+
+    void bind(int code, Callback func);
+
+    WebSocket* ws();
+private:
+    Client() {
+        // init
+        _ws = new WebSocket();
+    };
+    WebSocket* _ws;
+
+    std::unordered_map<int, Callback> funcList;
+
+    Callback getFunc(int code);
     
 };
 #endif
