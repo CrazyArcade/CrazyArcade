@@ -90,7 +90,12 @@ void GameMap::removeBox(const cocos2d::Vec2& pos)
         boxLayer->removeTileAt(coord);
         boxTop->removeTileAt(coord + Vec2(0, -1));
     }
-    at(coord) = TILE_EMPTY;
+    auto tile = at(coord);
+    if (tile == TILE_BOX1 || tile == TILE_BOX2)
+    {
+        at(coord) = TILE_EMPTY;
+    }
+    
 }
 
 cocos2d::Vec2 GameMap::tileCoordToPosition(const cocos2d::Vec2 & coord)
@@ -173,8 +178,9 @@ void GameMap::addPlayer(cocos2d::Sprite * player)
 
 void GameMap::addProp(cocos2d::Sprite * prop, int type)
 {
-    prop->setLocalZOrder(1);
+    prop->setLocalZOrder(5);
     tileMap->addChild(prop);
+    removeBox(prop->getPosition());
     addEntity(prop->getPosition(), type);
 }
 

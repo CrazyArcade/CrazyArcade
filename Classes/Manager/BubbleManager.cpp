@@ -61,6 +61,10 @@ void BubbleManager::boom(const std::string & id)
             {
                 bubbleWave = BubbleWave::create(BubbleWave::PosInWave::MIDDLE, direction);
             }
+            if (tileType >= 100)
+            {
+                // TODO remove prop
+            }
         }
         else if (tileType == map->TILE_BOX1 || tileType == map->TILE_BOX2)
         {

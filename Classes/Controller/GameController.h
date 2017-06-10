@@ -40,6 +40,8 @@ private:
     void onBubbleSet(cocos2d::EventCustom* event);
     void onBubbleBoom(cocos2d::EventCustom* event);
 
+    void onPropSet(cocos2d::EventCustom* event);
+
 };
 
 #endif // !__GAME_CONTROLLER_H__

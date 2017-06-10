@@ -3,6 +3,8 @@
 
 USING_NS_CC;
 
+#define CLENT_ON(__event__, __funcName__) dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create(__event__,CC_CALLBACK_1(GameController::__funcName__, this)), this);
+
 bool GameController::init()
 {
     if (!Layer::init())
@@ -34,14 +36,11 @@ void GameController::initListener()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(keyListener, this);
     auto dispatcher = this->getEventDispatcher();
 #ifdef NETWORK
-    dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("player_join", 
-        CC_CALLBACK_1(GameController::onPlayerJoin, this)), this);
-    dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("player_position_change", 
-        CC_CALLBACK_1(GameController::onPlayerPositionChange, this)), this);
-    dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("bubble_set",
-        CC_CALLBACK_1(GameController::onBubbleSet, this)), this);
-    dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("bubble_boom",
-        CC_CALLBACK_1(GameController::onBubbleBoom, this)), this);
+    CLENT_ON("player_join", onPlayerJoin);
+    CLENT_ON("player_position_change", onPlayerPositionChange);
+    CLENT_ON("bubble_set", onBubbleSet);
+    CLENT_ON("bubble_boom", onBubbleBoom);
+    CLENT_ON("prop_set", onPropSet);
 #endif // NETWORK
 }
 
@@ -218,4 +217,15 @@ void GameController::onBubbleBoom(cocos2d::EventCustom * event)
     }
 
     bubbleManager->boom(id);
+}
+
+void GameController::onPropSet(cocos2d::EventCustom * event)
+{
+    auto data = static_cast<API::PropSet*>(event->getUserData());
+    auto id = data->id()->str();
+    auto type = static_cast<Prop::Type>(data->type());
+    auto pos = Vec2(data->x(), data->y());
+    auto prop = propManager->createProp(id, type, pos);
+
+    map->addProp(prop, prop->getType());
 }

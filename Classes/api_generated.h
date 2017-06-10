@@ -51,20 +51,13 @@ namespace API
 
     enum PropType
     {
-        PropType_SPEED_UP = 0,
-        PropType_DAMAGE_UP = 1,
-        PropType_BUBBLE_UP = 2,
-        PropType_MIN = PropType_SPEED_UP,
-        PropType_MAX = PropType_BUBBLE_UP
+        PropType_NONE = 0,
+        PropType_SPEED_UP = 100,
+        PropType_BUBBLE_UP = 101,
+        PropType_DAMAGE_UP = 102,
+        PropType_MIN = PropType_NONE,
+        PropType_MAX = PropType_DAMAGE_UP
     };
-
-    inline const char **EnumNamesPropType()
-    {
-        static const char *names[] = { "SPEED_UP", "DAMAGE_UP", "BUBBLE_UP", nullptr };
-        return names;
-    }
-
-    inline const char *EnumNamePropType(PropType e) { return EnumNamesPropType()[static_cast<int>(e)]; }
 
     enum PlayerStatus
     {
@@ -504,7 +497,7 @@ namespace API
         flatbuffers::Offset<flatbuffers::String> id = 0,
         int32_t x = 0,
         int32_t y = 0,
-        PropType type = PropType_SPEED_UP)
+        PropType type = PropType_NONE)
     {
         PropSetBuilder builder_(_fbb);
         builder_.add_y(y);
@@ -518,7 +511,7 @@ namespace API
         const char *id = nullptr,
         int32_t x = 0,
         int32_t y = 0,
-        PropType type = PropType_SPEED_UP)
+        PropType type = PropType_NONE)
     {
         return CreatePropSet(_fbb, id ? _fbb.CreateString(id) : 0, x, y, type);
     }
