@@ -6,6 +6,7 @@
 #include "api_generated.h"
 #include <unordered_map>
 
+//#define NETWORK
 
 class Client : public cocos2d::network::WebSocket::Delegate
 {

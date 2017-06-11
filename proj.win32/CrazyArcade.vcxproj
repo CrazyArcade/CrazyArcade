@@ -150,6 +150,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\Client.cpp" />
     <ClCompile Include="..\Classes\Controller\GameController.cpp" />
+    <ClCompile Include="..\Classes\Controller\RoomController.cpp" />
     <ClCompile Include="..\Classes\Manager\BubbleManager.cpp" />
     <ClCompile Include="..\Classes\Manager\PlayerManager.cpp" />
     <ClCompile Include="..\Classes\Manager\PropManager.cpp" />
@@ -177,6 +178,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\Client.h" />
     <ClInclude Include="..\Classes\Controller\GameController.h" />
+    <ClInclude Include="..\Classes\Controller\RoomController.h" />
     <ClInclude Include="..\Classes\Manager\BubbleManager.h" />
     <ClInclude Include="..\Classes\Manager\PlayerManager.h" />
     <ClInclude Include="..\Classes\Manager\PropManager.h" />

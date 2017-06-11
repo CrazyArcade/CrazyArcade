@@ -96,6 +96,9 @@
     <ClCompile Include="..\Classes\Scene\UI\ResultBox.cpp">
       <Filter>src\Scene\UI</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Controller\RoomController.cpp">
+      <Filter>src\Controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -169,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Scene\UI\ResultBox.h">
       <Filter>src\Scene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Controller\RoomController.h">
+      <Filter>src\Controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
