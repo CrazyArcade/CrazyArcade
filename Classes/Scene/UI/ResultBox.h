@@ -4,8 +4,6 @@
 #include <cocos2d.h>
 #include "Settings.h"
 
-USING_NS_CC;
-
 class ResultBox : public cocos2d::Layer {
 public:
     enum Result {

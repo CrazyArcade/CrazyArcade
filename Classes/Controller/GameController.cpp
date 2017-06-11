@@ -4,7 +4,6 @@
 USING_NS_CC;
 using namespace API;
 
-//#define NETWORK
 #define CLIENT_ON(__code__, __func__) client->bind(__code__, CC_CALLBACK_1(GameController::__func__, this));
 
 bool GameController::init()
