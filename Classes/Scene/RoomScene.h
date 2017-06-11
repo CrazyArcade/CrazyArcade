@@ -19,6 +19,6 @@ public:
 	static cocos2d::Scene * createScene();
 	virtual bool init();
 	CREATE_FUNC(RoomScene);
-};
+}; 
 #endif // !__ROOMSCENE_SCENE_H__
 
