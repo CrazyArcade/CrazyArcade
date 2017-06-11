@@ -32,13 +32,16 @@ private:
 
     void syncLocalPlayerPosition(float dt);
 
-    void onPlayerJoin(cocos2d::EventCustom* event);
-    void onPlayerPositionChange(cocos2d::EventCustom* event);
+    void onPlayerJoin(const void* msg);
+    void onPlayerPositionChange(const void* msg);
+    void onPlayerAttrChange(const void* msg);
 
     void onLocalPlayerSetBubble();
 
-    void onBubbleSet(cocos2d::EventCustom* event);
-    void onBubbleBoom(cocos2d::EventCustom* event);
+    void onBubbleSet(const void* msg);
+    void onBubbleBoom(const void* msg);
+
+    void onPropSet(const void* msg);
 
 };
 

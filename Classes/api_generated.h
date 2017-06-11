@@ -51,20 +51,13 @@ namespace API
 
     enum PropType
     {
-        PropType_SPEED_UP = 0,
-        PropType_DAMAGE_UP = 1,
-        PropType_BUBBLE_UP = 2,
-        PropType_MIN = PropType_SPEED_UP,
-        PropType_MAX = PropType_BUBBLE_UP
+        PropType_NONE = 0,
+        PropType_SPEED_UP = 100,
+        PropType_BUBBLE_UP = 101,
+        PropType_DAMAGE_UP = 102,
+        PropType_MIN = PropType_NONE,
+        PropType_MAX = PropType_DAMAGE_UP
     };
-
-    inline const char **EnumNamesPropType()
-    {
-        static const char *names[] = { "SPEED_UP", "DAMAGE_UP", "BUBBLE_UP", nullptr };
-        return names;
-    }
-
-    inline const char *EnumNamePropType(PropType e) { return EnumNamesPropType()[static_cast<int>(e)]; }
 
     enum PlayerStatus
     {
@@ -504,7 +497,7 @@ namespace API
         flatbuffers::Offset<flatbuffers::String> id = 0,
         int32_t x = 0,
         int32_t y = 0,
-        PropType type = PropType_SPEED_UP)
+        PropType type = PropType_NONE)
     {
         PropSetBuilder builder_(_fbb);
         builder_.add_y(y);
@@ -518,7 +511,7 @@ namespace API
         const char *id = nullptr,
         int32_t x = 0,
         int32_t y = 0,
-        PropType type = PropType_SPEED_UP)
+        PropType type = PropType_NONE)
     {
         return CreatePropSet(_fbb, id ? _fbb.CreateString(id) : 0, x, y, type);
     }
@@ -579,19 +572,26 @@ namespace API
     {
         enum
         {
-            VT_SPEED = 4,
-            VT_DAMAGE = 6,
-            VT_MAXBUBBLE = 8
+            VT_ID = 4,
+            VT_SPEED = 6,
+            VT_DAMAGE = 8,
+            VT_MAXBUBBLE = 10,
+            VT_CURRENTBUBBLE = 12
         };
+        const flatbuffers::String *id() const { return GetPointer<const flatbuffers::String *>(VT_ID); }
         uint8_t speed() const { return GetField<uint8_t>(VT_SPEED, 0); }
         uint8_t damage() const { return GetField<uint8_t>(VT_DAMAGE, 0); }
         uint8_t maxBubble() const { return GetField<uint8_t>(VT_MAXBUBBLE, 0); }
+        uint8_t currentBubble() const { return GetField<uint8_t>(VT_CURRENTBUBBLE, 0); }
         bool Verify(flatbuffers::Verifier &verifier) const
         {
             return VerifyTableStart(verifier) &&
+                VerifyField<flatbuffers::uoffset_t>(verifier, VT_ID) &&
+                verifier.Verify(id()) &&
                 VerifyField<uint8_t>(verifier, VT_SPEED) &&
                 VerifyField<uint8_t>(verifier, VT_DAMAGE) &&
                 VerifyField<uint8_t>(verifier, VT_MAXBUBBLE) &&
+                VerifyField<uint8_t>(verifier, VT_CURRENTBUBBLE) &&
                 verifier.EndTable();
         }
     };
@@ -600,28 +600,44 @@ namespace API
     {
         flatbuffers::FlatBufferBuilder &fbb_;
         flatbuffers::uoffset_t start_;
+        void add_id(flatbuffers::Offset<flatbuffers::String> id) { fbb_.AddOffset(PlayerAttrChange::VT_ID, id); }
         void add_speed(uint8_t speed) { fbb_.AddElement<uint8_t>(PlayerAttrChange::VT_SPEED, speed, 0); }
         void add_damage(uint8_t damage) { fbb_.AddElement<uint8_t>(PlayerAttrChange::VT_DAMAGE, damage, 0); }
         void add_maxBubble(uint8_t maxBubble) { fbb_.AddElement<uint8_t>(PlayerAttrChange::VT_MAXBUBBLE, maxBubble, 0); }
+        void add_currentBubble(uint8_t currentBubble) { fbb_.AddElement<uint8_t>(PlayerAttrChange::VT_CURRENTBUBBLE, currentBubble, 0); }
         PlayerAttrChangeBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
         PlayerAttrChangeBuilder &operator=(const PlayerAttrChangeBuilder &);
         flatbuffers::Offset<PlayerAttrChange> Finish()
         {
-            auto o = flatbuffers::Offset<PlayerAttrChange>(fbb_.EndTable(start_, 3));
+            auto o = flatbuffers::Offset<PlayerAttrChange>(fbb_.EndTable(start_, 5));
             return o;
         }
     };
 
     inline flatbuffers::Offset<PlayerAttrChange> CreatePlayerAttrChange(flatbuffers::FlatBufferBuilder &_fbb,
+        flatbuffers::Offset<flatbuffers::String> id = 0,
         uint8_t speed = 0,
         uint8_t damage = 0,
-        uint8_t maxBubble = 0)
+        uint8_t maxBubble = 0,
+        uint8_t currentBubble = 0)
     {
         PlayerAttrChangeBuilder builder_(_fbb);
+        builder_.add_id(id);
+        builder_.add_currentBubble(currentBubble);
         builder_.add_maxBubble(maxBubble);
         builder_.add_damage(damage);
         builder_.add_speed(speed);
         return builder_.Finish();
+    }
+
+    inline flatbuffers::Offset<PlayerAttrChange> CreatePlayerAttrChangeDirect(flatbuffers::FlatBufferBuilder &_fbb,
+        const char *id = nullptr,
+        uint8_t speed = 0,
+        uint8_t damage = 0,
+        uint8_t maxBubble = 0,
+        uint8_t currentBubble = 0)
+    {
+        return CreatePlayerAttrChange(_fbb, id ? _fbb.CreateString(id) : 0, speed, damage, maxBubble, currentBubble);
     }
 
     struct PlayerStatusChange FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table

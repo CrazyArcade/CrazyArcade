@@ -85,9 +85,10 @@ uint8_t Player::getBubble()
     return attr.currentBubble;
 }
 
-void Player::setMaxBubble(uint8_t maxBubble)
+void Player::setMaxBubble(uint8_t maxBubble, uint8_t currentBubble)
 {
     attr.maxBubble = maxBubble;
+    attr.currentBubble = currentBubble;
 }
 
 bool Player::isCanSetBubble()
