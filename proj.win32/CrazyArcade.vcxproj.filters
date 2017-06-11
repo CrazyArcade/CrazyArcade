@@ -99,6 +99,9 @@
     <ClCompile Include="..\Classes\Controller\RoomController.cpp">
       <Filter>src\Controller</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Scene\UI\RoleBox.cpp">
+      <Filter>src\Scene\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -175,6 +178,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Controller\RoomController.h">
       <Filter>src\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene\UI\RoleBox.h">
+      <Filter>src\Scene\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
