@@ -4,10 +4,10 @@
 
 USING_NS_CC;
 
-Player * Player::create(const std::string& id, const std::string& role)
+Player * Player::create(const std::string& id, const std::string& Role)
 {
     auto player = new (std::nothrow) Player();
-    if (player && player->initWithRole(role))
+    if (player && player->initWithRole(Role))
     {
         player->_id = id;
         player->autorelease();
@@ -26,15 +26,16 @@ bool Player::init()
     direction = Direction::NONE;
     size = this->getContentSize();
     // set right anchor point.
-    this->setAnchorPoint(Vec2(0.5, (Settings::Map::TileSize::height / 2 ) / size.height));
+    this->setAnchorPoint(Vec2(0.5, (Settings::Map::TileSize::height / 2) / size.height));
     return true;
 }
 
-bool Player::initWithRole(const std::string& role)
+bool Player::initWithRole(const std::string& Role)
 {
-    auto file = Settings::Player::path + role + "/default.png";
+    auto file = Settings::Player::path + Role + "/default.png";
+    role = Role;
     if (this->initWithFile(file) && this->init())
-    { 
+    {
         // do something here
         initAnimation();
         return true;
@@ -44,12 +45,18 @@ bool Player::initWithRole(const std::string& role)
 
 bool Player::initAnimation()
 {
-	constexpr float delay = 0.1f;
-	loadAnimation("player2_left", delay, 6);
-	loadAnimation("player2_right", delay, 6);
-	loadAnimation("player2_up", delay, 6);
-	loadAnimation("player2_down", delay, 6);
-	
+    constexpr float moveDelay = 0.1f;
+    loadAnimation(role + "_left", moveDelay, 6);
+    loadAnimation(role + "_right", moveDelay, 6);
+    loadAnimation(role + "_up", moveDelay, 6);
+    loadAnimation(role + "_down", moveDelay, 6);
+
+    constexpr float dangerDelay = 0.1f;
+    loadAnimation(role + "_danger", dangerDelay, 3);
+
+    constexpr float dieDelay = 0.2f;
+    loadAnimation(role + "_die", dieDelay, 3);
+
     return true;
 }
 
@@ -163,22 +170,22 @@ void Player::setAnimation()
     if (_status == Status::FREE)
     {
         stopAnimation(this);
-        
+
         if (this->direction == Direction::LEFT)
         {
-            runAnimation("player2_left", this);
+            runAnimation(role + "_left", this);
         }
         else if (this->direction == Direction::RIGHT)
         {
-            runAnimation("player2_right", this);
+            runAnimation(role + "_right", this);
         }
         else if (this->direction == Direction::UP)
         {
-            runAnimation("player2_up", this);
+            runAnimation(role + "_up", this);
         }
         else if (this->direction == Direction::DOWN)
         {
-            runAnimation("player2_down", this);
+            runAnimation(role + "_down", this);
         }
     }
     else if (_status == Status::FREEZE)

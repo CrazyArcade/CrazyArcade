@@ -214,8 +214,16 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ResourceCompile Include="game.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\Resources\GameItem\Player\Player1\default.png" />
+    <Image Include="..\Resources\GameItem\Player\Player2\Player2Danger\player2Danger.png" />
+    <Image Include="..\Resources\GameItem\Player\Player2\Player2Danger\player2Danger_01.png" />
+    <Image Include="..\Resources\GameItem\Player\Player2\Player2Danger\player2Danger_02.png" />
+    <Image Include="..\Resources\GameItem\Player\Player2\Player2Danger\player2Danger_03.png" />
     <Image Include="..\Resources\Scene\PlayingPad.png" />
     <Image Include="..\Resources\Scene\ResultPad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resources\GameItem\Player\Player2\Player2Danger\player2Danger.plist" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
