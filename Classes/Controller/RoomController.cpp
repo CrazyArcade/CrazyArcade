@@ -1,16 +1,6 @@
 #include "RoomController.h"
 
 
-
-RoomController::RoomController()
-{
-}
-
-
-RoomController::~RoomController()
-{
-}
-
 bool RoomController::init()
 {
     if (!Layer::init())
@@ -19,6 +9,7 @@ bool RoomController::init()
     }
 
     client = Client::getInstance();
+    return true;
 }
 
 void RoomController::onEnter()

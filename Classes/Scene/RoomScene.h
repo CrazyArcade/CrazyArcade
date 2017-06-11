@@ -16,7 +16,12 @@ private:
 	void menuBackCallback(cocos2d::Ref* pSender);
 	void menuReadyCallback(cocos2d::Ref* pSender);
 
+    cocos2d::Vector<cocos2d::Sprite*> userBoxes;
+    void initUserBox();
 
+    cocos2d::Vector<cocos2d::Sprite*> roleBoxes;
+    void initRoleBox();
+    
 public:
 	static cocos2d::Scene * createScene();
 	virtual bool init();
