@@ -11,7 +11,7 @@ public:
      * create Player with role 
      * @return Player Object
      */
-    static Player * create(const std::string& id, const std::string& role);
+    static Player * create(const std::string& id, const std::string& Role);
     
     enum class Status : std::int8_t
     {
@@ -71,11 +71,12 @@ private:
     // record what time the direction was set
     time_t directions[4];
     Direction direction;
+    std::string role;
 
     bool _isLocal;
 
     bool init();
-    bool initWithRole(const std::string& role);
+    bool initWithRole(const std::string& Role);
     bool initAnimation();
 
 };

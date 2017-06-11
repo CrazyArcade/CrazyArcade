@@ -40,29 +40,12 @@ namespace Settings
     namespace Player
     {
         constexpr char path[] = "GameItem/Player/";
-        constexpr char player2Danger[] = "GameItem/Player/Player2/player2Danger/player2Danger.plist";
-        constexpr char player2Die[] = "GameItem/Player/Player2/player2Die/player2Die.plist";
-        constexpr char player2Animation[] = "GameItem/Player/Player2/animation.plist";
-        constexpr char player1Danger[] = "GameItem/Player/Player1/player1Danger/player1Danger.plist";
-        constexpr char player1Die[] = "GameItem/Player/Player1/player1Die/player1Die.plist";
-        constexpr char player1Animation[] = "GameItem/Player/Player1/animation.plist";
     }
     namespace Bubble
     {
-        constexpr char path[] = "GameItem/Bubble/bubble.png";
-        constexpr char alive[] = "GameItem/Bubble/Alive/alive.plist";
-        constexpr char* explosionPath[9]{
-            "GameItem/Bubble/ExplosionCenter/ExplosionCenter.plist",
-            "GameItem/Bubble/ExplosionLEFT/ExplosionLEFT.plist",
-            "GameItem/Bubble/ExplosionRIGHT/ExplosionRIGHT.plist",
-            "GameItem/Bubble/ExplosionUP/ExplosionUP.plist",
-            "GameItem/Bubble/ExplosionDOWN/ExplosionDOWN.plist",
-            "GameItem/Bubble/ExplosionWaveLEFT/ExplosionWaveLEFT.plist",
-            "GameItem/Bubble/ExplosionWaveRIGHT/ExplosionWaveRIGHT.plist",
-            "GameItem/Bubble/ExplosionWaveUP/ExplosionWaveUP.plist",
-            "GameItem/Bubble/ExplosionWaveDOWN/ExplosionWaveDOWN.plist",
-        };
-        constexpr char aliveAnimation[] = "GameItem/Bubble/Alive/alive.plist";
+        constexpr char path[] = "GameItem/Bubble/default.png";
+        constexpr char alive[] = "GameItem/Bubble/alive.plist";
+        constexpr char explosion[] = "GameItem/Bubble/Explosion.plist";
     }
     namespace Prop
     {
