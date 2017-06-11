@@ -4,6 +4,7 @@
 USING_NS_CC;
 using namespace API;
 
+//#define NETWORK
 #define CLIENT_ON(__code__, __func__) client->bind(__code__, CC_CALLBACK_1(GameController::__func__, this));
 
 bool GameController::init()
@@ -40,6 +41,7 @@ void GameController::initListener()
     CLIENT_ON(MsgType_PlayerJoin, onPlayerJoin);
     CLIENT_ON(MsgType_PlayerPosChange, onPlayerPositionChange);
     CLIENT_ON(MsgType_PlayerAttrChange, onPlayerAttrChange);
+    CLIENT_ON(MsgType_PlayerStatusChange, onPlayerStatusChange);
 
     CLIENT_ON(MsgType_BubbleSet, onBubbleSet);
     CLIENT_ON(MsgType_BubbleBoom, onBubbleBoom);
@@ -112,7 +114,8 @@ void GameController::onExit()
 {
     Layer::onExit();
 #ifdef NETWORK
-    client->ws()->closeAsync();
+    client->clear();
+    client->close();
     client = nullptr;
 #endif // NETWORK
 }
@@ -120,7 +123,7 @@ void GameController::onExit()
 void GameController::syncLocalPlayerPosition(float dt)
 {
     auto localPlayer = playerManager->getLocalPlayer();
-    if (localPlayer != nullptr)
+    if (localPlayer != nullptr && localPlayer->getStatus() == Player::Status::FREE)
     {
         using namespace API;
         flatbuffers::FlatBufferBuilder builder;
@@ -131,7 +134,7 @@ void GameController::syncLocalPlayerPosition(float dt)
         auto msg = CreateMsg(builder, MsgType_PlayerPosChange, data.Union());
         builder.Finish(msg);
 
-        client->ws()->send(builder.GetBufferPointer(), builder.GetSize());
+        client->send(builder.GetBufferPointer(), builder.GetSize());
     }
 }
 
@@ -176,6 +179,17 @@ void GameController::onPlayerAttrChange(const void * msg)
     }
 }
 
+void GameController::onPlayerStatusChange(const void * msg)
+{
+    auto data = static_cast<const API::PlayerStatusChange*>(msg);
+    auto player = playerManager->getPlayer(data->id()->str());
+
+    if (player)
+    {
+        player->setStatus(static_cast<Player::Status>(data->status()));
+    }
+}
+
 void GameController::onLocalPlayerSetBubble()
 {
     auto localPlayer = playerManager->getLocalPlayer();
@@ -188,7 +202,7 @@ void GameController::onLocalPlayerSetBubble()
         auto data = CreatePlayerSetBubble(builder);
         auto orc = CreateMsg(builder, MsgType_PlayerSetBubble, data.Union());
         builder.Finish(orc);
-        client->ws()->send(builder.GetBufferPointer(), builder.GetSize());
+        client->send(builder.GetBufferPointer(), builder.GetSize());
 #else
         auto pos = map->centrePos(localPlayer->getPosition());
         std::string id = "bubble_test" + std::to_string(time(0));

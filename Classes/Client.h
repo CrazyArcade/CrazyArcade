@@ -26,7 +26,14 @@ public:
     void onClose(WebSocket* ws);
     void onError(WebSocket* ws, const WebSocket::ErrorCode& error);
 
+    // bind callback function
     void bind(int code, Callback func);
+    // remove all callback function
+    void clear();
+
+    void close();
+
+    void send(const uint8_t* buf, const size_t len);
 
     WebSocket* ws();
 private:

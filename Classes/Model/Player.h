@@ -61,8 +61,6 @@ public:
     void setDirection(Direction direction);
     Direction getDirection();
     
-    // TODO
-    void setAnimation();
 
 private:
     Status _status;
