@@ -46,7 +46,11 @@ bool RoomScene::init()
 	this->addChild(bg);
 
     initUserBox();
-    initRoleBox();
+    std::string roleDefault = "Player";
+    for (int i = 1; i <= 2; i++)
+        addChild(RoleBox::create(roleDefault + StringUtils::format("%d", i), i));
+    
+    //initRoleBox();
 
 	//ready button
 	const auto readybutton = MenuItemLabel::create(
@@ -121,32 +125,4 @@ void RoomScene::initUserBox()
         userBoxes.pushBack(userBox);
         this->addChild(userBox);
     }
-}
-
-void RoomScene::initRoleBox()
-{
-    // TODO refoactor
-    Size visibleSize = Director::getInstance()->getVisibleSize();
-    //playercase 
-    //the case backgorund
-    auto caseTitle = Sprite::create("RoomScene/003c.png");
-    auto roomcase = Sprite::create("RoomScene/roomcase_01.png");
-    caseTitle->setPosition(Vec2(roomcase->getContentSize().width * 6 * 1.25, visibleSize.height * 0.8f));
-    caseTitle->setScale(0.5);
-    this->addChild(caseTitle, 1);
-    DrawNode* casebg = DrawNode::create();
-    casebg->drawSolidRect(Vec2(roomcase->getContentSize().width * 1.25 * 4.2, visibleSize.height * 0.85f),
-        Vec2(visibleSize.width * 0.97f, visibleSize.height * 0.4f), Color4F(1.0 / 255, 108.0 / 255, 250.0 / 255, 0.95));
-    for (int i = 1; i < 5; ++i)
-    {
-        casebg->drawSolidRect(Vec2(roomcase->getContentSize().width * 1.25 * 4.2 + roomcase->getContentSize().width * (i - 1) + roomcase->getContentSize().width * 0.1,
-            visibleSize.height * 0.85f - caseTitle->getContentSize().height * 0.6),
-            Vec2(roomcase->getContentSize().width*1.25*4.2 + roomcase->getContentSize().width * i,
-                visibleSize.height*.85f - caseTitle->getContentSize().height * 3 * 0.5), Color4F(31.0 / 255, 58.0 / 255, 147.0 / 255, 0.95));
-        casebg->drawSolidRect(Vec2(roomcase->getContentSize().width * 1.25 * 4.2 + roomcase->getContentSize().width * (i - 1) + roomcase->getContentSize().width * 0.1,
-            visibleSize.height * 0.85f - caseTitle->getContentSize().height * 3 * 0.6),
-            Vec2(roomcase->getContentSize().width*1.25*4.2 + roomcase->getContentSize().width * i,
-                visibleSize.height*0.42f), Color4F(31.0 / 255, 58.0 / 255, 147.0 / 255, 0.95));
-    }
-    this->addChild(casebg);
 }
