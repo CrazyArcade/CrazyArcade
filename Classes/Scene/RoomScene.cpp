@@ -53,9 +53,9 @@ bool RoomScene::init()
     //initRoleBox();
 
 	//ready button
-	const auto readybutton = MenuItemLabel::create(
-		Label::createWithTTF("Ready?", Settings::Font::Type::base, Settings::Font::Size::label),
-		CC_CALLBACK_1(RoomScene::menuReadyCallback, this));
+    const auto readybutton = MenuItemImage::create(
+        "RoomScene/not ready.png", "RoomScene/ready.png",
+        CC_CALLBACK_1(RoomScene::menuReadyCallback, this));
 	readybutton->setPosition(visibleSize.width*0.4f+readybutton->getContentSize().width, visibleSize.height*0.1f);
 	const auto mn = Menu::create();
 	mn->addChild(readybutton, 1);
