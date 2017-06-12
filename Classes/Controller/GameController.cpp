@@ -2,6 +2,10 @@
 #include "api_generated.h"
 
 USING_NS_CC;
+using namespace API;
+
+//#define NETWORK
+#define CLIENT_ON(__code__, __func__) client->bind(__code__, CC_CALLBACK_1(GameController::__func__, this));
 
 bool GameController::init()
 {
@@ -32,16 +36,17 @@ void GameController::initListener()
     keyListener->onKeyPressed = CC_CALLBACK_2(GameController::onKeyPressed, this);
     keyListener->onKeyReleased = CC_CALLBACK_2(GameController::onKeyReleased, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(keyListener, this);
-    auto dispatcher = this->getEventDispatcher();
+
 #ifdef NETWORK
-    dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("player_join", 
-        CC_CALLBACK_1(GameController::onPlayerJoin, this)), this);
-    dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("player_position_change", 
-        CC_CALLBACK_1(GameController::onPlayerPositionChange, this)), this);
-    dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("bubble_set",
-        CC_CALLBACK_1(GameController::onBubbleSet, this)), this);
-    dispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("bubble_boom",
-        CC_CALLBACK_1(GameController::onBubbleBoom, this)), this);
+    CLIENT_ON(MsgType_PlayerJoin, onPlayerJoin);
+    CLIENT_ON(MsgType_PlayerPosChange, onPlayerPositionChange);
+    CLIENT_ON(MsgType_PlayerAttrChange, onPlayerAttrChange);
+    CLIENT_ON(MsgType_PlayerStatusChange, onPlayerStatusChange);
+
+    CLIENT_ON(MsgType_BubbleSet, onBubbleSet);
+    CLIENT_ON(MsgType_BubbleBoom, onBubbleBoom);
+
+    CLIENT_ON(MsgType_PropSet, onPropSet);
 #endif // NETWORK
 }
 
@@ -87,8 +92,9 @@ void GameController::onEnter()
 {
     Layer::onEnter();
 #ifdef NETWORK
-    client = Client::create();
-    addChild(client);
+    client = Client::getInstance();
+    if (!client->isConnected()) client->connect();
+
     float dur = 1 / 30;
     schedule(schedule_selector(GameController::syncLocalPlayerPosition), dur);
 #else
@@ -108,14 +114,16 @@ void GameController::onExit()
 {
     Layer::onExit();
 #ifdef NETWORK
-    client->ws->close();
+    client->clear();
+    client->close();
+    client = nullptr;
 #endif // NETWORK
 }
 
 void GameController::syncLocalPlayerPosition(float dt)
 {
     auto localPlayer = playerManager->getLocalPlayer();
-    if (localPlayer != nullptr)
+    if (localPlayer != nullptr && localPlayer->getStatus() == Player::Status::FREE)
     {
         using namespace API;
         flatbuffers::FlatBufferBuilder builder;
@@ -126,13 +134,13 @@ void GameController::syncLocalPlayerPosition(float dt)
         auto msg = CreateMsg(builder, MsgType_PlayerPosChange, data.Union());
         builder.Finish(msg);
 
-        client->ws->send(builder.GetBufferPointer(), builder.GetSize());
+        client->send(builder.GetBufferPointer(), builder.GetSize());
     }
 }
 
-void GameController::onPlayerJoin(cocos2d::EventCustom * event)
+void GameController::onPlayerJoin(const void* msg)
 {
-    auto data = static_cast<API::PlayerJoin*>(event->getUserData());
+    auto data = static_cast<const API::PlayerJoin*>(msg);
     Player * player;
     if (data->is_local())
     {
@@ -146,9 +154,9 @@ void GameController::onPlayerJoin(cocos2d::EventCustom * event)
     map->addPlayer(player);
 }
 
-void GameController::onPlayerPositionChange(cocos2d::EventCustom * event)
+void GameController::onPlayerPositionChange(const void* msg)
 {
-    auto data = static_cast<API::PlayerPosChange*>(event->getUserData());
+    auto data = static_cast<const API::PlayerPosChange*>(msg);
     auto player = playerManager->getPlayer(data->id()->str());
     if (player != playerManager->getLocalPlayer() && player != nullptr)
     {
@@ -159,10 +167,33 @@ void GameController::onPlayerPositionChange(cocos2d::EventCustom * event)
     }
 }
 
+void GameController::onPlayerAttrChange(const void * msg)
+{
+    auto data = static_cast<const API::PlayerAttrChange*>(msg);
+    auto player = playerManager->getPlayer(data->id()->str());
+    if (player->isLocal())
+    {
+        player->setSpeed(data->speed());
+        player->setDamage(data->damage());
+        player->setMaxBubble(data->maxBubble(), data->currentBubble());
+    }
+}
+
+void GameController::onPlayerStatusChange(const void * msg)
+{
+    auto data = static_cast<const API::PlayerStatusChange*>(msg);
+    auto player = playerManager->getPlayer(data->id()->str());
+
+    if (player)
+    {
+        player->setStatus(static_cast<Player::Status>(data->status()));
+    }
+}
+
 void GameController::onLocalPlayerSetBubble()
 {
     auto localPlayer = playerManager->getLocalPlayer();
-    if (localPlayer->isCanSetBubble())
+    if (localPlayer->isCanSetBubble() && map->at(map->positionToTileCoord(localPlayer->getPosition())) != map->TILE_BUBBLE)
     {
         localPlayer->setBubble();
 #ifdef NETWORK
@@ -171,7 +202,7 @@ void GameController::onLocalPlayerSetBubble()
         auto data = CreatePlayerSetBubble(builder);
         auto orc = CreateMsg(builder, MsgType_PlayerSetBubble, data.Union());
         builder.Finish(orc);
-        client->ws->send(builder.GetBufferPointer(), builder.GetSize());
+        client->send(builder.GetBufferPointer(), builder.GetSize());
 #else
         auto pos = map->centrePos(localPlayer->getPosition());
         std::string id = "bubble_test" + std::to_string(time(0));
@@ -189,9 +220,9 @@ void GameController::onLocalPlayerSetBubble()
     }
 }
 
-void GameController::onBubbleSet(cocos2d::EventCustom * event)
+void GameController::onBubbleSet(const void* msg)
 {
-    auto data = static_cast<API::BubbleSet*>(event->getUserData());
+    auto data = static_cast<const API::BubbleSet*>(msg);
     auto id = data->id()->str();
     auto playerID = data->player_id()->str();
     auto x = data->x(), y = data->y();
@@ -204,9 +235,9 @@ void GameController::onBubbleSet(cocos2d::EventCustom * event)
     }
 }
 
-void GameController::onBubbleBoom(cocos2d::EventCustom * event)
+void GameController::onBubbleBoom(const void* msg)
 {
-    auto data = static_cast<API::BubbleBoom*>(event->getUserData());
+    auto data = static_cast<const API::BubbleBoom*>(msg);
     auto id = data->id()->str();
     auto playerID = bubbleManager->getBubble(id)->getPlayerID();
 
@@ -218,4 +249,15 @@ void GameController::onBubbleBoom(cocos2d::EventCustom * event)
     }
 
     bubbleManager->boom(id);
+}
+
+void GameController::onPropSet(const void* msg)
+{
+    auto data = static_cast<const API::PropSet*>(msg);
+    auto id = data->id()->str();
+    auto type = static_cast<Prop::Type>(data->type());
+    auto pos = Vec2(data->x(), data->y());
+    auto prop = propManager->createProp(id, type, pos);
+
+    map->addProp(prop, prop->getType());
 }

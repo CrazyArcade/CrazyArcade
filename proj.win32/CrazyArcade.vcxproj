@@ -213,10 +213,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   <ItemGroup>
     <ResourceCompile Include="game.rc" />
   </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\Resources\Scene\PlayingPad.png" />
-    <Image Include="..\Resources\Scene\ResultPad.png" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

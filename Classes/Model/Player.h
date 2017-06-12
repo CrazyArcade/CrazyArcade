@@ -11,7 +11,7 @@ public:
      * create Player with role 
      * @return Player Object
      */
-    static Player * create(const std::string& id, const std::string& role);
+    static Player * create(const std::string& id, const std::string& Role);
     
     enum class Status : std::int8_t
     {
@@ -44,7 +44,7 @@ public:
     void setDamage(uint8_t damage);
 
     uint8_t getBubble();
-    void setMaxBubble(uint8_t bubble);
+    void setMaxBubble(uint8_t maxBubble, uint8_t currentBubble);
     bool isCanSetBubble();
     void setBubble();
     void boomBubble();
@@ -61,8 +61,6 @@ public:
     void setDirection(Direction direction);
     Direction getDirection();
     
-    // TODO
-    void setAnimation();
 
 private:
     Status _status;
@@ -71,11 +69,12 @@ private:
     // record what time the direction was set
     time_t directions[4];
     Direction direction;
+    std::string role;
 
     bool _isLocal;
 
     bool init();
-    bool initWithRole(const std::string& role);
+    bool initWithRole(const std::string& Role);
     bool initAnimation();
 
 };

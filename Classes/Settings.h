@@ -1,7 +1,6 @@
 #ifndef __SETTINGS_H__
 #define __SETTINGS_H__
 
-//#define NETWORK
 
 #include <cstdint>
 #include <set>
@@ -40,24 +39,12 @@ namespace Settings
     namespace Player
     {
         constexpr char path[] = "GameItem/Player/";
-        constexpr char player2Animation[] = "GameItem/Player/Player2/animation.plist";
     }
     namespace Bubble
     {
-        constexpr char path[] = "GameItem/Bubble/bubble.png";
-        constexpr char alive[] = "GameItem/Bubble/Alive/alive.plist";
-        constexpr char* explosionPath[9]{
-            "GameItem/Bubble/ExplosionCenter/ExplosionCenter.plist",
-            "GameItem/Bubble/ExplosionLEFT/ExplosionLEFT.plist",
-            "GameItem/Bubble/ExplosionRIGHT/ExplosionRIGHT.plist",
-            "GameItem/Bubble/ExplosionUP/ExplosionUP.plist",
-            "GameItem/Bubble/ExplosionDOWN/ExplosionDOWN.plist",
-            "GameItem/Bubble/ExplosionWaveLEFT/ExplosionWaveLEFT.plist",
-            "GameItem/Bubble/ExplosionWaveRIGHT/ExplosionWaveRIGHT.plist",
-            "GameItem/Bubble/ExplosionWaveUP/ExplosionWaveUP.plist",
-            "GameItem/Bubble/ExplosionWaveDOWN/ExplosionWaveDOWN.plist",
-        };
-        constexpr char aliveAnimation[] = "GameItem/Bubble/Alive/alive.plist";
+        constexpr char path[] = "GameItem/Bubble/default.png";
+        constexpr char alive[] = "GameItem/Bubble/alive.plist";
+        constexpr char explosion[] = "GameItem/Bubble/Explosion.plist";
     }
     namespace Prop
     {

@@ -176,8 +176,4 @@
       <Filter>resource</Filter>
     </ResourceCompile>
   </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\Resources\Scene\PlayingPad.png" />
-    <Image Include="..\Resources\Scene\ResultPad.png" />
-  </ItemGroup>
 </Project>

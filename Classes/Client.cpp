@@ -1,67 +1,80 @@
 #include "Client.h"
-#include "api_generated.h"
+#include "Settings.h"
 
 USING_NS_CC;
 using namespace API;
 
-bool Client::init()
+Client * Client::getInstance()
 {
-    // create ws instance
-    ws = new network::WebSocket();
-    if (!ws->init(*this, Settings::Server::addr))
-    {
-        return false;
-    }
-    //this->
-
-    return true;
+    static Client INSTANCE;
+    return &INSTANCE;
 }
 
-void Client::onOpen(cocos2d::network::WebSocket * ws)
+bool Client::connect(const std::string & addr)
+{
+    return _ws->init(*this, Settings::Server::addr);
+}
+
+bool Client::isConnected()
+{
+    return _ws == nullptr ? false : _ws->getReadyState() == WebSocket::State::OPEN;
+}
+
+void Client::onOpen(WebSocket * ws)
 {
     log("connect");
 }
 
-void Client::onMessage(cocos2d::network::WebSocket * ws, const cocos2d::network::WebSocket::Data & data)
+void Client::onMessage(WebSocket * ws, const WebSocket::Data & data)
 {
     auto msg = GetMsg(data.bytes);
-    auto res = msg->data();
-    std::string event;
-    switch (msg->data_type())
-    {
-    case MsgType_PlayerJoin:
-        event = "player_join";
-        break;
-    case MsgType_PlayerPosChange:
-        event = "player_position_change";
-        break;
-    case MsgType_BubbleSet:
-        event = "bubble_set";
-        break;
-    case MsgType_BubbleBoom:
-        event = "bubble_boom";
-        break;
-    }
-    if (event.size() > 0)
-    {
-        EventCustom myEvent(event);
-        myEvent.setUserData(const_cast<void*>(res));
-        Director::getInstance()->getRunningScene()->getEventDispatcher()->dispatchEvent(&myEvent);
-    }
+    auto func = getFunc(msg->data_type());
+    if (func) func(msg->data());
 }
 
-void Client::onClose(cocos2d::network::WebSocket * ws)
+void Client::onClose(WebSocket * ws)
 {
-    if (ws == this->ws)
+    if (ws == this->_ws)
     {
-        this->ws = nullptr;
+        this->_ws = nullptr;
     }
     CC_SAFE_DELETE(ws);
     log("close");
 }
 
-void Client::onError(cocos2d::network::WebSocket * ws, const cocos2d::network::WebSocket::ErrorCode & error)
+void Client::onError(WebSocket * ws, const WebSocket::ErrorCode & error)
 {
     log("error");
+}
+
+void Client::bind(int code, Callback func)
+{
+    funcList[code] = func;
+}
+
+void Client::clear()
+{
+    funcList.clear();
+}
+
+void Client::close()
+{
+    if (isConnected()) _ws->closeAsync();
+}
+
+void Client::send(const uint8_t* buf, const size_t len)
+{
+    if (isConnected()) _ws->send(buf, len);
+}
+
+Client::WebSocket * Client::ws()
+{
+    return _ws;
+}
+
+inline Client::Callback Client::getFunc(int code)
+{
+    auto func = funcList.find(code);
+    return func == funcList.cend() ? nullptr : func->second;
 }
 
