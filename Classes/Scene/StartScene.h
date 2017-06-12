@@ -8,6 +8,7 @@
 #include "HelpScene.h"
 #include "SettingsScene.h"
 #include "Scene/RoomScene.h"
+#include "LoginScene.h"
 
 class StartScene : public cocos2d::Layer
 {
