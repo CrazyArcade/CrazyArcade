@@ -46,6 +46,8 @@ void RoleBox::setRole(const std::string & Role)
     roleWindow->setPosition(visibleSize.width*0.6,
         visibleSize.height*0.7 - (rank - 1)*roleWindow->getContentSize().height);
 
+    bound = roleWindow->getBoundingBox();
+
     addChild(roleWindow);
 
     // TODO 
@@ -54,4 +56,9 @@ void RoleBox::setRole(const std::string & Role)
 std::string RoleBox::getRole()
 {
     return role;
+}
+
+cocos2d::Rect RoleBox::getBound()
+{
+    return bound;
 }

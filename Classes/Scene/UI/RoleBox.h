@@ -14,9 +14,12 @@ public:
     void setRole(const std::string& Role);
     std::string getRole();
 
+    cocos2d::Rect getBound();
+
 private:
     std::string role;
     int8_t rank;
+    cocos2d::Rect bound;
 };
 
 #endif

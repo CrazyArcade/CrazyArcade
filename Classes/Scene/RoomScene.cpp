@@ -47,34 +47,54 @@ bool RoomScene::init()
 
     initUserBox();
     std::string roleDefault = "Player";
-    for (int i = 1; i <= 2; i++)
-        addChild(RoleBox::create(roleDefault + StringUtils::format("%d", i), i));
+    for (int i = 1; i <= 2; i++) {
+        auto box = RoleBox::create(roleDefault + StringUtils::format("%d", i), i);
+        roleBox.pushBack(box);
+        this->addChild(box);
+    }
     
     //initRoleBox();
 
 	//ready button
-    const auto readybutton = MenuItemImage::create(
-        "RoomScene/not ready.png", "RoomScene/ready.png",
-        CC_CALLBACK_1(RoomScene::menuReadyCallback, this));
-	readybutton->setPosition(visibleSize.width*0.4f+readybutton->getContentSize().width, visibleSize.height*0.1f);
-	const auto mn = Menu::create();
-	mn->addChild(readybutton, 1);
-	mn->setPosition(1, 0);
-	this->addChild(mn);
 
-	/*// ready button
-	auto button = cocos2d::ui::Button::create("button_normal.png","button_selected.png","button_surround.png");
-	button->setTitleText("Ready?");
-	button->setTitleFontName("fonts/OpenSans-Regular.ttf");
-	button->setTitleFontSize(32);
-	button->setPosition(Vec2(visibleSize.width / 2 + button->getContentSize().width, visibleSize.height*0.1f));
-	button->addTouchEventListener(CC_CALLBACK_1(GameScene::createScene(), this));
+    auto mouseListener = cocos2d::EventListenerMouse::create();
 
-	this->addChild(button, 1);
-	*/
+    mouseListener->onMouseUp = [=](Event* event) {
+        EventMouse* e = (EventMouse*)event;
+        auto touch = e->getLocation();
+        for (int i = 0; i < roleBox.size(); i++) {
+            auto range = (roleBox.at(i))->getBound();
+            if (range.containsPoint(touch)) {
+                // TODO
+            }
+        }
+    };
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
+
+	this->addChild(createButtons());
+
 	addChild(createText());
 
 	return true;
+}
+
+cocos2d::Menu * RoomScene::createButtons()
+{
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+
+    const auto readybutton = MenuItemImage::create(
+        "RoomScene/not ready.png", "RoomScene/ready.png",
+        CC_CALLBACK_1(RoomScene::menuReadyCallback, this));
+   
+    readybutton->setPosition(visibleSize.width*0.4f + readybutton->getContentSize().width, visibleSize.height*0.1f);
+    
+    const auto mn = Menu::create();
+   
+    mn->addChild(readybutton, 1);
+    mn->setPosition(1, 0);
+   
+    return mn;
 }
 
 cocos2d::Menu* RoomScene::createText() {
@@ -95,6 +115,7 @@ cocos2d::Menu* RoomScene::createText() {
 
 	return buttons;
 }
+
 void RoomScene::menuBackCallback(cocos2d::Ref* pSender)
 {
 	Director::getInstance()->popScene();
