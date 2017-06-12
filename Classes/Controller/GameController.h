@@ -35,6 +35,7 @@ private:
     void onPlayerJoin(const void* msg);
     void onPlayerPositionChange(const void* msg);
     void onPlayerAttrChange(const void* msg);
+    void onPlayerStatusChange(const void* msg);
 
     void onLocalPlayerSetBubble();
 

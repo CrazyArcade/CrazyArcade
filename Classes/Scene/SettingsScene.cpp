@@ -126,7 +126,7 @@ void SettingsScene::menuMusicToggleCallback(cocos2d::Ref * pSender)
 {
 	//const auto scene = HelpScene::createScene();
 	//Director::getInstance()->pushScene(scene);
-	auto scene = StartScene::createScene();
+	//auto scene = StartScene::createScene();
 	musicPP(pSender);
 	
 }

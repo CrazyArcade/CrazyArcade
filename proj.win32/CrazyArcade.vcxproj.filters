@@ -96,6 +96,12 @@
     <ClCompile Include="..\Classes\Scene\UI\ResultBox.cpp">
       <Filter>src\Scene\UI</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Controller\RoomController.cpp">
+      <Filter>src\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Scene\UI\RoleBox.cpp">
+      <Filter>src\Scene\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -170,22 +176,16 @@
     <ClInclude Include="..\Classes\Scene\UI\ResultBox.h">
       <Filter>src\Scene\UI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\Controller\RoomController.h">
+      <Filter>src\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene\UI\RoleBox.h">
+      <Filter>src\Scene\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\Resources\Scene\PlayingPad.png" />
-    <Image Include="..\Resources\Scene\ResultPad.png" />
-    <Image Include="..\Resources\GameItem\Player\Player2\Player2Danger\player2Danger.png" />
-    <Image Include="..\Resources\GameItem\Player\Player2\Player2Danger\player2Danger_01.png" />
-    <Image Include="..\Resources\GameItem\Player\Player2\Player2Danger\player2Danger_02.png" />
-    <Image Include="..\Resources\GameItem\Player\Player2\Player2Danger\player2Danger_03.png" />
-    <Image Include="..\Resources\GameItem\Player\Player1\default.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Resources\GameItem\Player\Player2\Player2Danger\player2Danger.plist" />
   </ItemGroup>
 </Project>

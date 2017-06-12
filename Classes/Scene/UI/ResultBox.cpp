@@ -1,6 +1,9 @@
 #include "Scene/UI/ResultBox.h"
 #include "Scene/UI/GameMap.h"
 
+USING_NS_CC;
+
+
 bool ResultBox::init()
 {
     return true;

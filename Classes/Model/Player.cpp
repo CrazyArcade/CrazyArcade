@@ -51,10 +51,10 @@ bool Player::initAnimation()
     loadAnimation(role + "_up", moveDelay, 6);
     loadAnimation(role + "_down", moveDelay, 6);
 
-    constexpr float dangerDelay = 0.1f;
+    constexpr float dangerDelay = 1.0f;
     loadAnimation(role + "_danger", dangerDelay, 3);
 
-    constexpr float dieDelay = 0.2f;
+    constexpr float dieDelay = 0.3f;
     loadAnimation(role + "_die", dieDelay, 3);
 
     return true;
@@ -93,7 +93,7 @@ void Player::setMaxBubble(uint8_t maxBubble, uint8_t currentBubble)
 
 bool Player::isCanSetBubble()
 {
-    return attr.currentBubble > 0;
+    return _status == Status::FREE && attr.currentBubble > 0;
 }
 
 void Player::setBubble()
@@ -109,7 +109,23 @@ void Player::boomBubble()
 void Player::setStatus(Player::Status status)
 {
     this->_status = status;
-    setAnimation();
+    Animation * animation = nullptr;
+    if (_status == Status::FREEZE)
+    {
+        animation = getAnimation(role + "_danger");
+    }
+    else if (_status == Status::DIE)
+    {    
+        animation = getAnimation(role + "_die");
+    }
+    if (animation)
+    {
+        stopAnimation(this);
+        animation->setRestoreOriginalFrame(false);
+        runAction(Animate::create(animation));
+        //setSpriteFrame(animation->getFrames().at(2)->getSpriteFrame());
+    }
+    
 }
 
 Player::Status Player::getStatus()
@@ -157,16 +173,6 @@ void Player::updateDirection()
 void Player::setDirection(Direction direction)
 {
     this->direction = direction;
-    setAnimation();
-}
-
-Player::Direction Player::getDirection()
-{
-    return direction;
-}
-
-void Player::setAnimation()
-{
     if (_status == Status::FREE)
     {
         stopAnimation(this);
@@ -188,8 +194,9 @@ void Player::setAnimation()
             runAnimation(role + "_down", this);
         }
     }
-    else if (_status == Status::FREEZE)
-    {
+}
 
-    }
+Player::Direction Player::getDirection()
+{
+    return direction;
 }

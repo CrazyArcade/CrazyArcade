@@ -17,7 +17,7 @@ bool Client::connect(const std::string & addr)
 
 bool Client::isConnected()
 {
-    return _ws->getReadyState() == WebSocket::State::OPEN;
+    return _ws == nullptr ? false : _ws->getReadyState() == WebSocket::State::OPEN;
 }
 
 void Client::onOpen(WebSocket * ws)
@@ -50,6 +50,21 @@ void Client::onError(WebSocket * ws, const WebSocket::ErrorCode & error)
 void Client::bind(int code, Callback func)
 {
     funcList[code] = func;
+}
+
+void Client::clear()
+{
+    funcList.clear();
+}
+
+void Client::close()
+{
+    if (isConnected()) _ws->closeAsync();
+}
+
+void Client::send(const uint8_t* buf, const size_t len)
+{
+    if (isConnected()) _ws->send(buf, len);
 }
 
 Client::WebSocket * Client::ws()
