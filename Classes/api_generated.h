@@ -528,11 +528,13 @@ namespace API
         {
             VT_ID = 4,
             VT_X = 6,
-            VT_Y = 8
+            VT_Y = 8,
+            VT_ROLE = 10
         };
         const flatbuffers::String *id() const { return GetPointer<const flatbuffers::String *>(VT_ID); }
         int32_t x() const { return GetField<int32_t>(VT_X, 0); }
         int32_t y() const { return GetField<int32_t>(VT_Y, 0); }
+        int32_t role() const { return GetField<int32_t>(VT_ROLE, 0); }
         bool Verify(flatbuffers::Verifier &verifier) const
         {
             return VerifyTableStart(verifier) &&
@@ -540,6 +542,7 @@ namespace API
                 verifier.Verify(id()) &&
                 VerifyField<int32_t>(verifier, VT_X) &&
                 VerifyField<int32_t>(verifier, VT_Y) &&
+                VerifyField<int32_t>(verifier, VT_ROLE) &&
                 verifier.EndTable();
         }
     };
@@ -551,11 +554,12 @@ namespace API
         void add_id(flatbuffers::Offset<flatbuffers::String> id) { fbb_.AddOffset(PlayerData::VT_ID, id); }
         void add_x(int32_t x) { fbb_.AddElement<int32_t>(PlayerData::VT_X, x, 0); }
         void add_y(int32_t y) { fbb_.AddElement<int32_t>(PlayerData::VT_Y, y, 0); }
+        void add_role(int32_t role) { fbb_.AddElement<int32_t>(PlayerData::VT_ROLE, role, 0); }
         PlayerDataBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
         PlayerDataBuilder &operator=(const PlayerDataBuilder &);
         flatbuffers::Offset<PlayerData> Finish()
         {
-            auto o = flatbuffers::Offset<PlayerData>(fbb_.EndTable(start_, 3));
+            auto o = flatbuffers::Offset<PlayerData>(fbb_.EndTable(start_, 4));
             return o;
         }
     };
@@ -563,9 +567,11 @@ namespace API
     inline flatbuffers::Offset<PlayerData> CreatePlayerData(flatbuffers::FlatBufferBuilder &_fbb,
         flatbuffers::Offset<flatbuffers::String> id = 0,
         int32_t x = 0,
-        int32_t y = 0)
+        int32_t y = 0,
+        int32_t role = 0)
     {
         PlayerDataBuilder builder_(_fbb);
+        builder_.add_role(role);
         builder_.add_y(y);
         builder_.add_x(x);
         builder_.add_id(id);
@@ -575,9 +581,10 @@ namespace API
     inline flatbuffers::Offset<PlayerData> CreatePlayerDataDirect(flatbuffers::FlatBufferBuilder &_fbb,
         const char *id = nullptr,
         int32_t x = 0,
-        int32_t y = 0)
+        int32_t y = 0,
+        int32_t role = 0)
     {
-        return CreatePlayerData(_fbb, id ? _fbb.CreateString(id) : 0, x, y);
+        return CreatePlayerData(_fbb, id ? _fbb.CreateString(id) : 0, x, y, role);
     }
 
     struct GameInit FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table

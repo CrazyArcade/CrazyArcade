@@ -1,5 +1,6 @@
 #include "GameController.h"
 #include "api_generated.h"
+#include "Model/User.h"
 
 USING_NS_CC;
 using namespace API;
@@ -35,7 +36,7 @@ void GameController::initListener()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(keyListener, this);
 
 #ifdef NETWORK
-    //CLIENT_ON(MsgType_PlayerJoin, GameController::onPlayerJoin);
+    CLIENT_ON(MsgType_GameInit, GameController::onGameInit);
     CLIENT_ON(MsgType_PlayerPosChange, GameController::onPlayerPositionChange);
     CLIENT_ON(MsgType_PlayerAttrChange, GameController::onPlayerAttrChange);
     CLIENT_ON(MsgType_PlayerStatusChange, GameController::onPlayerStatusChange);
@@ -135,6 +136,31 @@ void GameController::syncLocalPlayerPosition(float dt)
     }
 }
 
+void GameController::onGameInit(const void * msg)
+{
+    auto data = static_cast<const GameInit*>(msg);
+    auto playerVector = data->players();
+    for (auto it = playerVector->begin(); it != playerVector->end(); ++it)
+    {
+        auto id = it->id()->str();
+        auto x = it->x(), y = it->y();
+        auto role = it->role();
+        Player * player;
+        if (User::getInstance()->getName() == id)
+        {
+            player = playerManager->createLocalPlayer(id, /*todo*/);
+        }
+        else
+        {
+            player = playerManager->createPlayer(id, /*todo*/);
+        }
+        player->setPosition(x, y);
+        map->addPlayer(player);
+    }
+
+    // todo send done msg
+}
+
 void GameController::onPlayerJoin(const void* msg)
 {
     /*
@@ -151,7 +177,6 @@ void GameController::onPlayerJoin(const void* msg)
 
     map->addPlayer(player);
     */
-
 }
 
 void GameController::onPlayerPositionChange(const void* msg)
