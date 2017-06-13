@@ -2,12 +2,6 @@
 #define __SCENE_STARTSCENE_H__
 
 #include "cocos2d.h"
-#include "SimpleAudioEngine.h"
-#include "Settings.h"
-#include "GameScene.h"
-#include "HelpScene.h"
-#include "SettingsScene.h"
-#include "Scene/RoomScene.h"
 
 class StartScene : public cocos2d::Layer
 {

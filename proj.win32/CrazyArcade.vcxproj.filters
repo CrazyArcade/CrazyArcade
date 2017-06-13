@@ -182,6 +182,9 @@
     <ClInclude Include="..\Classes\Scene\UI\RoleBox.h">
       <Filter>src\Scene\UI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\Model\User.h">
+      <Filter>src\Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

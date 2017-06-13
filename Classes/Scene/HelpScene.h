@@ -2,8 +2,6 @@
 #define __SCENE_HELPSCENE_H__
 
 #include "cocos2d.h"
-#include "Settings.h"
-#include "StartScene.h"
 
 class HelpScene : public cocos2d::Layer
 {
