@@ -148,11 +148,11 @@ void GameController::onGameInit(const void * msg)
         Player * player;
         if (User::getInstance()->getName() == id)
         {
-            player = playerManager->createLocalPlayer(id, /*todo*/);
+            //player = playerManager->createLocalPlayer(id, /*todo*/);
         }
         else
         {
-            player = playerManager->createPlayer(id, /*todo*/);
+            //player = playerManager->createPlayer(id, /*todo*/);
         }
         player->setPosition(x, y);
         map->addPlayer(player);

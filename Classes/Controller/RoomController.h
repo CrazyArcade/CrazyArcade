@@ -10,6 +10,10 @@ public:
     virtual bool init();
     CREATE_FUNC(RoomController);
 
+    void onUserChangeRole(/*TODO*/);
+
+    void onUserChangeStats(bool isReady);
+
 private:
     Client * client;
 
@@ -19,10 +23,6 @@ private:
     void onWelcome(const void* msg);
 
     void onRoomInfoUpdate(const void* msg);
-
-    void onUserChangeRole(/*TODO*/);
-
-    void onUserChangeStats(/*TODO*/);
 
 };
 

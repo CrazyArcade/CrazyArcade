@@ -91,10 +91,11 @@ void RoomController::onUserChangeRole()
     client->send(builder.GetBufferPointer(), builder.GetSize());
 }
 
-void RoomController::onUserChangeStats()
+void RoomController::onUserChangeStats(bool isReady)
 {
     // TODO
-    auto stats = 1;
+    log("%d", isReady);
+    auto stats = static_cast<int>(isReady);
     flatbuffers::FlatBufferBuilder builder;
     auto orc = CreateUserChangeStats(builder, stats);
     auto msg = CreateMsg(builder, MsgType_UserChangeStats, orc.Union());
