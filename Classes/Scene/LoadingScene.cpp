@@ -1,6 +1,7 @@
 #include "Scene/LoadingScene.h"
 #include "Scene/StartScene.h"
 #include "Settings.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
