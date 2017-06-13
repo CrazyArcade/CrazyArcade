@@ -14,6 +14,16 @@ private:
     Client * client;
 
     void onEnter();
+    void onExit();
+
+    void onWelcome(const void* msg);
+
+    void onRoomInfoUpdate(const void* msg);
+
+    void onUserChangeRole(/*TODO*/);
+
+    void onUserChangeStats(/*TODO*/);
+
 };
 
 #endif

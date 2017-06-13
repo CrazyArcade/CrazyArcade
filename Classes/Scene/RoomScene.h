@@ -3,10 +3,6 @@
 #define __ROOMSCENE_SCENE_H__
 
 #include"cocos2d.h"
-#include"SimpleAudioEngine.h"
-#include"Settings.h"
-#include"Scene/GameScene.h"
-#include"Scene/StartScene.h"
 #include"UI/CocosGUI.h"
 #include "Scene/UI/RoleBox.h"
 

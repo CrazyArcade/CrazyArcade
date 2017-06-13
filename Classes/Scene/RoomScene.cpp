@@ -1,7 +1,10 @@
-#include"RoomScene.h"
-#include"Settings.h"
-
+#include "RoomScene.h"
+#include "Settings.h"
+#include "SimpleAudioEngine.h"
 #include "UI/RoleBox.h"
+#include "Scene/GameScene.h"
+#include "Scene/StartScene.h"
+#include "Controller/RoomController.h"
 
 USING_NS_CC;
 /*to do */
@@ -29,6 +32,8 @@ bool RoomScene::init()
 	{
 		return false;
 	}
+    addChild(RoomController::create());
+
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
