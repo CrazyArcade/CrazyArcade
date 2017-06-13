@@ -46,31 +46,55 @@ bool RoomScene::init()
 	this->addChild(bg);
 
     initUserBox();
-    initRoleBox();
+    std::string roleDefault = "Player";
+    for (int i = 1; i <= 2; i++) {
+        auto box = RoleBox::create(roleDefault + StringUtils::format("%d", i), i);
+        roleBox.pushBack(box);
+        this->addChild(box);
+    }
+    
+    //initRoleBox();
 
 	//ready button
-	const auto readybutton = MenuItemLabel::create(
-		Label::createWithTTF("Ready?", Settings::Font::Type::base, Settings::Font::Size::label),
-		CC_CALLBACK_1(RoomScene::menuReadyCallback, this));
-	readybutton->setPosition(visibleSize.width*0.4f+readybutton->getContentSize().width, visibleSize.height*0.1f);
-	const auto mn = Menu::create();
-	mn->addChild(readybutton, 1);
-	mn->setPosition(1, 0);
-	this->addChild(mn);
 
-	/*// ready button
-	auto button = cocos2d::ui::Button::create("button_normal.png","button_selected.png","button_surround.png");
-	button->setTitleText("Ready?");
-	button->setTitleFontName("fonts/OpenSans-Regular.ttf");
-	button->setTitleFontSize(32);
-	button->setPosition(Vec2(visibleSize.width / 2 + button->getContentSize().width, visibleSize.height*0.1f));
-	button->addTouchEventListener(CC_CALLBACK_1(GameScene::createScene(), this));
+    auto mouseListener = cocos2d::EventListenerMouse::create();
 
-	this->addChild(button, 1);
-	*/
+    mouseListener->onMouseUp = [=](Event* event) {
+        EventMouse* e = (EventMouse*)event;
+        auto touch = e->getLocation();
+        for (int i = 0; i < roleBox.size(); i++) {
+            auto range = (roleBox.at(i))->getBound();
+            if (range.containsPoint(touch)) {
+                // TODO
+            }
+        }
+    };
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
+
+	this->addChild(createButtons());
+
 	addChild(createText());
 
 	return true;
+}
+
+cocos2d::Menu * RoomScene::createButtons()
+{
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+
+    const auto readybutton = MenuItemImage::create(
+        "RoomScene/not ready.png", "RoomScene/ready.png",
+        CC_CALLBACK_1(RoomScene::menuReadyCallback, this));
+   
+    readybutton->setPosition(visibleSize.width*0.4f + readybutton->getContentSize().width, visibleSize.height*0.1f);
+    
+    const auto mn = Menu::create();
+   
+    mn->addChild(readybutton, 1);
+    mn->setPosition(1, 0);
+   
+    return mn;
 }
 
 cocos2d::Menu* RoomScene::createText() {
@@ -91,6 +115,7 @@ cocos2d::Menu* RoomScene::createText() {
 
 	return buttons;
 }
+
 void RoomScene::menuBackCallback(cocos2d::Ref* pSender)
 {
 	Director::getInstance()->popScene();
@@ -121,32 +146,4 @@ void RoomScene::initUserBox()
         userBoxes.pushBack(userBox);
         this->addChild(userBox);
     }
-}
-
-void RoomScene::initRoleBox()
-{
-    // TODO refoactor
-    Size visibleSize = Director::getInstance()->getVisibleSize();
-    //playercase 
-    //the case backgorund
-    auto caseTitle = Sprite::create("RoomScene/003c.png");
-    auto roomcase = Sprite::create("RoomScene/roomcase_01.png");
-    caseTitle->setPosition(Vec2(roomcase->getContentSize().width * 6 * 1.25, visibleSize.height * 0.8f));
-    caseTitle->setScale(0.5);
-    this->addChild(caseTitle, 1);
-    DrawNode* casebg = DrawNode::create();
-    casebg->drawSolidRect(Vec2(roomcase->getContentSize().width * 1.25 * 4.2, visibleSize.height * 0.85f),
-        Vec2(visibleSize.width * 0.97f, visibleSize.height * 0.4f), Color4F(1.0 / 255, 108.0 / 255, 250.0 / 255, 0.95));
-    for (int i = 1; i < 5; ++i)
-    {
-        casebg->drawSolidRect(Vec2(roomcase->getContentSize().width * 1.25 * 4.2 + roomcase->getContentSize().width * (i - 1) + roomcase->getContentSize().width * 0.1,
-            visibleSize.height * 0.85f - caseTitle->getContentSize().height * 0.6),
-            Vec2(roomcase->getContentSize().width*1.25*4.2 + roomcase->getContentSize().width * i,
-                visibleSize.height*.85f - caseTitle->getContentSize().height * 3 * 0.5), Color4F(31.0 / 255, 58.0 / 255, 147.0 / 255, 0.95));
-        casebg->drawSolidRect(Vec2(roomcase->getContentSize().width * 1.25 * 4.2 + roomcase->getContentSize().width * (i - 1) + roomcase->getContentSize().width * 0.1,
-            visibleSize.height * 0.85f - caseTitle->getContentSize().height * 3 * 0.6),
-            Vec2(roomcase->getContentSize().width*1.25*4.2 + roomcase->getContentSize().width * i,
-                visibleSize.height*0.42f), Color4F(31.0 / 255, 58.0 / 255, 147.0 / 255, 0.95));
-    }
-    this->addChild(casebg);
 }
