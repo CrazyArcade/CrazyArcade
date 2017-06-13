@@ -1,4 +1,6 @@
 #include "SettingsScene.h"
+#include "Settings.h"
+#include "StartScene.h"
 
 USING_NS_CC;
 
