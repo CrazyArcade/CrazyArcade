@@ -11,7 +11,7 @@ public:
 
     void setRole(int role);
 
-    void setName(const std::string& name);
+    void setUserName(const std::string& name);
 
 private:
     int _role;

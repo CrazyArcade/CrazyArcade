@@ -93,9 +93,9 @@ void RoomScene::initUserBox()
 {
     for (int i = 0; i < 2; i++) {
         auto _userBox = UserBox::create();
-        _userBox->setPosition(Vec2(visibleSize.width / 2 + (2*i - 1)*_userBox->getContentSize().width*0.7,
-            visibleSize.height*0.65f));
-        _userBox->setName("test");
+        _userBox->setPosition(Vec2(_userBox->getContentSize().width * (i + 1) * 1.25 - _userBox->getContentSize().width * 0.5f,
+            visibleSize.height*0.68f));
+        _userBox->setUserName("test");
         _userBox->setRole(0);
         addChild(_userBox);
         userBoxes.pushBack(_userBox);
@@ -108,8 +108,8 @@ void RoomScene::initRoleBox()
     {
         auto roleBox = RoleBox::create(static_cast<RoleBox::roleChoice>(i));
         roleBox->setPosition(cocos2d::Vec2(
-            visibleSize.width*0.5 + (2 * i - 1)*roleBox->getContentSize().width*0.7,
-            visibleSize.height*0.35));
+            visibleSize.width*0.7 + (2 * i - 1)*roleBox->getContentSize().width*0.7,
+            visibleSize.height*0.6));
         addChild(roleBox);
         roleBoxes.pushBack(roleBox);
     }
