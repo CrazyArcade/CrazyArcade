@@ -99,6 +99,9 @@
     <ClCompile Include="..\Classes\Scene\LoginScene.cpp">
       <Filter>src\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Scene\UI\CheckBox.cpp">
+      <Filter>src\Scene\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -175,6 +178,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Scene\LoginScene.h">
       <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene\UI\CheckBox.h">
+      <Filter>src\Scene\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

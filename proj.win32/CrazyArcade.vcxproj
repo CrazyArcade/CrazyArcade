@@ -169,6 +169,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Classes\Scene\UI\ChatBox.cpp" />
+    <ClCompile Include="..\Classes\Scene\UI\CheckBox.cpp" />
     <ClCompile Include="..\Classes\Scene\UI\GameMap.cpp" />
     <ClCompile Include="..\Classes\Scene\UI\ResultBox.cpp" />
     <ClCompile Include="..\Classes\Util\AnimationLoader.cpp" />
@@ -195,6 +196,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Scene\SettingsScene.h" />
     <ClInclude Include="..\Classes\Scene\StartScene.h" />
     <ClInclude Include="..\Classes\Scene\UI\ChatBox.h" />
+    <ClInclude Include="..\Classes\Scene\UI\CheckBox.h" />
     <ClInclude Include="..\Classes\Scene\UI\GameMap.h" />
     <ClInclude Include="..\Classes\Scene\UI\ResultBox.h" />
     <ClInclude Include="..\Classes\Settings.h" />

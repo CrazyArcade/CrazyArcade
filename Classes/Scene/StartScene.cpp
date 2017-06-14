@@ -45,6 +45,7 @@ cocos2d::Menu* StartScene::musicInit() {
     const auto music = Menu::create();
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("StartScene/bgmusic.mp3");
     musicOn = UserDefault::getInstance()->getBoolForKey("musicOn", true);
+	musicOn = CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying();
     if (!musicOn)
         CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
 
