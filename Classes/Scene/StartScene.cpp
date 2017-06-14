@@ -5,6 +5,7 @@
 #include "HelpScene.h"
 #include "SettingsScene.h"
 #include "RoomScene.h"
+#include "LoginScene.h"
 
 USING_NS_CC;
 
