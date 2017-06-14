@@ -2,21 +2,26 @@
 #ifndef __ROOMSCENE_SCENE_H__
 #define __ROOMSCENE_SCENE_H__
 
-#include"cocos2d.h"
-#include"SimpleAudioEngine.h"
-#include"Settings.h"
-#include"Scene/GameScene.h"
-#include"Scene/StartScene.h"
-#include"UI/CocosGUI.h"
+#include "cocos2d.h"
+#include "ui/CocosGUI.h"
 #include "Scene/UI/RoleBox.h"
+#include "Controller/RoomController.h"
 
 class RoomScene :public cocos2d::Layer
 {
 private:
-    cocos2d::Menu *createButtons();
+    void createUI();
+
+    RoomController * roomController;
+
+    cocos2d::ui::Button * readyButton;
+    void createReadyButton();
+    std::function<void(bool isReady)> readyButtonCallBack;
+
+    void onExit();
+    
     cocos2d::Menu *createText();
     void menuBackCallback(cocos2d::Ref* pSender);
-    void menuReadyCallback(cocos2d::Ref* pSender);
 
     cocos2d::Vector<cocos2d::Sprite*> userBoxes;
     void initUserBox();

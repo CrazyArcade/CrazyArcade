@@ -1,9 +1,13 @@
-#include"RoomScene.h"
-#include"Settings.h"
-
-#include "UI/RoleBox.h"
+#include "RoomScene.h"
+#include "ui/CocosGUI.h"
+#include "SimpleAudioEngine.h"
+#include "Scene/UI/RoleBox.h"
+#include "Scene/GameScene.h"
+#include "Scene/StartScene.h"
+#include "Settings.h"
 
 USING_NS_CC;
+
 /*to do */
 /*the back button*/
 /*the case of the players*/
@@ -29,42 +33,57 @@ bool RoomScene::init()
 	{
 		return false;
 	}
-	Size visibleSize = Director::getInstance()->getVisibleSize();
-	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    // room controller
+    roomController = RoomController::create();
+    addChild(roomController);
+    // ready button callback
+    readyButtonCallBack = CC_CALLBACK_1(RoomController::onUserChangeStats, roomController);
+   
+    createUI();
+	return true;
+}
 
-	//the title
-	auto label = Label::createWithTTF("ROOM", Settings::Font::Type::title, Settings::Font::Size::label);
-	label->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - label->getContentSize().height));
-	label->enableGlow(Color4B::BLUE);
-	this->addChild(label,1);
+void RoomScene::createUI()
+{
+    createReadyButton();
 
-	//static node
-	Sprite * bg = Sprite::create("RoomScene/bg03.jpg");
-	bg->setScale(1.25);
-	bg->setPosition(Vec2(origin.x + visibleSize.width / 2,
-		origin.y + visibleSize.height / 2));
-	this->addChild(bg);
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+    //the title
+    auto label = Label::createWithTTF("ROOM", Settings::Font::Type::title, Settings::Font::Size::label);
+    label->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - label->getContentSize().height));
+    label->enableGlow(Color4B::BLUE);
+    this->addChild(label, 1);
+
+    //static node
+    Sprite * bg = Sprite::create("RoomScene/bg03.jpg");
+    bg->setScale(1.25f);
+    bg->setLocalZOrder(-1);
+    bg->setPosition(Vec2(origin.x + visibleSize.width / 2,
+        origin.y + visibleSize.height / 2));
+    this->addChild(bg);
 
     initUserBox();
     std::string roleDefault = "Player";
-    for (int i = 1; i <= 2; i++) {
+    for (int i = 1; i <= 2; i++)
+    {
         auto box = RoleBox::create(roleDefault + StringUtils::format("%d", i), i);
         roleBox.pushBack(box);
         this->addChild(box);
     }
-    
-    //initRoleBox();
-
-	//ready button
 
     auto mouseListener = cocos2d::EventListenerMouse::create();
 
-    mouseListener->onMouseUp = [=](Event* event) {
+    mouseListener->onMouseUp = [=](Event* event)
+    {
         EventMouse* e = (EventMouse*)event;
         auto touch = e->getLocation();
-        for (int i = 0; i < roleBox.size(); i++) {
+        for (int i = 0; i < roleBox.size(); i++)
+        {
             auto range = (roleBox.at(i))->getBound();
-            if (range.containsPoint(touch)) {
+            if (range.containsPoint(touch))
+            {
                 // TODO
             }
         }
@@ -72,29 +91,47 @@ bool RoomScene::init()
 
     _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
 
-	this->addChild(createButtons());
-
-	addChild(createText());
-
-	return true;
+    addChild(createText());
 }
 
-cocos2d::Menu * RoomScene::createButtons()
+void RoomScene::createReadyButton()
 {
     Size visibleSize = Director::getInstance()->getVisibleSize();
 
-    const auto readybutton = MenuItemImage::create(
-        "RoomScene/not ready.png", "RoomScene/ready.png",
-        CC_CALLBACK_1(RoomScene::menuReadyCallback, this));
-   
-    readybutton->setPosition(visibleSize.width*0.4f + readybutton->getContentSize().width, visibleSize.height*0.1f);
-    
-    const auto mn = Menu::create();
-   
-    mn->addChild(readybutton, 1);
-    mn->setPosition(1, 0);
-   
-    return mn;
+    auto getShowText = [](bool isReady)
+    {
+        return isReady ? "Cancel" : "Ready";
+    };
+    auto isReady = new bool;
+    *isReady = false;
+
+    readyButton = ui::Button::create("RoomScene/button_normal.png", "RoomScene/button_selected.png");
+    readyButton->setUserData(isReady);
+    readyButton->setTitleText(getShowText(*isReady));
+    readyButton->setTitleFontSize(Settings::Font::Size::normal);
+    //readyButton->setTitleFontName();
+    readyButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type)
+    {
+        if (type == ui::Widget::TouchEventType::ENDED)
+        {
+            auto button = static_cast<ui::Button*>(sender);
+            auto isReady = static_cast<bool*>(button->getUserData());
+            *isReady = !*isReady;
+            button->setTitleText(getShowText(*isReady));
+            if (readyButtonCallBack) readyButtonCallBack(*isReady);
+        }
+    });
+
+    readyButton->setPosition(Vec2(visibleSize.width*0.4f + readyButton->getContentSize().width, visibleSize.height*0.1f));
+    this->addChild(readyButton);
+}
+
+void RoomScene::onExit()
+{
+    Layer::onExit();
+
+    delete static_cast<bool*>(readyButton->getUserData());
+    readyButton->setUserData(nullptr);
 }
 
 cocos2d::Menu* RoomScene::createText() {
@@ -119,11 +156,6 @@ cocos2d::Menu* RoomScene::createText() {
 void RoomScene::menuBackCallback(cocos2d::Ref* pSender)
 {
 	Director::getInstance()->popScene();
-}
-void RoomScene::menuReadyCallback(cocos2d::Ref* pSender)
-{
-	const auto scene = GameScene::createScene();
-	Director::getInstance()->pushScene(scene);
 }
 
 void RoomScene::initUserBox()
