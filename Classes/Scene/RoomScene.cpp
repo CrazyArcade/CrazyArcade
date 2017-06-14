@@ -62,7 +62,15 @@ void RoomScene::createUI()
         origin.y + visibleSize.height / 2));
     this->addChild(bg);
 
-    initUserBox();
+    //initUserBox();
+    for (int i = 0; i < 2; i++) {
+        auto _userBox = UserBox::create();
+        _userBox->setPosition(Vec2(_userBox->getContentSize().width * i * 1.25 - _userBox->getContentSize().width * 0.5f,
+            visibleSize.height*0.68f));
+        addChild(_userBox);
+        userBox.pushBack(_userBox);
+    }
+
     for (int i = 0; i < 2; i++)
     {
         auto _roleBox = RoleBox::create(static_cast<RoleBox::roleChoice>(i));
@@ -88,6 +96,7 @@ void RoomScene::createUI()
                 for (auto val : roleBox)
                     val->setChosen(false);
                 prev->setChosen(true);
+                userBox.at(0)->setRole(prev->getRole());
                 break;
             }
         }
@@ -162,7 +171,7 @@ void RoomScene::menuBackCallback(cocos2d::Ref* pSender)
     Director::getInstance()->popScene();
 }
 
-void RoomScene::initUserBox()
+/*void RoomScene::initUserBox()
 {
     Size visibleSize = Director::getInstance()->getVisibleSize();
     for (int i = 1; i < 9; ++i)
@@ -182,4 +191,4 @@ void RoomScene::initUserBox()
         userBoxes.pushBack(userBox);
         this->addChild(userBox);
     }
-}
+}*/

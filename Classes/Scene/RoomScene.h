@@ -6,6 +6,7 @@
 #include "Controller/RoomController.h"
 #include "ui/CocosGUI.h"
 #include "ui/UIButton.h"
+#include "Scene/UI/UserBox.h"
 
 class RoomScene :public cocos2d::Layer
 {
@@ -23,7 +24,7 @@ private:
     cocos2d::Menu *createText();
     void menuBackCallback(cocos2d::Ref* pSender);
 
-    cocos2d::Vector<cocos2d::Sprite*> userBoxes;
+    cocos2d::Vector<UserBox*> userBox;
     void initUserBox();
 
     cocos2d::Vector<RoleBox*> roleBox;
