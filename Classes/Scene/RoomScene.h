@@ -12,16 +12,9 @@
 class RoomScene :public cocos2d::Layer
 {
 private:
-	
+	cocos2d::Menu *createText();
 	void menuBackCallback(cocos2d::Ref* pSender);
 	void menuReadyCallback(cocos2d::Ref* pSender);
-	void createUI();
-	cocos2d::Sprite * createBackground();
-	cocos2d::Menu * createReadyButton();
-	cocos2d::Label * createTitle();
-	cocos2d::Menu *createText();
-	void initRoleBox();
-	void initUserBox();
 public:
 	static cocos2d::Scene * createScene();
 	virtual bool init();
