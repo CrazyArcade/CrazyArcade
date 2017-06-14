@@ -101,6 +101,7 @@ void RoomController::onUserChangeRole(int role)
     client->send(builder.GetBufferPointer(), builder.GetSize());
 }
 
+
 void RoomController::onUserChangeStats(bool isReady)
 {
     auto stats = static_cast<int>(isReady);

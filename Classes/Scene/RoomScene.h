@@ -6,6 +6,7 @@
 #include "Controller/RoomController.h"
 #include "ui/CocosGUI.h"
 #include "ui/UIButton.h"
+#include "Scene/UI/UserBox.h"
 
 class RoomScene :public cocos2d::Layer
 {
@@ -13,24 +14,26 @@ private:
     void createUI();
 
     RoomController * roomController;
-    
+
     cocos2d::ui::Button * readyButton;
-    cocos2d::Vector<cocos2d::Sprite*> userBoxes;
-    cocos2d::Vector<RoleBox*> roleBoxes;
-    
+    cocos2d::Vector< UserBox*> userBoxes;
+    cocos2d::Vector< RoleBox*> roleBoxes;
+
     std::function<void(bool)> readyButtonCallBack;
     std::function<void(int)> roleChangeCallback;
 
     cocos2d::Vec2 origin;
     cocos2d::Size visibleSize;
-    
+
     void createReadyButton();
 
     void createTitle();
-    
+
     void initUserBox();
 
     void initRoleBox();
+
+    void initMouseListener();
 
     void createBackButton();
 
@@ -42,4 +45,3 @@ public:
     CREATE_FUNC(RoomScene);
 };
 #endif // !__ROOMSCENE_SCENE_H__
-
