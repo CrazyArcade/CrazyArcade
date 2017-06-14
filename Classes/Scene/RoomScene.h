@@ -16,18 +16,28 @@ private:
     RoomController * roomController;
 
     cocos2d::ui::Button * readyButton;
+    cocos2d::Vector< UserBox*> userBoxes;
+    cocos2d::Vector< RoleBox*> roleBoxes;
+
+    std::function<void(bool)> readyButtonCallBack;
+    std::function<void(int)> roleChangeCallback;
+
+    cocos2d::Vec2 origin;
+    cocos2d::Size visibleSize;
+
     void createReadyButton();
-    std::function<void(bool isReady)> readyButtonCallBack;
 
-    void onExit();
-    
-    cocos2d::Menu *createText();
-    void menuBackCallback(cocos2d::Ref* pSender);
+    void createTitle();
 
-    cocos2d::Vector<UserBox*> userBox;
     void initUserBox();
 
-    cocos2d::Vector<RoleBox*> roleBox;
+    void initRoleBox();
+
+    void initMouseListener();
+
+    void createBackButton();
+
+    void createBackground();
 
 public:
     static cocos2d::Scene * createScene();
@@ -35,4 +45,3 @@ public:
     CREATE_FUNC(RoomScene);
 };
 #endif // !__ROOMSCENE_SCENE_H__
-

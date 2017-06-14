@@ -36,10 +36,17 @@ std::string UserBox::getName()
 void UserBox::initNameArea()
 {
     nameArea = cocos2d::ui::TextField::create("Username Here",
-        Settings::Font::Type::base, Settings::Font::Size::chat);
+        Settings::Font::Type::base, Settings::Font::Size::name);
+    nameArea->setColor(cocos2d::Color3B::BLACK);
+
+    nameArea->setMaxLengthEnabled(true);
+    nameArea->setMaxLength(15);
+    
     nameArea->setCursorEnabled(true);
     nameArea->setCursorChar('|');
+    
     nameArea->setTextHorizontalAlignment(cocos2d::TextHAlignment::LEFT);
-    nameArea->setPosition(cocos2d::Vec2(this->getContentSize().width / 2, this->getContentSize().height*0.2));
+    
+    nameArea->setPosition(cocos2d::Vec2(this->getContentSize().width / 2, this->getContentSize().height*0.08));
     addChild(nameArea);
 }

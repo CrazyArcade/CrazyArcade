@@ -11,6 +11,7 @@ namespace Settings
     {
         namespace Size
         {
+            constexpr int name = 15;
             constexpr int chat = 24;
             constexpr int title  = 60;
             constexpr int label  = 40;
