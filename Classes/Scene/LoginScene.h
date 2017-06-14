@@ -8,6 +8,7 @@
 #include"SettingsScene.h"
 #include"RoomScene.h"
 #include"StartScene.h"
+#include"Scene/UI/CheckBox.h"
 #include"cocos2d/cocos/ui/CocosGUI.h"
 #include"cocos2d/extensions/cocos-ext.h"
 
@@ -17,10 +18,18 @@ class LoginScene :public cocos2d::Layer,public cocos2d::ui::EditBoxDelegate
 protected:
 	cocos2d::ui::EditBox* _editUserName;
 	cocos2d::ui::EditBox* _editPassword;
-	void menuLoginCallback(cocos2d::Ref* pSender);
 private:
 	cocos2d::Menu* createText();
+	cocos2d::Sprite* createBackground();
+	cocos2d::Sprite* createLoginBox();
+	cocos2d::Menu* createLoginItem();
 	void menuBackCallback(cocos2d::Ref* pSender);
+	void menuLoginCallback(cocos2d::Ref* pSender);
+	void checkboxSelectedEvent(cocos2d::Ref* pSender);
+	void initUserBox();
+	void initPasswordBox();
+	void initcheckBox();
+	void initURLSkip();
 public :
 	
 	static cocos2d::Scene * createScene();
