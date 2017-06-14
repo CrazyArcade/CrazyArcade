@@ -1,6 +1,5 @@
 #include "RoomController.h"
 #include "api_generated.h"
-#include "Model/User.h"
 
 USING_NS_CC;
 using namespace API;
