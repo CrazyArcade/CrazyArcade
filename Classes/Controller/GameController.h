@@ -33,6 +33,10 @@ private:
     void syncLocalPlayerPosition(float dt);
 
     void onGameInit(const void* msg);
+    void onGameStatusChange(const void* msg);
+
+    void toStart();
+    void toOver();
 
     void onPlayerJoin(const void* msg);
     void onPlayerPositionChange(const void* msg);

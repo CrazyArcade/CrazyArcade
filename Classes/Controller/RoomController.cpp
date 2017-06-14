@@ -75,7 +75,7 @@ void RoomController::onRoomInfoUpdate(const void * msg)
     {
         auto uid = it->uid()->str();
         auto name = it->name()->str();
-        auto role = it->role() + 1;
+        auto role = it->role();
         // TODO
         log("%s %s %d", uid.data(), name.data(), role);
     }

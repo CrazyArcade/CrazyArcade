@@ -37,6 +37,8 @@ void GameController::initListener()
 
 #ifdef NETWORK
     CLIENT_ON(MsgType_GameInit, GameController::onGameInit);
+    CLIENT_ON(MsgType_GameStatusChange, GameController::onGameStatusChange);
+
     CLIENT_ON(MsgType_PlayerPosChange, GameController::onPlayerPositionChange);
     CLIENT_ON(MsgType_PlayerAttrChange, GameController::onPlayerAttrChange);
     CLIENT_ON(MsgType_PlayerStatusChange, GameController::onPlayerStatusChange);
@@ -105,7 +107,6 @@ void GameController::onEnter()
     auto prop = propManager->createProp("bubble", Prop::Type::BUBBLE, pos1);
     map->addProp(prop, prop->getType());
 #endif // NETWORK
-    initListener();
 }
 
 void GameController::onExit()
@@ -146,13 +147,13 @@ void GameController::onGameInit(const void * msg)
         auto x = it->x(), y = it->y();
         auto role = it->role();
         Player * player;
-        if (User::getInstance()->getName() == id)
+        if (User::getInstance()->getUID() == id)
         {
-            //player = playerManager->createLocalPlayer(id, /*todo*/);
+            player = playerManager->createLocalPlayer(id, role);
         }
         else
         {
-            //player = playerManager->createPlayer(id, /*todo*/);
+            player = playerManager->createPlayer(id, role);
         }
         player->setPosition(x, y);
         map->addPlayer(player);
@@ -166,6 +167,31 @@ void GameController::onGameInit(const void * msg)
         builder.Finish(msg);
     }
     // todo send done msg
+}
+
+void GameController::onGameStatusChange(const void * msg)
+{
+    auto data = static_cast<const GameStatusChange*>(msg);
+    auto status = data->status();
+    if (status == GameStatus::GameStatus_START)
+    {
+        toStart();
+    }
+    else if (status == GameStatus::GameStatus_OVER)
+    {
+        toOver();
+    }
+}
+
+void GameController::toStart()
+{
+    // game start, init keyboard listener
+    initListener();
+}
+
+void GameController::toOver()
+{
+    // todo
 }
 
 void GameController::onPlayerJoin(const void* msg)
@@ -190,7 +216,7 @@ void GameController::onPlayerPositionChange(const void* msg)
 {
     auto data = static_cast<const API::PlayerPosChange*>(msg);
     auto player = playerManager->getPlayer(data->id()->str());
-    if (player != playerManager->getLocalPlayer() && player != nullptr)
+    if (!player->isLocal() && player != nullptr)
     {
         auto pos = Vec2(data->x(), data->y());
         auto dir = static_cast<Player::Direction>(data->direction());
@@ -227,7 +253,7 @@ void GameController::onLocalPlayerSetBubble()
     auto localPlayer = playerManager->getLocalPlayer();
     if (localPlayer->isCanSetBubble() && map->at(map->positionToTileCoord(localPlayer->getPosition())) != map->TILE_BUBBLE)
     {
-        localPlayer->setBubble();
+        //localPlayer->setBubble();
 #ifdef NETWORK
         using namespace API;
         flatbuffers::FlatBufferBuilder builder;
@@ -259,7 +285,10 @@ void GameController::onBubbleSet(const void* msg)
     auto playerID = data->player_id()->str();
     auto x = data->x(), y = data->y();
     auto damage = data->damage();
-    
+
+    auto player = playerManager->getPlayer(playerID);
+    if (player->isLocal()) player->setBubble();
+
     auto bubble = bubbleManager->createBubble(id, playerID, Vec2(x, y), damage);
     if (bubble)
     {

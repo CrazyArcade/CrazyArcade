@@ -4,10 +4,10 @@
 
 USING_NS_CC;
 
-Player * Player::create(const std::string& id, const std::string& Role)
+Player * Player::create(const std::string& id, int role)
 {
     auto player = new (std::nothrow) Player();
-    if (player && player->initWithRole(Role))
+    if (player && player->initWithRole(role))
     {
         player->_id = id;
         player->autorelease();
@@ -30,10 +30,10 @@ bool Player::init()
     return true;
 }
 
-bool Player::initWithRole(const std::string& Role)
+bool Player::initWithRole(int role)
 {
-    auto file = Settings::Player::path + Role + "/default.png";
-    role = Role;
+    auto file = Settings::Player::path + std::string(Settings::Player::roleName[role]) + "/default.png";
+    this->role = role;
     if (this->initWithFile(file) && this->init())
     {
         // do something here
