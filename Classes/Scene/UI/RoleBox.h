@@ -3,23 +3,24 @@
 
 #include "cocos2d.h"
 
-class RoleWindow;
-
-class RoleBox : public cocos2d::Layer
+class RoleBox : public cocos2d::Sprite
 {
 public:
-    virtual bool initWithRole(std::string role,int8_t Rank);
-    static RoleBox* create(std::string role, int8_t Rank);
 
-    void setRole(const std::string& Role);
-    std::string getRole();
+    enum roleChoice {
+        Player1,
+        Player2
+    };
 
-    cocos2d::Rect getBound();
+    virtual bool init();
+    static RoleBox* create(roleChoice role);
+
+    void setChosen(bool choice);
+    roleChoice getRole();
 
 private:
-    std::string role;
-    int8_t rank;
-    cocos2d::Rect bound;
+    bool isChosen = false;
+    roleChoice _role;
 };
 
 #endif
