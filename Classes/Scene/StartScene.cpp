@@ -27,7 +27,7 @@ bool StartScene::init()
 
     addChild(createBGImage());
     addChild(createText());
-    addChild(musicInit());
+    musicInit();
 
     return true;
 }
@@ -41,7 +41,7 @@ void StartScene::musicPP(cocos2d::Ref * pSender) {
     UserDefault::getInstance()->setBoolForKey("musicOn", musicOn);
 }
 
-cocos2d::Menu* StartScene::musicInit() {
+void StartScene::musicInit() {
     const auto music = Menu::create();
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("StartScene/bgmusic.mp3");
     musicOn = UserDefault::getInstance()->getBoolForKey("musicOn", true);
@@ -49,7 +49,7 @@ cocos2d::Menu* StartScene::musicInit() {
     if (!musicOn)
         CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
 
-    auto labelDef = Label::createWithTTF(musicOn ? "Music on" : "Music off", Settings::Font::Type::base, Settings::Font::Size::light);
+    /*auto labelDef = Label::createWithTTF(musicOn ? "Music on" : "Music off", Settings::Font::Type::base, Settings::Font::Size::light);
     auto labelSwi = Label::createWithTTF(musicOn ? "Music off" : "music on", Settings::Font::Type::base, Settings::Font::Size::light);
     labelDef->setColor(cocos2d::Color3B::BLACK);
     labelSwi->setColor(cocos2d::Color3B::BLACK);
@@ -64,7 +64,7 @@ cocos2d::Menu* StartScene::musicInit() {
     musicButton->setPosition(visibleSize.width * 0.95f, visibleSize.height * 0.95f);
     music->addChild(musicButton);
     music->setPosition(0, 0);
-    return music;
+	return music;*/
 }
 
 void StartScene::menuPlayCallback(cocos2d::Ref * pSender) {
