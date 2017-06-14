@@ -1,52 +1,40 @@
 #include "UserBox.h"
 #include "Settings.h"
 
+USING_NS_CC;
+
 bool UserBox::init()
 {
     this->initWithFile("RoomScene/roomcase_01.png");
-    initNameArea();
     return true;
 }
 
-void UserBox::setRole(RoleBox::roleChoice role)
+void UserBox::setRole(int role)
 {
-    if (isInit) {
-        isInit = false;
-        rolePic = cocos2d::Sprite::create(
-            Settings::Player::path + std::string(Settings::Player::roleName[this->_role]) + "/face.png");
-        rolePic->setPosition(cocos2d::Vec2(this->getContentSize().width / 2, this->getContentSize().height / 2));
-        addChild(rolePic);
-        _role = role;
-    }
-    else {
-        if (role != _role) {
-            _role = role;
-            rolePic->setTexture(cocos2d::Sprite::create(
-                Settings::Player::path + std::string(Settings::Player::roleName[this->_role]) + "/face.png")
-            ->getTexture());
-        }
-    }
+    _role = role;
+    if (!rolePic)
+    {
+        rolePic = Sprite::create();
+        rolePic->setPosition(cocos2d::Vec2(this->getContentSize().width * 0.5f, this->getContentSize().height * 0.6f));
+        rolePic->setScale(1.2f);
+        addChild(rolePic, 1);
+    } 
+    rolePic->setTexture(Settings::Player::path + std::string(Settings::Player::roleName[role]) + "/default.png");
 }
 
-std::string UserBox::getName()
+void UserBox::setName(const std::string & name)
 {
-    return name;
-}
-
-void UserBox::initNameArea()
-{
-    nameArea = cocos2d::ui::TextField::create("Username Here",
-        Settings::Font::Type::base, Settings::Font::Size::name);
-    nameArea->setColor(cocos2d::Color3B::BLACK);
-
-    nameArea->setMaxLengthEnabled(true);
-    nameArea->setMaxLength(15);
-    
-    nameArea->setCursorEnabled(true);
-    nameArea->setCursorChar('|');
-    
-    nameArea->setTextHorizontalAlignment(cocos2d::TextHAlignment::LEFT);
-    
-    nameArea->setPosition(cocos2d::Vec2(this->getContentSize().width / 2, this->getContentSize().height*0.08));
-    addChild(nameArea);
+    this->name = name;
+    if (!nameArea)
+    {
+        nameArea = ui::Text::create(name, Settings::Font::Type::base, 24);
+        nameArea->setPosition(Vec2(this->getContentSize().width * 0.5f, this->getContentSize().height * 0.6f));
+        nameArea->setColor(Color3B::WHITE);
+        nameArea->enableGlow(Color4B::BLACK);
+        addChild(nameArea, 100);
+    }
+    else
+    {
+        nameArea->setString(name);
+    }
 }
