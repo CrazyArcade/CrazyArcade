@@ -1,6 +1,7 @@
 #include "RoomController.h"
 #include "api_generated.h"
 #include "Model/User.h"
+#include "Scene/GameScene.h"
 
 USING_NS_CC;
 using namespace API;
@@ -12,7 +13,6 @@ bool RoomController::init()
         return false;
     }
 
-    client = Client::getInstance();
     return true;
 }
 
@@ -20,6 +20,7 @@ void RoomController::onEnter()
 {
     Layer::onEnter();
 #ifdef NETWORK
+    client = Client::getInstance();
     if (!client->isConnected())
     {
         client->connect();
@@ -27,6 +28,7 @@ void RoomController::onEnter()
 
     CLIENT_ON(MsgType_Welcome, RoomController::onWelcome);
     CLIENT_ON(MsgType_RoomInfoUpdate, RoomController::onRoomInfoUpdate);
+    CLIENT_ON(MsgType_GameStatusChange, RoomController::onGameStatusChange);
 #endif // NETWORK
 }
 
@@ -79,6 +81,16 @@ void RoomController::onRoomInfoUpdate(const void * msg)
     }
 }
 
+void RoomController::onGameStatusChange(const void * msg)
+{
+    auto data = static_cast<const GameStatusChange*>(msg);
+    auto status = data->status();
+    if (status == GameStatus::GameStatus_PENDING)
+    {
+        Director::getInstance()->pushScene(GameScene::createScene());
+    }
+}
+
 void RoomController::onUserChangeRole()
 {
     // TODO
@@ -93,8 +105,6 @@ void RoomController::onUserChangeRole()
 
 void RoomController::onUserChangeStats(bool isReady)
 {
-    // TODO
-    log("%d", isReady);
     auto stats = static_cast<int>(isReady);
     flatbuffers::FlatBufferBuilder builder;
     auto orc = CreateUserChangeStats(builder, stats);

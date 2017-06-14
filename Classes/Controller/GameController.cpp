@@ -158,6 +158,13 @@ void GameController::onGameInit(const void * msg)
         map->addPlayer(player);
     }
 
+    {
+        // send load done msg.
+        flatbuffers::FlatBufferBuilder builder;
+        auto orc = CreateUserChangeStats(builder, 2);
+        auto msg = CreateMsg(builder, MsgType_UserChangeStats, orc.Union());
+        builder.Finish(msg);
+    }
     // todo send done msg
 }
 

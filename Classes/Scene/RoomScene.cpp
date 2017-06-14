@@ -102,23 +102,18 @@ void RoomScene::createReadyButton()
     {
         return isReady ? "Cancel" : "Ready";
     };
-    auto isReady = new bool;
-    *isReady = false;
-
+    static bool isReady = false;
     readyButton = ui::Button::create("RoomScene/button_normal.png", "RoomScene/button_selected.png");
-    readyButton->setUserData(isReady);
-    readyButton->setTitleText(getShowText(*isReady));
+    readyButton->setTitleText(getShowText(isReady));
     readyButton->setTitleFontSize(Settings::Font::Size::normal);
-    //readyButton->setTitleFontName();
     readyButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type)
     {
         if (type == ui::Widget::TouchEventType::ENDED)
         {
             auto button = static_cast<ui::Button*>(sender);
-            auto isReady = static_cast<bool*>(button->getUserData());
-            *isReady = !*isReady;
-            button->setTitleText(getShowText(*isReady));
-            if (readyButtonCallBack) readyButtonCallBack(*isReady);
+            isReady = !isReady;
+            button->setTitleText(getShowText(isReady));
+            if (readyButtonCallBack) readyButtonCallBack(isReady);
         }
     });
 
@@ -129,9 +124,6 @@ void RoomScene::createReadyButton()
 void RoomScene::onExit()
 {
     Layer::onExit();
-
-    delete static_cast<bool*>(readyButton->getUserData());
-    readyButton->setUserData(nullptr);
 }
 
 cocos2d::Menu* RoomScene::createText() {
