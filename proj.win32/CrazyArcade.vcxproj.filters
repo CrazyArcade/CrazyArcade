@@ -96,6 +96,13 @@
     <ClCompile Include="..\Classes\Scene\UI\ResultBox.cpp">
       <Filter>src\Scene\UI</Filter>
     </ClCompile>
+
+    <ClCompile Include="..\Classes\Scene\LoginScene.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Scene\UI\CheckBox.cpp">
+      <Filter>src\Scene\UI</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\Controller\RoomController.cpp">
       <Filter>src\Controller</Filter>
     </ClCompile>
@@ -179,6 +186,12 @@
     <ClInclude Include="..\Classes\Scene\UI\ResultBox.h">
       <Filter>src\Scene\UI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\Scene\LoginScene.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene\UI\CheckBox.h">
+      <Filter>src\Scene\UI</Filter>
+    </ClInclude>
     <ClInclude Include="..\Classes\Controller\RoomController.h">
       <Filter>src\Controller</Filter>
     </ClInclude>
@@ -196,5 +209,9 @@
     <ResourceCompile Include="game.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Resources\Scene\PlayingPad.png" />
+    <Image Include="..\Resources\Scene\ResultPad.png" />
   </ItemGroup>
 </Project>
