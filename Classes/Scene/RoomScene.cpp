@@ -1,7 +1,5 @@
 #include "RoomScene.h"
-#include "ui/CocosGUI.h"
 #include "SimpleAudioEngine.h"
-#include "Scene/UI/RoleBox.h"
 #include "Scene/GameScene.h"
 #include "Scene/StartScene.h"
 #include "Settings.h"
@@ -14,33 +12,33 @@ USING_NS_CC;
 
 Scene* RoomScene::createScene()
 {
-	//scene is an auto release object 
-	auto scene = Scene::create();
+    //scene is an auto release object 
+    auto scene = Scene::create();
 
-	//layer is an auto release object
-	auto layer = RoomScene::create();
+    //layer is an auto release object
+    auto layer = RoomScene::create();
 
-	//add layer as a child to scene
-	scene->addChild(layer);
+    //add layer as a child to scene
+    scene->addChild(layer);
 
-	//return the scene
-	return scene;
+    //return the scene
+    return scene;
 }
 
 bool RoomScene::init()
 {
-	if (!Layer::init())
-	{
-		return false;
-	}
+    if (!Layer::init())
+    {
+        return false;
+    }
     // room controller
     roomController = RoomController::create();
     addChild(roomController);
     // ready button callback
     readyButtonCallBack = CC_CALLBACK_1(RoomController::onUserChangeStats, roomController);
-   
+
     createUI();
-	return true;
+    return true;
 }
 
 void RoomScene::createUI()
@@ -65,12 +63,14 @@ void RoomScene::createUI()
     this->addChild(bg);
 
     initUserBox();
-    std::string roleDefault = "Player";
-    for (int i = 1; i <= 2; i++)
+    for (int i = 0; i < 2; i++)
     {
-        auto box = RoleBox::create(roleDefault + StringUtils::format("%d", i), i);
-        roleBox.pushBack(box);
-        this->addChild(box);
+        auto _roleBox = RoleBox::create(static_cast<RoleBox::roleChoice>(i));
+        _roleBox->setPosition(cocos2d::Vec2(
+            visibleSize.width*0.6 + i*_roleBox->getContentSize().width*1.5,
+            visibleSize.height*0.6));
+        addChild(_roleBox);
+        roleBox.pushBack(_roleBox);
     }
 
     auto mouseListener = cocos2d::EventListenerMouse::create();
@@ -79,12 +79,16 @@ void RoomScene::createUI()
     {
         EventMouse* e = (EventMouse*)event;
         auto touch = e->getLocation();
-        for (int i = 0; i < roleBox.size(); i++)
+        touch = Vec2(touch.x, touch.y + 147);       // possible upstream bug
+        for (auto prev : roleBox)
         {
-            auto range = (roleBox.at(i))->getBound();
+            auto range = prev->getBoundingBox();
             if (range.containsPoint(touch))
             {
-                // TODO
+                for (auto val : roleBox)
+                    val->setChosen(false);
+                prev->setChosen(true);
+                break;
             }
         }
     };
@@ -135,27 +139,27 @@ void RoomScene::onExit()
 }
 
 cocos2d::Menu* RoomScene::createText() {
-	const auto buttons = Menu::create();
+    const auto buttons = Menu::create();
 
-	const auto backButton = MenuItemLabel::create(
-		Label::createWithTTF("Back", Settings::Font::Type::base, Settings::Font::Size::label),
-		CC_CALLBACK_1(RoomScene::menuBackCallback, this));
+    const auto backButton = MenuItemLabel::create(
+        Label::createWithTTF("Back", Settings::Font::Type::base, Settings::Font::Size::label),
+        CC_CALLBACK_1(RoomScene::menuBackCallback, this));
 
-	const auto visibleSize = Director::getInstance()->getVisibleSize();
-	const auto baseY = visibleSize.height * 0.85f;
+    const auto visibleSize = Director::getInstance()->getVisibleSize();
+    const auto baseY = visibleSize.height * 0.85f;
 
-	backButton->setPosition(backButton->getContentSize().width / 2 + 30, baseY + 30);
+    backButton->setPosition(backButton->getContentSize().width / 2 + 30, baseY + 30);
 
-	buttons->addChild(backButton, 1);
+    buttons->addChild(backButton, 1);
 
-	buttons->setPosition(0, 0);
+    buttons->setPosition(0, 0);
 
-	return buttons;
+    return buttons;
 }
 
 void RoomScene::menuBackCallback(cocos2d::Ref* pSender)
 {
-	Director::getInstance()->popScene();
+    Director::getInstance()->popScene();
 }
 
 void RoomScene::initUserBox()

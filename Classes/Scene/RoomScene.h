@@ -1,11 +1,11 @@
-#pragma once
 #ifndef __ROOMSCENE_SCENE_H__
 #define __ROOMSCENE_SCENE_H__
 
 #include "cocos2d.h"
-#include "ui/CocosGUI.h"
 #include "Scene/UI/RoleBox.h"
 #include "Controller/RoomController.h"
+#include "ui/CocosGUI.h"
+#include "ui/UIButton.h"
 
 class RoomScene :public cocos2d::Layer
 {
