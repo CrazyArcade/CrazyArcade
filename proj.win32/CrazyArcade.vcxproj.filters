@@ -96,10 +96,20 @@
     <ClCompile Include="..\Classes\Scene\UI\ResultBox.cpp">
       <Filter>src\Scene\UI</Filter>
     </ClCompile>
+
     <ClCompile Include="..\Classes\Scene\LoginScene.cpp">
       <Filter>src\Scene</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Scene\UI\CheckBox.cpp">
+      <Filter>src\Scene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Controller\RoomController.cpp">
+      <Filter>src\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Scene\UI\RoleBox.cpp">
+      <Filter>src\Scene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Scene\UI\UserBox.cpp">
       <Filter>src\Scene\UI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -180,6 +190,18 @@
       <Filter>src\Scene</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Scene\UI\CheckBox.h">
+      <Filter>src\Scene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Controller\RoomController.h">
+      <Filter>src\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene\UI\RoleBox.h">
+      <Filter>src\Scene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\User.h">
+      <Filter>src\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene\UI\UserBox.h">
       <Filter>src\Scene\UI</Filter>
     </ClInclude>
   </ItemGroup>

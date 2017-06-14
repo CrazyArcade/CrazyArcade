@@ -12,6 +12,7 @@ Client * Client::getInstance()
 
 bool Client::connect(const std::string & addr)
 {
+    if (_ws == nullptr) _ws = new WebSocket();
     return _ws->init(*this, Settings::Server::addr);
 }
 

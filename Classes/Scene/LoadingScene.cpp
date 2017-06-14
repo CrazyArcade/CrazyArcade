@@ -1,5 +1,7 @@
 #include "Scene/LoadingScene.h"
+#include "Scene/StartScene.h"
 #include "Settings.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -25,7 +27,7 @@ void LoadingScene::endLoading(float dt) {
 
 void LoadingScene::loadSound()
 {
-    audio = CocosDenshion::SimpleAudioEngine::getInstance();
+    auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
     //audio->preloadEffect("GameAudio/bubble1.wav");
     //audio->preloadEffect("GameAudio/bubble2.wav");
 }
