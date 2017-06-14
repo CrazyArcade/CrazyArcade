@@ -67,6 +67,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)extensions</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
@@ -74,7 +75,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(EngineRoot)external;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)external;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -162,12 +163,14 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Scene\HelloWorldScene.cpp" />
     <ClCompile Include="..\Classes\Scene\HelpScene.cpp" />
     <ClCompile Include="..\Classes\Scene\LoadingScene.cpp" />
+    <ClCompile Include="..\Classes\Scene\LoginScene.cpp" />
     <ClCompile Include="..\Classes\Scene\RoomScene.cpp" />
     <ClCompile Include="..\Classes\Scene\SettingsScene.cpp" />
     <ClCompile Include="..\Classes\Scene\StartScene.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Classes\Scene\UI\ChatBox.cpp" />
+    <ClCompile Include="..\Classes\Scene\UI\CheckBox.cpp" />
     <ClCompile Include="..\Classes\Scene\UI\GameMap.cpp" />
     <ClCompile Include="..\Classes\Scene\UI\ResultBox.cpp" />
     <ClCompile Include="..\Classes\Scene\UI\RoleBox.cpp" />
@@ -193,10 +196,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Scene\HelloWorldScene.h" />
     <ClInclude Include="..\Classes\Scene\HelpScene.h" />
     <ClInclude Include="..\Classes\Scene\LoadingScene.h" />
+    <ClInclude Include="..\Classes\Scene\LoginScene.h" />
     <ClInclude Include="..\Classes\Scene\RoomScene.h" />
     <ClInclude Include="..\Classes\Scene\SettingsScene.h" />
     <ClInclude Include="..\Classes\Scene\StartScene.h" />
     <ClInclude Include="..\Classes\Scene\UI\ChatBox.h" />
+    <ClInclude Include="..\Classes\Scene\UI\CheckBox.h" />
     <ClInclude Include="..\Classes\Scene\UI\GameMap.h" />
     <ClInclude Include="..\Classes\Scene\UI\ResultBox.h" />
     <ClInclude Include="..\Classes\Scene\UI\RoleBox.h" />
@@ -219,6 +224,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Resources\Scene\PlayingPad.png" />
+    <Image Include="..\Resources\Scene\ResultPad.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

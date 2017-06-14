@@ -13,7 +13,7 @@ private:
     void menuPlayCallback(cocos2d::Ref* pSender);
     void menuHelpCallback(cocos2d::Ref * pSender);
     void menuSettingsCallback(cocos2d::Ref * pSender);
-    cocos2d::Menu* musicInit();
+    void musicInit();
     void musicPP(cocos2d::Ref* pSender);    //play or pause the music
     
 public:
