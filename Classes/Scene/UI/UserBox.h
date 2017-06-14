@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
+
 class UserBox : public cocos2d::Sprite {
 public:
 

@@ -3,6 +3,7 @@
 #include "Scene/GameScene.h"
 #include "Scene/StartScene.h"
 #include "Settings.h"
+#include "api_generated.h"
 
 USING_NS_CC;
 
@@ -36,11 +37,14 @@ bool RoomScene::init()
 
     // room controller
     roomController = RoomController::create();
-    addChild(roomController);
+    
     // ready button callback
     readyButtonCallBack = CC_CALLBACK_1(RoomController::onUserChangeStats, roomController);
     roleChangeCallback = CC_CALLBACK_1(RoomController::onUserChangeRole, roomController);
+    
     createUI();
+
+    addChild(roomController, -1);
     return true;
 }
 
@@ -98,7 +102,7 @@ void RoomScene::initUserBox()
         _userBox->setName("test");
         _userBox->setRole(0);
         addChild(_userBox);
-        userBoxes.pushBack(_userBox);
+        roomController->userBoxes.pushBack(_userBox);
     }
 }
 
@@ -115,8 +119,6 @@ void RoomScene::initRoleBox()
     }
     // default role
     roleBoxes.at(0)->setChosen(true);
-
-
 }
 
 void RoomScene::initMouseListener()

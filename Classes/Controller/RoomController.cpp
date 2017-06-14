@@ -71,12 +71,13 @@ void RoomController::onRoomInfoUpdate(const void * msg)
 {
     auto data = static_cast<const RoomInfoUpdate*>(msg);
     auto userVector = data->users();
+
     for (auto it = userVector->begin(); it != userVector->end(); ++it)
     {
         auto uid = it->uid()->str();
         auto name = it->name()->str();
         auto role = it->role();
-        // TODO
+
         log("%s %s %d", uid.data(), name.data(), role);
     }
 }
