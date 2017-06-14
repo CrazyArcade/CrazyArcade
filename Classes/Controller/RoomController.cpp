@@ -91,10 +91,8 @@ void RoomController::onGameStatusChange(const void * msg)
     }
 }
 
-void RoomController::onUserChangeRole()
+void RoomController::onUserChangeRole(int role)
 {
-    // TODO
-    auto role = 1;
     flatbuffers::FlatBufferBuilder builder;
     auto orc = CreateUserChangeRole(builder, role);
     auto msg = CreateMsg(builder, MsgType_UserChangeRole, orc.Union());

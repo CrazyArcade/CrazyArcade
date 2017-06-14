@@ -10,7 +10,7 @@ public:
     virtual bool init();
     CREATE_FUNC(RoomController);
 
-    void onUserChangeRole();
+    void onUserChangeRole(int role);
 
     void onUserChangeStats(bool isReady);
 
