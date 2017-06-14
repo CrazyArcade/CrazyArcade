@@ -102,6 +102,9 @@
     <ClCompile Include="..\Classes\Scene\UI\RoleBox.cpp">
       <Filter>src\Scene\UI</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Scene\UI\UserBox.cpp">
+      <Filter>src\Scene\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -184,6 +187,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Model\User.h">
       <Filter>src\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene\UI\UserBox.h">
+      <Filter>src\Scene\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

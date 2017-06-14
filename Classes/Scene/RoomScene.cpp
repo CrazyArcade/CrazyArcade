@@ -50,6 +50,7 @@ void RoomScene::createUI()
     createTitle();
     initUserBox();
     initRoleBox();
+    initMouseListener();
     createBackButton();
     createReadyButton();
 }
@@ -90,22 +91,12 @@ void RoomScene::createTitle()
 
 void RoomScene::initUserBox()
 {
-    for (int i = 1; i < 9; ++i)
-    {
-        auto userBox = Sprite::create("RoomScene/roomcase_01.png");
-        if (i < 5)
-        {
-            userBox->setPosition(Vec2(userBox->getContentSize().width * i * 1.25 - userBox->getContentSize().width * 0.5f,
-                visibleSize.height*0.68f));
-        }
-        else
-        {
-            userBox->setPosition(Vec2(userBox->getContentSize().width * (i - 4)* 1.25 - userBox->getContentSize().width *0.5f
-                , visibleSize.height *0.68f - userBox->getContentSize().height * 1.28));
-        }
-        userBox->setScale(1.25);
-        userBoxes.pushBack(userBox);
-        this->addChild(userBox);
+    for (int i = 0; i < 2; i++) {
+        auto _userBox = UserBox::create();
+        _userBox->setPosition(Vec2(visibleSize.width / 2 + (2*i - 1)*_userBox->getContentSize().width*0.7,
+            visibleSize.height*0.65f));
+        addChild(_userBox);
+        userBoxes.pushBack(_userBox);
     }
 }
 
@@ -115,28 +106,38 @@ void RoomScene::initRoleBox()
     {
         auto roleBox = RoleBox::create(static_cast<RoleBox::roleChoice>(i));
         roleBox->setPosition(cocos2d::Vec2(
-            visibleSize.width*0.6 + i*roleBox->getContentSize().width*1.5,
-            visibleSize.height*0.6));
+            visibleSize.width*0.5 + (2 * i - 1)*roleBox->getContentSize().width*0.7,
+            visibleSize.height*0.35));
         addChild(roleBox);
         roleBoxes.pushBack(roleBox);
     }
     // default role
     roleBoxes.at(0)->setChosen(true);
 
+
+}
+
+void RoomScene::initMouseListener()
+{
     auto mouseListener = cocos2d::EventListenerMouse::create();
+
     mouseListener->onMouseUp = [=](Event* event)
     {
         EventMouse* e = (EventMouse*)event;
         auto touch = e->getLocation();
         touch = Vec2(touch.x, touch.y + 147);       // possible upstream bug
+
         for (auto prev : roleBoxes)
         {
             auto range = prev->getBoundingBox();
+
             if (range.containsPoint(touch))
             {
                 roleChangeCallback(prev->getRole());
+
                 for (auto val : roleBoxes)
                     val->setChosen(false);
+
                 prev->setChosen(true);
                 break;
             }
@@ -166,8 +167,8 @@ void RoomScene::createBackButton()
 
 void RoomScene::createBackground()
 {
-    auto bg = Sprite::create("RoomScene/bg03.jpg");
-    bg->setScale(1.25f);
+    auto bg = Sprite::create("RoomScene/bg.png");
+    bg->setScale(1.6f);
     bg->setLocalZOrder(-1);
     bg->setPosition(Vec2(origin.x + visibleSize.width / 2,
         origin.y + visibleSize.height / 2));
