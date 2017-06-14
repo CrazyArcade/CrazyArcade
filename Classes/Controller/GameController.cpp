@@ -98,7 +98,7 @@ void GameController::onEnter()
     float dur = 1 / 30;
     schedule(schedule_selector(GameController::syncLocalPlayerPosition), dur);
 #else
-    auto player = playerManager->createLocalPlayer("local");
+    auto player = playerManager->createLocalPlayer("local", 0);
     auto pos = map->tileCoordToPosition(Vec2(0, 0));
     player->setPosition(pos);
     map->addPlayer(player);

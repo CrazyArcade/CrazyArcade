@@ -99,8 +99,6 @@ void RoomScene::initUserBox()
         auto _userBox = UserBox::create();
         _userBox->setPosition(Vec2(_userBox->getContentSize().width * (i + 1) * 1.25 - _userBox->getContentSize().width * 0.5f,
             visibleSize.height*0.68f));
-        _userBox->setUserName("test");
-        _userBox->setRole(0);
         addChild(_userBox);
         roomController->userBoxes.pushBack(_userBox);
     }
