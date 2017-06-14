@@ -26,16 +26,10 @@ void RoleBox::setChosen(bool choice)
 {
     if (choice != isChosen) {
         isChosen = choice;
-        if (isChosen) {
-            this->setTexture(cocos2d::Sprite::create(
-                Settings::Player::path + std::string(Settings::Player::roleName[this->_role]) + "/face.png")
-                ->getTexture());
-        }
-        else {
-            this->setTexture(cocos2d::Sprite::create(
-                Settings::Player::path + std::string(Settings::Player::roleName[this->_role]) + "/faceBW.png")
-                ->getTexture());
-        }
+        auto fileName = isChosen ? "/face.png" : "/faceBW.png";
+        this->setTexture(cocos2d::Sprite::create(
+            Settings::Player::path + std::string(Settings::Player::roleName[this->_role]) + fileName)
+            ->getTexture());
     }
 }
 

@@ -13,20 +13,28 @@ private:
     void createUI();
 
     RoomController * roomController;
-
-    cocos2d::ui::Button * readyButton;
-    void createReadyButton();
-    std::function<void(bool isReady)> readyButtonCallBack;
-
-    void onExit();
     
-    cocos2d::Menu *createText();
-    void menuBackCallback(cocos2d::Ref* pSender);
-
+    cocos2d::ui::Button * readyButton;
     cocos2d::Vector<cocos2d::Sprite*> userBoxes;
+    cocos2d::Vector<RoleBox*> roleBoxes;
+    
+    std::function<void(bool)> readyButtonCallBack;
+    std::function<void(int)> roleChangeCallback;
+
+    cocos2d::Vec2 origin;
+    cocos2d::Size visibleSize;
+    
+    void createReadyButton();
+
+    void createTitle();
+    
     void initUserBox();
 
-    cocos2d::Vector<RoleBox*> roleBox;
+    void initRoleBox();
+
+    void createBackButton();
+
+    void createBackground();
 
 public:
     static cocos2d::Scene * createScene();
