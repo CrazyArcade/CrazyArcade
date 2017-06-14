@@ -4,6 +4,11 @@
 bool RoleBox::init()
 {
     std::string name= Settings::Player::path + std::string(Settings::Player::roleName[this->_role]) + "/faceBW.png";
+   
+    auto bg = Sprite::create("RoomScene/roleBoxbg.png");
+    bg->setPosition(cocos2d::Vec2(42,42));
+    addChild(bg, -1); 
+    
     if (!this->initWithFile(name))
         return false;
     return true;

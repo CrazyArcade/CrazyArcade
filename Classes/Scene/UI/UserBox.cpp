@@ -22,14 +22,14 @@ void UserBox::setRole(int role)
     rolePic->setTexture(Settings::Player::path + std::string(Settings::Player::roleName[role]) + "/default.png");
 }
 
-void UserBox::setName(const std::string & name)
+void UserBox::setUserName(const std::string & name)
 {
     this->name = name;
     if (!nameArea)
     {
-        nameArea = ui::Text::create(name, Settings::Font::Type::base, 24);
-        nameArea->setPosition(Vec2(this->getContentSize().width * 0.5f, this->getContentSize().height * 0.6f));
-        nameArea->setColor(Color3B::WHITE);
+        nameArea = ui::Text::create(name, Settings::Font::Type::base, Settings::Font::Size::name);
+        nameArea->setPosition(Vec2(this->getContentSize().width * 0.5f, this->getContentSize().height * 0.08f));
+        nameArea->setColor(Color3B::BLACK);
         nameArea->enableGlow(Color4B::BLACK);
         addChild(nameArea, 100);
     }
