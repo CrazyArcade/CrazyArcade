@@ -15,6 +15,9 @@ void ResultBox::initCustomEvent()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("game_over", [=](EventCustom* event) {
         bool isWin = *static_cast<bool*>(event->getUserData());
         setResult(isWin);
+        scheduleOnce([](float dt) {
+            Director::getInstance()->popScene();
+        }, 3, "game_over");
     }), this);
 }
 

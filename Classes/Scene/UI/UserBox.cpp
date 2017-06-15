@@ -19,7 +19,16 @@ void UserBox::setRole(int role)
         rolePic->setScale(1.2f);
         addChild(rolePic, 1);
     } 
-    rolePic->setTexture(Settings::Player::path + std::string(Settings::Player::roleName[role]) + "/default.png");
+    if (role < 0)
+    {
+        rolePic->setVisible(false);
+    }
+    else
+    {
+        rolePic->setVisible(true);
+        rolePic->setTexture(Settings::Player::path + std::string(Settings::Player::roleName[role]) + "/default.png");
+    }
+    
 }
 
 void UserBox::setUserName(const std::string & name)
