@@ -69,7 +69,7 @@ private:
     // record what time the direction was set
     time_t directions[4];
     Direction direction;
-    int role;
+    std::string roleName;
 
     bool _isLocal;
 

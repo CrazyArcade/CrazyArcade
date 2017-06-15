@@ -23,7 +23,6 @@ private:
     Client * client;
     GameMap * map;
 
-    void initListener();
     void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 
@@ -38,7 +37,6 @@ private:
     void toStart();
     void toOver();
 
-    void onPlayerJoin(const void* msg);
     void onPlayerPositionChange(const void* msg);
     void onPlayerAttrChange(const void* msg);
     void onPlayerStatusChange(const void* msg);

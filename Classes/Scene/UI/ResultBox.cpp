@@ -6,25 +6,34 @@ USING_NS_CC;
 
 bool ResultBox::init()
 {
+    initCustomEvent();
     return true;
 }
 
-void ResultBox::setResult(Result result)
+void ResultBox::initCustomEvent()
 {
-    auto visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
-    
-    switch (result) {
-    case VICTORY:
-        pad = cocos2d::Sprite::create("Scene/win.png");
-        break;
-    case DEFEAT:
-        pad = cocos2d::Sprite::create("Scene/lose.png");
-        break;
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(EventListenerCustom::create("game_over", [=](EventCustom* event) {
+        bool isWin = *static_cast<bool*>(event->getUserData());
+        setResult(isWin);
+    }), this);
+}
+
+void ResultBox::setResult(bool isWin)
+{
+    if (!pad) { 
+        auto visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
+        pad = Sprite::create();
+        pad->setPosition(visibleSize.width / 2, visibleSize.height / 2);
+        addChild(pad);
     }
-   
-    pad->setPosition(visibleSize.width / 2, visibleSize.height / 2);
-    //GameMap::getCurrentMap()->setOpacity(0.5);
-    addChild(pad);
+    if (isWin)
+    {
+        pad->setTexture("Scene/win.png");
+    }
+    else
+    {
+        pad->setTexture("Scene/lose.png");
+    }
 }
 
 

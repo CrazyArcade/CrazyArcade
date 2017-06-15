@@ -6,16 +6,14 @@
 
 class ResultBox : public cocos2d::Layer {
 public:
-    enum Result {
-        VICTORY,
-        DEFEAT
-    };
 
     virtual bool init();
 
+    void initCustomEvent();
+
     CREATE_FUNC(ResultBox);
 
-    void setResult(Result result);
+    void setResult(bool isWin);
 
 private:
     cocos2d::Sprite* pad;
