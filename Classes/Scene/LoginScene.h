@@ -12,7 +12,6 @@ protected:
 	cocos2d::ui::EditBox* _editUserName;
 	cocos2d::ui::EditBox* _editPassword;
 private:
-	cocos2d::Menu* createText();
 	cocos2d::Sprite* createBackground();
 	cocos2d::Sprite* createLoginBox();
 	cocos2d::Menu* createLoginItem();

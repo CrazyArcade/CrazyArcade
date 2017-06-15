@@ -13,6 +13,7 @@ public:
     Prop * createProp(const std::string& id, Prop::Type type, const cocos2d::Vec2 & pos);
 
     //void removeProp(Prop * prop);
+    bool checkEat(const cocos2d::Vec2& pos);
 
 private:
     cocos2d::Map<std::string, Prop*> _propList;

@@ -21,6 +21,25 @@ Prop * PropManager::createProp(const std::string & id, Prop::Type type, const co
     return nullptr;
 }
 
+bool PropManager::checkEat(const cocos2d::Vec2 & pos)
+{
+    auto map = GameMap::getCurrentMap();
+    if (!map) return false;
+    // check and remove prop
+    for (auto it = _propList.begin(); it != _propList.end(); ++it)
+    {
+        auto prop = it->second;
+        if (map->isInSameTile(prop->getPosition(), pos))
+        {
+            _propList.erase(it);
+            map->removeEntity(pos);
+            prop->removeFromParent();
+            return true;
+        }
+    }
+    return false;
+}
+
 void PropManager::addCustomEvent()
 {
     auto dispatcher = this->getEventDispatcher();
@@ -30,22 +49,9 @@ void PropManager::addCustomEvent()
         auto data = static_cast<int*>(event->getUserData());
         auto pos = Vec2(data[0], data[1]);
 
-        auto map = GameMap::getCurrentMap();
-        if (!map) return;
-        // check and remove prop
-        for (auto it = _propList.begin(); it != _propList.end();)
+        if (checkEat(pos))
         {
-            auto prop = it->second;
-            if (map->isInSameTile(prop->getPosition(), pos))
-            {
-                _propList.erase(it++);
-                map->removeEntity(pos);
-                prop->removeFromParent();
-            }
-            else
-            {
-                ++it;
-            }
+            // local player eat prop
         }
     }), this);
 }
