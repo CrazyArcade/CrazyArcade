@@ -22,6 +22,7 @@ Player* PlayerManager::createPlayer(const std::string& id, int role)
     auto player = Player::create(id, role);
     if (player)
     {
+        player->isLocal(false);
         this->_playerList.insert(id, player);
         return player;
     }

@@ -74,11 +74,18 @@ void RoomController::onRoomInfoUpdate(const void * msg)
 
     auto it1 = userVector->begin();
     auto it2 = userBoxes.begin();
-    for (; it1 != userVector->end() && it2 != userBoxes.end(); ++it1, ++it2)
+    for (; it2 != userBoxes.end(); ++it2)
     {
-        auto uid = it1->uid()->str();
-        auto name = it1->name()->str();
-        auto role = it1->role();
+        std::string name = "";
+        int role = -1;
+        
+        if (it1 != userVector->end())
+        {
+            //auto uid = it1->uid()->str();
+            name = it1->name()->str();
+            role = it1->role();
+            ++it1;
+        }
 
         (*it2)->setName(name);
         (*it2)->setRole(role);
