@@ -1,14 +1,7 @@
-#pragma once
 #ifndef  _LOGINSCENE_SCENE_H__
 #define  _LOGINSCENE_SCENE_H__
 
-#include<iostream>
 #include"cocos2d.h"
-#include"Settings.h"
-#include"SettingsScene.h"
-#include"RoomScene.h"
-#include"StartScene.h"
-#include"Scene/UI/CheckBox.h"
 #include"cocos2d/cocos/ui/CocosGUI.h"
 #include"cocos2d/extensions/cocos-ext.h"
 
@@ -30,7 +23,7 @@ private:
 	void initPasswordBox();
 	void initcheckBox();
 	void initURLSkip();
-public :
+public:
 	
 	static cocos2d::Scene * createScene();
 	virtual bool init();

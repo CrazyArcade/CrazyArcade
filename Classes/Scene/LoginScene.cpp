@@ -1,6 +1,8 @@
 #include"LoginScene.h"
-
-
+#include"Settings.h"
+#include"SettingsScene.h"
+#include"StartScene.h"
+#include"Scene/UI/CheckBox.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -152,7 +154,7 @@ void LoginScene::initURLSkip()
 }
 void LoginScene::menuLoginCallback(cocos2d::Ref* pSender)
 {
-	auto scene = RoomScene::createScene();
+	auto scene = StartScene::createScene();
 	Director::getInstance()->pushScene(scene);
 }
 void LoginScene::editBoxEditingDidBegin(cocos2d::ui::EditBox* editBox)
