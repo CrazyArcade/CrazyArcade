@@ -2,8 +2,6 @@
 #define __SCENE_GAMESCENE_H__
 
 #include "cocos2d.h"
-#include "UI/GameMap.h"
-#include "UI/ChatBox.h"
 
 class GameScene : public cocos2d::Layer
 {

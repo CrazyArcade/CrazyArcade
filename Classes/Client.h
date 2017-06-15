@@ -6,6 +6,9 @@
 #include "api_generated.h"
 #include <unordered_map>
 
+//#define NETWORK
+#define CLIENT_ON(__code__, __func__) client->bind(__code__, CC_CALLBACK_1(__func__, this));
+
 
 class Client : public cocos2d::network::WebSocket::Delegate
 {

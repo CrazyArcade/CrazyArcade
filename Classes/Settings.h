@@ -11,6 +11,7 @@ namespace Settings
     {
         namespace Size
         {
+            constexpr int name = 18;
             constexpr int chat = 24;
             constexpr int title  = 60;
             constexpr int label  = 40;
@@ -39,6 +40,10 @@ namespace Settings
     namespace Player
     {
         constexpr char path[] = "GameItem/Player/";
+        constexpr char* roleName[] = {
+            "Player1",
+            "Player2"
+        };
     }
     namespace Bubble
     {

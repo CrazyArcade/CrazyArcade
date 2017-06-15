@@ -1,4 +1,11 @@
 #include "StartScene.h"
+#include "SimpleAudioEngine.h"
+#include "Settings.h"
+#include "GameScene.h"
+#include "HelpScene.h"
+#include "SettingsScene.h"
+#include "RoomScene.h"
+#include "LoginScene.h"
 
 USING_NS_CC;
 

@@ -37,8 +37,6 @@ void ChatBox::keyReleasedAct(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::E
 
 void ChatBox::boxInputInit()
 {
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-
     boxInput = cocos2d::ui::TextField::create("Chat Here",
         Settings::Font::Type::base, Settings::Font::Size::chat);
     boxInput->setCursorEnabled(true);

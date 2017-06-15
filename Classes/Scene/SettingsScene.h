@@ -2,8 +2,6 @@
 #define __SETTINGS_SCENE_H__
 
 #include "cocos2d.h"
-#include "Settings.h"
-#include "StartScene.h"
 
 class SettingsScene : public cocos2d::Layer
 {
