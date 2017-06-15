@@ -16,7 +16,6 @@ private:
     RoomController * roomController;
 
     cocos2d::ui::Button * readyButton;
-    cocos2d::Vector< UserBox*> userBoxes;
     cocos2d::Vector< RoleBox*> roleBoxes;
 
     std::function<void(bool)> readyButtonCallBack;

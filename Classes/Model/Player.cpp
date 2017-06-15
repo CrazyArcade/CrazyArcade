@@ -4,10 +4,10 @@
 
 USING_NS_CC;
 
-Player * Player::create(const std::string& id, const std::string& Role)
+Player * Player::create(const std::string& id, int role)
 {
     auto player = new (std::nothrow) Player();
-    if (player && player->initWithRole(Role))
+    if (player && player->initWithRole(role))
     {
         player->_id = id;
         player->autorelease();
@@ -30,10 +30,11 @@ bool Player::init()
     return true;
 }
 
-bool Player::initWithRole(const std::string& Role)
+bool Player::initWithRole(int role)
 {
-    auto file = Settings::Player::path + Role + "/default.png";
-    role = Role;
+    roleName = std::string(Settings::Player::roleName[role]);
+    auto file = Settings::Player::path + roleName + "/default.png";
+    
     if (this->initWithFile(file) && this->init())
     {
         // do something here
@@ -46,16 +47,16 @@ bool Player::initWithRole(const std::string& Role)
 bool Player::initAnimation()
 {
     constexpr float moveDelay = 0.1f;
-    loadAnimation(role + "_left", moveDelay, 6);
-    loadAnimation(role + "_right", moveDelay, 6);
-    loadAnimation(role + "_up", moveDelay, 6);
-    loadAnimation(role + "_down", moveDelay, 6);
+    loadAnimation(roleName + "_left", moveDelay, 6);
+    loadAnimation(roleName + "_right", moveDelay, 6);
+    loadAnimation(roleName + "_up", moveDelay, 6);
+    loadAnimation(roleName + "_down", moveDelay, 6);
 
     constexpr float dangerDelay = 1.0f;
-    loadAnimation(role + "_danger", dangerDelay, 3);
+    loadAnimation(roleName + "_danger", dangerDelay, 3);
 
     constexpr float dieDelay = 0.3f;
-    loadAnimation(role + "_die", dieDelay, 3);
+    loadAnimation(roleName + "_die", dieDelay, 3);
 
     return true;
 }
@@ -112,11 +113,11 @@ void Player::setStatus(Player::Status status)
     Animation * animation = nullptr;
     if (_status == Status::FREEZE)
     {
-        animation = getAnimation(role + "_danger");
+        animation = getAnimation(roleName + "_danger");
     }
     else if (_status == Status::DIE)
     {    
-        animation = getAnimation(role + "_die");
+        animation = getAnimation(roleName + "_die");
     }
     if (animation)
     {
@@ -172,6 +173,10 @@ void Player::updateDirection()
 
 void Player::setDirection(Direction direction)
 {
+    if (this->direction == direction)
+    {
+        return;
+    }
     this->direction = direction;
     if (_status == Status::FREE)
     {
@@ -179,19 +184,19 @@ void Player::setDirection(Direction direction)
 
         if (this->direction == Direction::LEFT)
         {
-            runAnimation(role + "_left", this);
+            runAnimation(roleName + "_left", this);
         }
         else if (this->direction == Direction::RIGHT)
         {
-            runAnimation(role + "_right", this);
+            runAnimation(roleName + "_right", this);
         }
         else if (this->direction == Direction::UP)
         {
-            runAnimation(role + "_up", this);
+            runAnimation(roleName + "_up", this);
         }
         else if (this->direction == Direction::DOWN)
         {
-            runAnimation(role + "_down", this);
+            runAnimation(roleName + "_down", this);
         }
     }
 }

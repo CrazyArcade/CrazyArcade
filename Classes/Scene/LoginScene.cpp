@@ -29,7 +29,6 @@ bool LoginScene::init()
 
 	this->addChild(createBackground());
 //	this->addChild(createLoginBox());
-	this->addChild(createText());
 	this->addChild(createLoginItem());
 	initUserBox();
 	initPasswordBox();
@@ -181,22 +180,4 @@ void LoginScene::checkboxSelectedEvent(cocos2d::Ref* pSender)
 void LoginScene::menuBackCallback(cocos2d::Ref* pSender)
 {
 	Director::getInstance()->popScene();
-}
-cocos2d::Menu* LoginScene::createText() {
-	const auto buttons = Menu::create();
-
-	const auto backButton = cocos2d::MenuItemLabel::create(
-		Label::createWithTTF("Back", Settings::Font::Type::base, Settings::Font::Size::label),
-		CC_CALLBACK_1(LoginScene::menuBackCallback, this));
-
-	const auto visibleSize = Director::getInstance()->getVisibleSize();
-	const auto baseY = visibleSize.height * 0.85f;
-
-	backButton->setPosition(backButton->getContentSize().width / 2 + 30, baseY + 30);
-
-	buttons->addChild(backButton, 1);
-
-	buttons->setPosition(0, 0);
-
-	return buttons;
 }
