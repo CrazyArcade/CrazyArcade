@@ -137,6 +137,17 @@ Player::Status Player::getStatus()
 void Player::isLocal(bool a)
 {
     this->_isLocal = a;
+    if (a)
+    {
+        auto sign = Sprite::create(Settings::Player::path + std::string("local_sign.png"));
+        if (sign)
+        {
+            sign->setAnchorPoint(Vec2::ANCHOR_MIDDLE_BOTTOM);
+            sign->setPosition(Vec2(this->getContentSize().width * 0.5f, this->getContentSize().height));
+            sign->setScale(0.2f);
+            this->addChild(sign);
+        }
+    }
 }
 
 bool Player::isLocal()
