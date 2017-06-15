@@ -43,12 +43,12 @@ void StartScene::musicPP(cocos2d::Ref * pSender) {
 
 void StartScene::musicInit() {
     const auto music = Menu::create();
-    CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("StartScene/bgmusic.mp3");
-    musicOn = UserDefault::getInstance()->getBoolForKey("musicOn", true);
-	musicOn = CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying();
+	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("StartScene/bgmusic.mp3");
+	musicOn = UserDefault::getInstance()->getBoolForKey("musicOn", true);
+	//musicOn = CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying();
+	//UserDefault::getInstance()->setBoolForKey("musicOn", musicOn);
     if (!musicOn)
-        CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
-
+        CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic(); 
     /*auto labelDef = Label::createWithTTF(musicOn ? "Music on" : "Music off", Settings::Font::Type::base, Settings::Font::Size::light);
     auto labelSwi = Label::createWithTTF(musicOn ? "Music off" : "music on", Settings::Font::Type::base, Settings::Font::Size::light);
     labelDef->setColor(cocos2d::Color3B::BLACK);

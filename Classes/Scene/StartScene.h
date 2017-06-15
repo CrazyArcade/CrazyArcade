@@ -14,6 +14,7 @@ class StartScene : public cocos2d::Layer
 {
 private:
     bool musicOn = true; 
+	bool musicCheck = true;
     cocos2d::Menu* createText();
     cocos2d::Sprite* createBGImage();
     void menuExitCallback(cocos2d::Ref* pSender);
@@ -21,10 +22,10 @@ private:
     void menuHelpCallback(cocos2d::Ref * pSender);
     void menuSettingsCallback(cocos2d::Ref * pSender);
     void musicInit();
-    void musicPP(cocos2d::Ref* pSender);    //play or pause the music
-    
+ 
 public:
     static cocos2d::Scene* createScene();
+	void musicPP(cocos2d::Ref* pSender);        //play or pause the music
     virtual bool init();
     CREATE_FUNC(StartScene);                
 };
