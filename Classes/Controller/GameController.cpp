@@ -111,7 +111,7 @@ void GameController::onExit()
     Layer::onExit();
 #ifdef NETWORK
     client->clear();
-    client->close();
+    //client->close();
     client = nullptr;
 #endif // NETWORK
 }
