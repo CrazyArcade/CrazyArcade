@@ -157,21 +157,20 @@ void LoginScene::menuLoginCallback(cocos2d::Ref* pSender)
 }
 void LoginScene::editBoxEditingDidBegin(cocos2d::ui::EditBox* editBox)
 {
-	log("editbox %p didbegin", editBox);
+	log("editBox %p DidBegin", editBox);
 }
 void LoginScene::editBoxEditingDidEnd(cocos2d::ui::EditBox* editBox)
 {
-
+	log("editBox %p DidEnd", editBox);
 }
 void LoginScene::editBoxTextChanged(
 	cocos2d::ui::EditBox* editBox, const std::string &text)
 {
-
+	log("editBox %p TextChanged, text: %s", editBox, text.c_str());
 }
 void LoginScene::editBoxReturn(cocos2d::ui::EditBox* editBox)
 {
-
-
+	log("edit return");
 }
 void LoginScene::checkboxSelectedEvent(cocos2d::Ref* pSender)
 {
