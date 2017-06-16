@@ -6,6 +6,7 @@ USING_NS_CC;
 bool UserBox::init()
 {
     this->initWithFile("RoomScene/roomcase_01.png");
+    setReadyLabel(true);
     return true;
 }
 
@@ -45,5 +46,20 @@ void UserBox::setUserName(const std::string & name)
     else
     {
         nameArea->setString(name);
+    }
+}
+
+void UserBox::setReadyLabel(bool ready)
+{
+    if (ready) {
+        readyLabel = cocos2d::Label::createWithTTF("Ready!", Settings::Font::Type::base, Settings::Font::Size::normal);
+        readyLabel->setColor(cocos2d::Color3B::GREEN);
+        readyLabel->setPosition(this->getContentSize().width*0.7, this->getContentSize().height*0.9);
+        readyLabel->setRotation(30);
+        this->addChild(readyLabel, 2);
+    }
+    else{
+        if (readyLabel)
+            readyLabel->removeFromParentAndCleanup(true);
     }
 }
