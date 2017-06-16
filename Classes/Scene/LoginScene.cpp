@@ -41,8 +41,8 @@ cocos2d::Sprite* LoginScene::createBackground()
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	Sprite * bg = Sprite::create("Scene/bg03.jpg");
-	bg->setScale(2.4);
+	Sprite * bg = Sprite::create("SettingsScene/background5.jpg");
+	//bg->setScale(2.4);
 	//set transparent
 	bg->setOpacity(255);
 	bg->setPosition(Vec2(origin.x + visibleSize.width / 2,

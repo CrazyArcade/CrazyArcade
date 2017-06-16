@@ -52,8 +52,7 @@ void StartScene::musicInit() {
     const auto music = Menu::create();
 	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("StartScene/absoluteMusic.mp3");
 	musicOn = UserDefault::getInstance()->getBoolForKey("musicOn", true);
-	//musicOn = CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying();
-	//UserDefault::getInstance()->setBoolForKey("musicOn", musicOn);
+	
     if (!musicOn)
         CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic(); 
     /*auto labelDef = Label::createWithTTF(musicOn ? "Music on" : "Music off", Settings::Font::Type::base, Settings::Font::Size::light);

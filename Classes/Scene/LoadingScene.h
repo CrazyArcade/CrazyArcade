@@ -11,6 +11,8 @@ private:
     void loadSound();
     void loadImage();
     void loadSpriteFrame();
+	void loadCarton();
+	void createText();
     cocos2d::ui::LoadingBar* createLoadingBar();
 public:
     static cocos2d::Scene* createScene();
