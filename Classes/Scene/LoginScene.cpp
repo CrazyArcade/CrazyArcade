@@ -62,6 +62,7 @@ void LoginScene::createLoginButton()
 
     loginButton->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type)
     {
+        if (type != ui::Widget::TouchEventType::ENDED) return;
         auto username = usernameInput->getString();
         if (username.empty())
         {
