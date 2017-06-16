@@ -6,7 +6,6 @@ USING_NS_CC;
 bool UserBox::init()
 {
     this->initWithFile("RoomScene/roomcase_01.png");
-    setReadyLabel(true);
     return true;
 }
 
