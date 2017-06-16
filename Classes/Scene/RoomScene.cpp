@@ -37,11 +37,11 @@ bool RoomScene::init()
 
     // room controller
     roomController = RoomController::create();
-    
+
     // ready button callback
     readyButtonCallBack = CC_CALLBACK_1(RoomController::onUserChangeStats, roomController);
     roleChangeCallback = CC_CALLBACK_1(RoomController::onUserChangeRole, roomController);
-    
+
     createUI();
 
     addChild(roomController, -1);
