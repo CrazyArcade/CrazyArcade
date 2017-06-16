@@ -19,6 +19,7 @@ public:
 
 private:
     Client * client;
+    int gameStatus;
 
     void onEnter();
     void onExit();

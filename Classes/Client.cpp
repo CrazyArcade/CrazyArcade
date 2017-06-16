@@ -45,7 +45,8 @@ void Client::onClose(WebSocket * ws)
 
 void Client::onError(WebSocket * ws, const WebSocket::ErrorCode & error)
 {
-    log("error");
+    std::string msg = "Connected error. Error code: " + static_cast<int>(error);
+    MessageBox(msg.data(), "Error");
 }
 
 void Client::bind(int code, Callback func)

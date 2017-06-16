@@ -10,18 +10,17 @@ class LoginScene :public cocos2d::Layer
 {
 private:
 
-    cocos2d::Sprite* usernameBG = nullptr;
+    cocos2d::Sprite* usernameBG;
+    cocos2d::ui::TextField* usernameInput;
 
-    cocos2d::Sprite* createBackground();
-    cocos2d::Sprite* createLoginBox();
-    cocos2d::Menu* createLoginItem();
+    void createBackground();
+    void createLoginButton();
 
     void initUserBox();
     void initcheckBox();
 
     void menuBackCallback(cocos2d::Ref* pSender);
-    void menuLoginCallback(cocos2d::Ref* pSender);
-    void checkboxSelectedEvent(cocos2d::Ref* pSender);
+    //void checkboxSelectedEvent(cocos2d::Ref* pSender);
     void textFieldEvent(cocos2d::Ref* sender, cocos2d::ui::TextField::EventType event);
 
 public:
