@@ -12,6 +12,8 @@ private:
 	void menuOkCallback(cocos2d::Ref *pSender);
 
     cocos2d::Menu* createText();
+	void createBackground();
+	void createMenu();
 
 	bool okOn = true;
 	bool musicOn = true;
