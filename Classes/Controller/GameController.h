@@ -22,6 +22,7 @@ private:
     PropManager * propManager;
     Client * client;
     GameMap * map;
+    int gameStatus;
 
     void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);

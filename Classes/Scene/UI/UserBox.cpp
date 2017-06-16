@@ -37,8 +37,8 @@ void UserBox::setUserName(const std::string & name)
     if (!nameArea)
     {
         nameArea = ui::Text::create(name, Settings::Font::Type::base, Settings::Font::Size::name);
-        nameArea->setPosition(Vec2(this->getContentSize().width * 0.5f, this->getContentSize().height * 0.08f));
-        nameArea->setColor(Color3B::BLACK);
+        nameArea->setPosition(Vec2(this->getContentSize().width * 0.5f, this->getContentSize().height * 0.1f));
+        nameArea->setColor(Color3B::WHITE);
         nameArea->enableGlow(Color4B::BLACK);
         addChild(nameArea, 100);
     }

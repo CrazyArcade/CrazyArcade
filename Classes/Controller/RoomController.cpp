@@ -34,12 +34,15 @@ void RoomController::onEnter()
 
 void RoomController::onExit()
 {
-    Layer::onExit();
 #ifdef NETWORK
+    if (gameStatus == 0) // player exit room directly
+    {
+        client->close();
+    }
     client->clear();
     client = nullptr;
 #endif // NETWORK
-
+    Layer::onExit();
 }
 
 void RoomController::onWelcome(const void * msg)
@@ -87,7 +90,7 @@ void RoomController::onRoomInfoUpdate(const void * msg)
             ++it1;
         }
 
-        (*it2)->setName(name);
+        (*it2)->setUserName(name);
         (*it2)->setRole(role);
     }
 }
@@ -96,6 +99,8 @@ void RoomController::onGameStatusChange(const void * msg)
 {
     auto data = static_cast<const GameStatusChange*>(msg);
     auto status = data->status();
+    gameStatus = static_cast<int>(status);
+
     if (status == GameStatus::GameStatus_PENDING)
     {
         Director::getInstance()->pushScene(GameScene::createScene());

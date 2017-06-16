@@ -108,12 +108,15 @@ void GameController::onEnter()
 
 void GameController::onExit()
 {
-    Layer::onExit();
 #ifdef NETWORK
+    if (gameStatus != 3) // player exit game directly
+    {
+        client->close();
+    }
     client->clear();
-    //client->close();
     client = nullptr;
 #endif // NETWORK
+    Layer::onExit();
 }
 
 void GameController::syncLocalPlayerPosition(float dt)
@@ -161,6 +164,8 @@ void GameController::onGameStatusChange(const void * msg)
 {
     auto data = static_cast<const GameStatusChange*>(msg);
     auto status = data->status();
+    gameStatus = static_cast<int>(status);
+
     if (status == GameStatus::GameStatus_START)
     {
         toStart();
