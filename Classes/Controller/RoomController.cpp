@@ -88,8 +88,8 @@ void RoomController::onRoomInfoUpdate(const void * msg)
             //auto uid = it1->uid()->str();
             name = it1->name()->str();
             role = it1->role();
+            isReady = it1->isReady();
 
-            //isReady = it1->isReady();
             ++it1;
         }
 
