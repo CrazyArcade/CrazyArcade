@@ -24,6 +24,7 @@ bool LoginScene::init()
     {
         return false;
     }
+
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
@@ -31,7 +32,6 @@ bool LoginScene::init()
     createLoginButton();
 
     initUserBox();
-    //initcheckBox();
 
     return true;
 }

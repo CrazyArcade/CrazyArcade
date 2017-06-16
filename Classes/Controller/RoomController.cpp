@@ -81,17 +81,22 @@ void RoomController::onRoomInfoUpdate(const void * msg)
     {
         std::string name = "";
         int role = -1;
-        
+        bool isReady = false;
+
         if (it1 != userVector->end())
         {
             //auto uid = it1->uid()->str();
             name = it1->name()->str();
             role = it1->role();
+
+            //isReady = it1->isReady();
             ++it1;
         }
 
         (*it2)->setUserName(name);
         (*it2)->setRole(role);
+        (*it2)->setReadyLabel(isReady);
+        
     }
 }
 
