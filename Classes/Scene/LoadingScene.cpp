@@ -28,14 +28,14 @@ void LoadingScene::endLoading(float dt) {
 void LoadingScene::loadSound()
 {
     auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
-	audio->playBackgroundMusic("Sound/inGame.mp3", true);
-	audio->playBackgroundMusic("Sound/roomScene.mp3", true);
-	audio->playEffect("Sound/win.mp3", false, 1.0f, 1.0f, 1.0f);
-	audio->playEffect("Sound/defeat.mp3", false, 1.0f, 1.0f, 1.0f);
-	audio->playEffect("Sound/bubbleSet.mp3", false, 1.0f, 1.0f, 1.0f);
-	audio->playEffect("Sound/bubbleBoom.mp3", false, 1.0f, 1.0f, 1.0f);
-	audio->playEffect("Sound/eatProp.mp3", false, 1.0f, 1.0f, 1.0f);
-	audio->playEffect("Sound/gameStart.mp3", false, 1.0f, 1.0f, 1.0f);
+	audio->preloadBackgroundMusic("Sound/inGame.mp3", true);
+	audio->preloadBackgroundMusic("Sound/roomScene.mp3", true);
+	audio->preloadEffect("Sound/win.mp3", false, 1.0f, 1.0f, 1.0f);
+	audio->preloadEffect("Sound/defeat.mp3", false, 1.0f, 1.0f, 1.0f);
+	audio->preloadEffect("Sound/bubbleSet.mp3", false, 1.0f, 1.0f, 1.0f);
+	audio->preloadEffect("Sound/bubbleBoom.mp3", false, 1.0f, 1.0f, 1.0f);
+	audio->preloadEffect("Sound/eatProp.mp3", false, 1.0f, 1.0f, 1.0f);
+	audio->preloadEffect("Sound/gameStart.mp3", false, 1.0f, 1.0f, 1.0f);
 }
 
 void LoadingScene::loadImage() {
