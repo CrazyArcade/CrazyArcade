@@ -18,6 +18,7 @@ bool RoomController::init()
 
 void RoomController::onEnter()
 {
+    gameStatus = 0;
     Layer::onEnter();
 #ifdef NETWORK
     client = Client::getInstance();

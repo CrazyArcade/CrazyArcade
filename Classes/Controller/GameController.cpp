@@ -129,7 +129,7 @@ void GameController::syncLocalPlayerPosition(float dt)
         auto id = builder.CreateString(localPlayer->getID());
         auto dir = static_cast<Direction>(localPlayer->getDirection());
         auto pos = localPlayer->getPosition();
-        auto data = CreatePlayerPosChange(builder, id, dir, pos.x, pos.y);
+        auto data = CreatePlayerPosChange(builder, id, dir, pos.x * 10, pos.y * 10);
         auto msg = CreateMsg(builder, MsgType_PlayerPosChange, data.Union());
         builder.Finish(msg);
 
@@ -209,7 +209,7 @@ void GameController::onPlayerPositionChange(const void* msg)
     auto player = playerManager->getPlayer(data->id()->str());
     if (player != nullptr && !player->isLocal())
     {
-        auto pos = Vec2(data->x(), data->y());
+        auto pos = Vec2(data->x() / 10, data->y() / 10);
         auto dir = static_cast<Player::Direction>(data->direction());
         player->setPosition(pos);
         player->setDirection(dir);
