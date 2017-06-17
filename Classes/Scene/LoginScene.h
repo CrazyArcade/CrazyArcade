@@ -1,24 +1,15 @@
-#pragma once
 #ifndef  _LOGINSCENE_SCENE_H__
 #define  _LOGINSCENE_SCENE_H__
 
-#include<iostream>
 #include"cocos2d.h"
-#include"Settings.h"
-#include"SettingsScene.h"
-#include"RoomScene.h"
-#include"StartScene.h"
-#include"Scene/UI/CheckBox.h"
 #include"cocos2d/cocos/ui/CocosGUI.h"
 #include"cocos2d/extensions/cocos-ext.h"
 
 
-class LoginScene :public cocos2d::Layer,public cocos2d::ui::EditBoxDelegate
+class LoginScene :public cocos2d::Layer
 {
-protected:
-	cocos2d::ui::EditBox* _editUserName;
-	cocos2d::ui::EditBox* _editPassword;
 private:
+<<<<<<< HEAD
 	cocos2d::Menu* createText();
 	cocos2d::Sprite* createBackground();
 	cocos2d::Sprite* createLoginBox();
@@ -40,6 +31,27 @@ public :
 	      cocos2d::ui::EditBox* editBox, const std::string &text);
 	virtual void editBoxReturn(cocos2d::ui::EditBox* editBox);
 	CREATE_FUNC(LoginScene);
+=======
+
+    cocos2d::Sprite* usernameBG;
+    cocos2d::ui::TextField* usernameInput;
+
+    void createBackground();
+    void createLoginButton();
+
+    void initUserBox();
+    void initcheckBox();
+
+    void menuBackCallback(cocos2d::Ref* pSender);
+    //void checkboxSelectedEvent(cocos2d::Ref* pSender);
+    void textFieldEvent(cocos2d::Ref* sender, cocos2d::ui::TextField::EventType event);
+
+public:
+
+    static cocos2d::Scene * createScene();
+    virtual bool init();
+    CREATE_FUNC(LoginScene);
+>>>>>>> refs/remotes/origin/master
 
 };
 #endif // ! _LOGINSCENE_SCENE_H__

@@ -34,12 +34,15 @@ void RoomController::onEnter()
 
 void RoomController::onExit()
 {
-    Layer::onExit();
 #ifdef NETWORK
+    if (gameStatus == 0) // player exit room directly
+    {
+        client->close();
+    }
     client->clear();
     client = nullptr;
 #endif // NETWORK
-
+    Layer::onExit();
 }
 
 void RoomController::onWelcome(const void * msg)
@@ -71,13 +74,29 @@ void RoomController::onRoomInfoUpdate(const void * msg)
 {
     auto data = static_cast<const RoomInfoUpdate*>(msg);
     auto userVector = data->users();
-    for (auto it = userVector->begin(); it != userVector->end(); ++it)
+
+    auto it1 = userVector->begin();
+    auto it2 = userBoxes.begin();
+    for (; it2 != userBoxes.end(); ++it2)
     {
-        auto uid = it->uid()->str();
-        auto name = it->name()->str();
-        auto role = it->role() + 1;
-        // TODO
-        log("%s %s %d", uid.data(), name.data(), role);
+        std::string name = "";
+        int role = -1;
+        bool isReady = false;
+
+        if (it1 != userVector->end())
+        {
+            //auto uid = it1->uid()->str();
+            name = it1->name()->str();
+            role = it1->role();
+            isReady = it1->isReady();
+
+            ++it1;
+        }
+
+        (*it2)->setUserName(name);
+        (*it2)->setRole(role);
+        (*it2)->setReadyLabel(isReady);
+        
     }
 }
 
@@ -85,6 +104,8 @@ void RoomController::onGameStatusChange(const void * msg)
 {
     auto data = static_cast<const GameStatusChange*>(msg);
     auto status = data->status();
+    gameStatus = static_cast<int>(status);
+
     if (status == GameStatus::GameStatus_PENDING)
     {
         Director::getInstance()->pushScene(GameScene::createScene());

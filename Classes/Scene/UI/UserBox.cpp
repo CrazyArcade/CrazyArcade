@@ -19,7 +19,16 @@ void UserBox::setRole(int role)
         rolePic->setScale(1.2f);
         addChild(rolePic, 1);
     } 
-    rolePic->setTexture(Settings::Player::path + std::string(Settings::Player::roleName[role]) + "/default.png");
+    if (role < 0)
+    {
+        rolePic->setVisible(false);
+    }
+    else
+    {
+        rolePic->setVisible(true);
+        rolePic->setTexture(Settings::Player::path + std::string(Settings::Player::roleName[role]) + "/default.png");
+    }
+    
 }
 
 void UserBox::setUserName(const std::string & name)
@@ -28,8 +37,8 @@ void UserBox::setUserName(const std::string & name)
     if (!nameArea)
     {
         nameArea = ui::Text::create(name, Settings::Font::Type::base, Settings::Font::Size::name);
-        nameArea->setPosition(Vec2(this->getContentSize().width * 0.5f, this->getContentSize().height * 0.08f));
-        nameArea->setColor(Color3B::BLACK);
+        nameArea->setPosition(Vec2(this->getContentSize().width * 0.5f, this->getContentSize().height * 0.1f));
+        nameArea->setColor(Color3B::WHITE);
         nameArea->enableGlow(Color4B::BLACK);
         addChild(nameArea, 100);
     }
@@ -37,4 +46,18 @@ void UserBox::setUserName(const std::string & name)
     {
         nameArea->setString(name);
     }
+}
+
+void UserBox::setReadyLabel(bool ready)
+{
+    if (!readyLabel)
+    {
+        readyLabel = cocos2d::Label::createWithTTF("Ready!", Settings::Font::Type::base, Settings::Font::Size::normal);
+        readyLabel->setColor(cocos2d::Color3B::GREEN);
+        readyLabel->setPosition(this->getContentSize().width*0.7, this->getContentSize().height*0.9);
+        readyLabel->setRotation(30);
+        this->addChild(readyLabel, 2);
+    }
+
+    readyLabel->setVisible(ready);
 }

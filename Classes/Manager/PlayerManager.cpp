@@ -17,18 +17,19 @@ bool PlayerManager::init()
     return true;
 }
 
-Player* PlayerManager::createPlayer(const std::string& id, const std::string& role)
+Player* PlayerManager::createPlayer(const std::string& id, int role)
 {
     auto player = Player::create(id, role);
     if (player)
     {
+        player->isLocal(false);
         this->_playerList.insert(id, player);
         return player;
     }
     return nullptr;
 }
 
-Player * PlayerManager::createLocalPlayer(const std::string & id, const std::string & role)
+Player * PlayerManager::createLocalPlayer(const std::string & id, int role)
 {
     localPlayer = createPlayer(id, role);
     if (localPlayer)

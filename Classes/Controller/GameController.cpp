@@ -28,26 +28,6 @@ void GameController::setMap(GameMap * map)
     if (map) this->map = map;
 }
 
-void GameController::initListener()
-{
-    auto keyListener = EventListenerKeyboard::create();
-    keyListener->onKeyPressed = CC_CALLBACK_2(GameController::onKeyPressed, this);
-    keyListener->onKeyReleased = CC_CALLBACK_2(GameController::onKeyReleased, this);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(keyListener, this);
-
-#ifdef NETWORK
-    CLIENT_ON(MsgType_GameInit, GameController::onGameInit);
-    CLIENT_ON(MsgType_PlayerPosChange, GameController::onPlayerPositionChange);
-    CLIENT_ON(MsgType_PlayerAttrChange, GameController::onPlayerAttrChange);
-    CLIENT_ON(MsgType_PlayerStatusChange, GameController::onPlayerStatusChange);
-
-    CLIENT_ON(MsgType_BubbleSet, GameController::onBubbleSet);
-    CLIENT_ON(MsgType_BubbleBoom, GameController::onBubbleBoom);
-
-    CLIENT_ON(MsgType_PropSet, GameController::onPropSet);
-#endif // NETWORK
-}
-
 void GameController::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event * event)
 {
     switch (keyCode)
@@ -93,10 +73,29 @@ void GameController::onEnter()
     client = Client::getInstance();
     if (!client->isConnected()) client->connect();
 
-    float dur = 1 / 30;
-    schedule(schedule_selector(GameController::syncLocalPlayerPosition), dur);
+    CLIENT_ON(MsgType_GameInit, GameController::onGameInit);
+    CLIENT_ON(MsgType_GameStatusChange, GameController::onGameStatusChange);
+
+    CLIENT_ON(MsgType_PlayerPosChange, GameController::onPlayerPositionChange);
+    CLIENT_ON(MsgType_PlayerAttrChange, GameController::onPlayerAttrChange);
+    CLIENT_ON(MsgType_PlayerStatusChange, GameController::onPlayerStatusChange);
+
+    CLIENT_ON(MsgType_BubbleSet, GameController::onBubbleSet);
+    CLIENT_ON(MsgType_BubbleBoom, GameController::onBubbleBoom);
+
+    CLIENT_ON(MsgType_PropSet, GameController::onPropSet);
+    
+    {
+        // send enter scene msg.
+        flatbuffers::FlatBufferBuilder builder;
+        auto orc = CreateUserChangeStats(builder, 2);
+        auto msg = CreateMsg(builder, MsgType_UserChangeStats, orc.Union());
+        builder.Finish(msg);
+        client->send(builder.GetBufferPointer(), builder.GetSize());
+    }
+
 #else
-    auto player = playerManager->createLocalPlayer("local");
+    auto player = playerManager->createLocalPlayer("local", 0);
     auto pos = map->tileCoordToPosition(Vec2(0, 0));
     player->setPosition(pos);
     map->addPlayer(player);
@@ -105,17 +104,19 @@ void GameController::onEnter()
     auto prop = propManager->createProp("bubble", Prop::Type::BUBBLE, pos1);
     map->addProp(prop, prop->getType());
 #endif // NETWORK
-    initListener();
 }
 
 void GameController::onExit()
 {
-    Layer::onExit();
 #ifdef NETWORK
+    if (gameStatus != 3) // player exit game directly
+    {
+        client->close();
+    }
     client->clear();
-    client->close();
     client = nullptr;
 #endif // NETWORK
+    Layer::onExit();
 }
 
 void GameController::syncLocalPlayerPosition(float dt)
@@ -146,56 +147,73 @@ void GameController::onGameInit(const void * msg)
         auto x = it->x(), y = it->y();
         auto role = it->role();
         Player * player;
-        if (User::getInstance()->getName() == id)
+        if (User::getInstance()->getUID() == id)
         {
-            //player = playerManager->createLocalPlayer(id, /*todo*/);
+            player = playerManager->createLocalPlayer(id, role);
         }
         else
         {
-            //player = playerManager->createPlayer(id, /*todo*/);
+            player = playerManager->createPlayer(id, role);
         }
         player->setPosition(x, y);
         map->addPlayer(player);
     }
-
-    {
-        // send load done msg.
-        flatbuffers::FlatBufferBuilder builder;
-        auto orc = CreateUserChangeStats(builder, 2);
-        auto msg = CreateMsg(builder, MsgType_UserChangeStats, orc.Union());
-        builder.Finish(msg);
-    }
-    // todo send done msg
 }
 
-void GameController::onPlayerJoin(const void* msg)
+void GameController::onGameStatusChange(const void * msg)
 {
-    /*
-    auto data = static_cast<const API::PlayerJoin*>(msg);
-    Player * player;
-    if (data->is_local())
-    {
-        player = playerManager->createLocalPlayer(data->id()->str());
-    } else {
-        player = playerManager->createPlayer(data->id()->str());
-    }
-    auto pos = Vec2(data->x(), data->y());
-    player->setPosition(pos);
+    auto data = static_cast<const GameStatusChange*>(msg);
+    auto status = data->status();
+    gameStatus = static_cast<int>(status);
 
-    map->addPlayer(player);
-    */
+    if (status == GameStatus::GameStatus_START)
+    {
+        toStart();
+    }
+    else if (status == GameStatus::GameStatus_OVER)
+    {
+        toOver();
+    }
+}
+
+void GameController::toStart()
+{
+    // game start, init keyboard listener
+    auto keyListener = EventListenerKeyboard::create();
+    keyListener->onKeyPressed = CC_CALLBACK_2(GameController::onKeyPressed, this);
+    keyListener->onKeyReleased = CC_CALLBACK_2(GameController::onKeyReleased, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(keyListener, this);
+
+#ifdef NETWORK
+    float dur = 1 / 30;
+    schedule(schedule_selector(GameController::syncLocalPlayerPosition), dur);
+#endif // NETWORK
+}
+
+void GameController::toOver()
+{
+    _eventDispatcher->removeEventListenersForType(EventListener::Type::KEYBOARD);
+    unschedule(schedule_selector(GameController::syncLocalPlayerPosition));
+    
+    auto isWin = new bool;
+    *isWin = (playerManager->getLocalPlayer()->getStatus() != Player::Status::DIE);
+
+    Director::getInstance()->getRunningScene()->getEventDispatcher()->dispatchCustomEvent("game_over", isWin);
+
+    CC_SAFE_DELETE(isWin);
 }
 
 void GameController::onPlayerPositionChange(const void* msg)
 {
     auto data = static_cast<const API::PlayerPosChange*>(msg);
     auto player = playerManager->getPlayer(data->id()->str());
-    if (player != playerManager->getLocalPlayer() && player != nullptr)
+    if (player != nullptr && !player->isLocal())
     {
         auto pos = Vec2(data->x(), data->y());
         auto dir = static_cast<Player::Direction>(data->direction());
         player->setPosition(pos);
         player->setDirection(dir);
+        propManager->checkEat(pos);
     }
 }
 
@@ -227,7 +245,7 @@ void GameController::onLocalPlayerSetBubble()
     auto localPlayer = playerManager->getLocalPlayer();
     if (localPlayer->isCanSetBubble() && map->at(map->positionToTileCoord(localPlayer->getPosition())) != map->TILE_BUBBLE)
     {
-        localPlayer->setBubble();
+        //localPlayer->setBubble();
 #ifdef NETWORK
         using namespace API;
         flatbuffers::FlatBufferBuilder builder;
@@ -259,7 +277,10 @@ void GameController::onBubbleSet(const void* msg)
     auto playerID = data->player_id()->str();
     auto x = data->x(), y = data->y();
     auto damage = data->damage();
-    
+
+    auto player = playerManager->getPlayer(playerID);
+    if (player->isLocal()) player->setBubble();
+
     auto bubble = bubbleManager->createBubble(id, playerID, Vec2(x, y), damage);
     if (bubble)
     {

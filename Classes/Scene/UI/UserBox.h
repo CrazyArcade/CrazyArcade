@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
+
 class UserBox : public cocos2d::Sprite {
 public:
 
@@ -13,9 +14,12 @@ public:
 
     void setUserName(const std::string& name);
 
+    void setReadyLabel(bool ready);
+
 private:
     int _role;
-    cocos2d::Sprite* rolePic;
+    cocos2d::Sprite* rolePic = nullptr;
+    cocos2d::Label* readyLabel = nullptr;
 
     std::string name;
     cocos2d::ui::Text * nameArea;

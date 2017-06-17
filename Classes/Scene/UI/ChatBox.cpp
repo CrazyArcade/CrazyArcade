@@ -39,10 +39,9 @@ void ChatBox::boxInputInit()
 {
     boxInput = cocos2d::ui::TextField::create("Chat Here",
         Settings::Font::Type::base, Settings::Font::Size::chat);
+
     boxInput->setCursorEnabled(true);
     boxInput->setCursorChar('|');
-    boxInput->setTextHorizontalAlignment(cocos2d::TextHAlignment::LEFT);
-
     addChild(boxInput);
 }
 

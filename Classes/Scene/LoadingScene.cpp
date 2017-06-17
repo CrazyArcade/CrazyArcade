@@ -1,5 +1,5 @@
 #include "Scene/LoadingScene.h"
-#include "Scene/StartScene.h"
+#include "Scene/LoginScene.h"
 #include "Settings.h"
 #include "SimpleAudioEngine.h"
 
@@ -21,7 +21,7 @@ Scene* LoadingScene::createScene()
 }
 
 void LoadingScene::endLoading(float dt) {
-    const auto transition = TransitionFade::create(1,StartScene::createScene());
+    const auto transition = TransitionFade::create(1, LoginScene::createScene());
     Director::getInstance()->replaceScene(transition);
 }
 

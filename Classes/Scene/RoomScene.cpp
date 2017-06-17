@@ -3,6 +3,7 @@
 #include "Scene/GameScene.h"
 #include "Scene/StartScene.h"
 #include "Settings.h"
+#include "api_generated.h"
 
 USING_NS_CC;
 
@@ -36,11 +37,14 @@ bool RoomScene::init()
 
     // room controller
     roomController = RoomController::create();
-    addChild(roomController);
+
     // ready button callback
     readyButtonCallBack = CC_CALLBACK_1(RoomController::onUserChangeStats, roomController);
     roleChangeCallback = CC_CALLBACK_1(RoomController::onUserChangeRole, roomController);
+
     createUI();
+
+    addChild(roomController, -1);
     return true;
 }
 
@@ -55,17 +59,24 @@ void RoomScene::createUI()
     createReadyButton();
 }
 
+void RoomScene::onEnter()
+{
+    Layer::onEnter();
+    readyButton->setTitleText("Ready");
+    isReady = false;
+}
+
 void RoomScene::createReadyButton()
 {
     auto getShowText = [](bool isReady)
     {
         return isReady ? "Cancel" : "Ready";
     };
-    static bool isReady = false;
     readyButton = ui::Button::create("RoomScene/button_normal.png", "RoomScene/button_selected.png");
     readyButton->setTitleText(getShowText(isReady));
     readyButton->setTitleFontSize(Settings::Font::Size::normal);
-    readyButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type)
+
+    readyButton->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type)
     {
         if (type == ui::Widget::TouchEventType::ENDED)
         {
@@ -91,14 +102,12 @@ void RoomScene::createTitle()
 
 void RoomScene::initUserBox()
 {
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 4; i++) {
         auto _userBox = UserBox::create();
         _userBox->setPosition(Vec2(_userBox->getContentSize().width * (i + 1) * 1.25 - _userBox->getContentSize().width * 0.5f,
             visibleSize.height*0.68f));
-        _userBox->setUserName("test");
-        _userBox->setRole(0);
         addChild(_userBox);
-        userBoxes.pushBack(_userBox);
+        roomController->userBoxes.pushBack(_userBox);
     }
 }
 
@@ -115,8 +124,6 @@ void RoomScene::initRoleBox()
     }
     // default role
     roleBoxes.at(0)->setChosen(true);
-
-
 }
 
 void RoomScene::initMouseListener()
@@ -154,7 +161,10 @@ void RoomScene::createBackButton()
 
     const auto backButton = MenuItemLabel::create(
         Label::createWithTTF("Back", Settings::Font::Type::base, Settings::Font::Size::label),
-        [](Ref * ref) { Director::getInstance()->popScene(); });
+        [](Ref * ref) { 
+        Client::getInstance()->close();
+        Director::getInstance()->popScene(); 
+    });
 
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     const auto baseY = visibleSize.height * 0.85f;

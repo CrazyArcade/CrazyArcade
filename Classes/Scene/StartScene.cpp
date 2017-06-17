@@ -5,7 +5,6 @@
 #include "HelpScene.h"
 #include "SettingsScene.h"
 #include "RoomScene.h"
-#include "LoginScene.h"
 
 USING_NS_CC;
 
@@ -74,7 +73,7 @@ void StartScene::musicInit() {
 }
 
 void StartScene::menuPlayCallback(cocos2d::Ref * pSender) {
-    Director::getInstance()->pushScene(TransitionFade::create(1, LoginScene::createScene()));
+    Director::getInstance()->pushScene(TransitionFade::create(1, RoomScene::createScene()));
 }
 
 void StartScene::menuSettingsCallback(cocos2d::Ref * pSender) {
