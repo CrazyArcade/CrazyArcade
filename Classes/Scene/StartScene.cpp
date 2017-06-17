@@ -49,7 +49,7 @@ void StartScene::musicPP(cocos2d::Ref * pSender) {
 
 void StartScene::musicInit() {
     const auto music = Menu::create();
-	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("StartScene/bgmusic.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Sound/roomScene.mp3",true);
 	musicOn = UserDefault::getInstance()->getBoolForKey("musicOn", true);
 	//musicOn = CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying();
 	//UserDefault::getInstance()->setBoolForKey("musicOn", musicOn);

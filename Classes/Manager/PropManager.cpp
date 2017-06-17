@@ -1,5 +1,6 @@
 #include "PropManager.h"
 #include "Scene/UI/GameMap.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -37,6 +38,7 @@ bool PropManager::checkEat(const cocos2d::Vec2 & pos)
             return true;
         }
     }
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Sound/eatProp.mp3", false, 1.0f, 1.0f, 1.0f);
     return false;
 }
 
