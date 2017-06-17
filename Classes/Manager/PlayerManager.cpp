@@ -69,7 +69,7 @@ void PlayerManager::localPlayerMove()
     enum class MoveMode : uint8_t { Direct, Offset };
     auto mode = MoveMode::Direct;
     const auto speed = localPlayer->getSpeed();
-    const float step = localPlayer->getRealSpeed() / speed;
+    const float step = round(localPlayer->getRealSpeed() / speed * 10) / 10;
     auto direction = localPlayer->getDirection();
 
     for (uint8_t i = 0; i < speed; ++i)

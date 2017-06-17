@@ -1,6 +1,7 @@
 #include "GameController.h"
 #include "api_generated.h"
 #include "Model/User.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 using namespace API;
@@ -155,6 +156,9 @@ void GameController::onGameInit(const void * msg)
         {
             player = playerManager->createPlayer(id, role);
         }
+        player->setSpeed(it->speed());
+        player->setDamage(it->damage());
+        player->setMaxBubble(it->bubble(), it->bubble());
         player->setPosition(x, y);
         map->addPlayer(player);
     }
@@ -188,6 +192,7 @@ void GameController::toStart()
     float dur = 1 / 30;
     schedule(schedule_selector(GameController::syncLocalPlayerPosition), dur);
 #endif // NETWORK
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Sound/gameStart.mp3", false, 1.0f, 1.0f, 1.0f);
 }
 
 void GameController::toOver()

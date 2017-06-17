@@ -1,5 +1,6 @@
 #include "PropManager.h"
 #include "Scene/UI/GameMap.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -51,7 +52,7 @@ void PropManager::addCustomEvent()
 
         if (checkEat(pos))
         {
-            // local player eat prop
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Sound/eatProp.mp3", false);
         }
     }), this);
 }
