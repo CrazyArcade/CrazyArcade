@@ -23,6 +23,11 @@ Scene* GameScene::createScene()
     // return the scene
     return scene;
 }
+void GameScene::onEnter()
+{
+	Layer::onEnter();
+	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Sound/inGame.mp3", true);
+}
 
 // on "init" you need to initialize your instance
 bool GameScene::init()

@@ -1,4 +1,4 @@
-#include "Scene/LoadingScene.h"
+﻿#include "Scene/LoadingScene.h"
 #include "Scene/LoginScene.h"
 #include "Settings.h"
 #include "SimpleAudioEngine.h"
@@ -28,8 +28,14 @@ void LoadingScene::endLoading(float dt) {
 void LoadingScene::loadSound()
 {
     auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
-    //audio->preloadEffect("GameAudio/bubble1.wav");
-    //audio->preloadEffect("GameAudio/bubble2.wav");
+	audio->preloadBackgroundMusic("Sound/inGame.mp3", true);
+	audio->preloadBackgroundMusic("Sound/roomScene.mp3", true);
+	audio->preloadEffect("Sound/win.mp3", false );
+	audio->preloadEffect("Sound/defeat.mp3", false);
+	audio->preloadEffect("Sound/bubbleSet.mp3", false);
+	audio->preloadEffect("Sound/bubbleBoom.mp3", false);
+	audio->preloadEffect("Sound/eatProp.mp3", false);
+	audio->preloadEffect("Sound/gameStart.mp3", false);
 }
 
 void LoadingScene::loadImage() {
@@ -47,6 +53,12 @@ void LoadingScene::loadSpriteFrame()
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("GameItem/Player/Player2/animation.plist");
 
 	return;
+}
+
+void LoadingScene::onEnter()
+{
+	Layer::onEnter();
+	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Sound/roomScene.mp3", true);
 }
 
 bool LoadingScene::init()
