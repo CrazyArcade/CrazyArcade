@@ -38,6 +38,7 @@ public:
     };
 
     uint8_t getSpeed();
+    float getRealSpeed();
     void setSpeed(uint8_t speed);
 
     uint8_t getDamage();

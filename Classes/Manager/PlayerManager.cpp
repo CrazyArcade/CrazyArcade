@@ -69,6 +69,7 @@ void PlayerManager::localPlayerMove()
     enum class MoveMode : uint8_t { Direct, Offset };
     auto mode = MoveMode::Direct;
     const auto speed = localPlayer->getSpeed();
+    const float step = localPlayer->getRealSpeed() / speed;
     auto direction = localPlayer->getDirection();
 
     for (uint8_t i = 0; i < speed; ++i)
@@ -80,7 +81,7 @@ void PlayerManager::localPlayerMove()
 
         const auto currentPos = localPlayer->getPosition();
 
-        auto pair = getNextPos(currentPos, direction);
+        auto pair = getNextPos(currentPos, direction, step);
         auto nextPos = pair.first, logicPos1 = pair.second.first, logicPos2 = pair.second.second;
             
         // next move is out of map
@@ -141,10 +142,8 @@ void PlayerManager::update(float dt)
     }
 }
 
-std::pair<cocos2d::Vec2, std::pair<cocos2d::Vec2, cocos2d::Vec2>> PlayerManager::getNextPos(const cocos2d::Vec2& pos, Player::Direction direction)
+std::pair<cocos2d::Vec2, std::pair<cocos2d::Vec2, cocos2d::Vec2>> PlayerManager::getNextPos(const cocos2d::Vec2& pos, Player::Direction direction, float step)
 {
-    int step = 1;
-
     Vec2 nextPos(pos), logicPos1(pos), logicPos2(pos);
 
     switch (direction)

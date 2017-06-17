@@ -66,6 +66,11 @@ uint8_t Player::getSpeed()
     return attr.speed;
 }
 
+float Player::getRealSpeed()
+{
+    return 0.8f + attr.speed * 0.4f;
+}
+
 void Player::setSpeed(uint8_t speed)
 {
     this->attr.speed = speed;
