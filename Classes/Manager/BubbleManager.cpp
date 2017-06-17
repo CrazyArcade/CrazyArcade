@@ -15,7 +15,7 @@ Bubble * BubbleManager::createBubble(const std::string & id, const std::string& 
 
         return bubble;
     }
-	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Sound/bubbleSet.mp3", false, 1.0f, 1.0f, 1.0f);
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Sound/bubbleSet.mp3", false);
     return nullptr;
 }
 

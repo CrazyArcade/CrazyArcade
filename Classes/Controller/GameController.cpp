@@ -203,7 +203,6 @@ void GameController::toOver()
     Director::getInstance()->getRunningScene()->getEventDispatcher()->dispatchCustomEvent("game_over", isWin);
 
     CC_SAFE_DELETE(isWin);
-	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Sound/defeat.mp3", false, 1.0f, 1.0f, 1.0f);
 }
 
 void GameController::onPlayerPositionChange(const void* msg)
