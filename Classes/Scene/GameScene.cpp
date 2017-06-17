@@ -1,6 +1,5 @@
 #include "GameScene.h"
 #include "SimpleAudioEngine.h"
-#include "api_generated.h"
 #include "Controller/GameController.h"
 #include "Scene/UI/ResultBox.h"
 #include "Scene/UI/GameMap.h"

@@ -34,6 +34,7 @@ bool PropManager::checkEat(const cocos2d::Vec2 & pos)
         {
             _propList.erase(it);
             map->removeEntity(pos);
+            prop->setVisible(false);
             prop->removeFromParent();
             return true;
         }
