@@ -71,30 +71,13 @@ void LoginScene::createLoginButton()
         else
         {
             username.substr(0, 16);
+            UserDefault::getInstance()->setStringForKey("username", username);
             User::getInstance()->setName(username);
 
             Director::getInstance()->replaceScene(TransitionFade::create(1.2f, StartScene::createScene()));
         }
     });
     addChild(loginButton);
-    //login menu
-    /*
-    auto loginOnItem = cocos2d::MenuItemImage::create(
-        "LoginScene/login03.png",
-        "LoginScene/login03.png");
-    auto loginOffItem = loginOnItem;
-    auto loginToggleItem = cocos2d::MenuItemToggle::createWithCallback(
-        CC_CALLBACK_1(LoginScene::menuLoginCallback, this),
-        loginOnItem,
-        loginOffItem,
-        NULL);
-    loginOnItem->setScale(1.5f);
-    loginOffItem->setScale(1.5f);
-    loginToggleItem->setPosition(Director::getInstance()->convertToGL(Vec2(visibleSize.width / 2, visibleSize.height * 0.76f)));
-    //loginItem->setAnchorPoint(Vec2(1, 0));
-    Menu * mn = Menu::create(loginToggleItem, NULL);
-    mn->setPosition(Vec2::ZERO);
-    */
 }
 
 void LoginScene::initUserBox()
@@ -107,7 +90,7 @@ void LoginScene::initUserBox()
     usernameBG->setOpacity(200);
 
     usernameInput = ui::TextField::create("Input Username Here", Settings::Font::Type::base, Settings::Font::Size::light);
-
+    usernameInput->setString(UserDefault::getInstance()->getStringForKey("username", ""));
     usernameInput->setColor(Color3B::BLACK);
     usernameInput->setCursorChar('|');
     usernameInput->setCursorEnabled(true);
