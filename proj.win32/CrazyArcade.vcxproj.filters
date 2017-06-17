@@ -28,6 +28,9 @@
     <Filter Include="src\Util">
       <UniqueIdentifier>{d0c443b6-768b-4b38-87b2-51f647ae641a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Network">
+      <UniqueIdentifier>{9586c25b-657a-42e2-8f38-46a8515a2319}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -66,9 +69,6 @@
     <ClCompile Include="..\Classes\Scene\UI\GameMap.cpp">
       <Filter>src\Scene\UI</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Client.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Scene\LoadingScene.cpp">
       <Filter>src\Scene</Filter>
     </ClCompile>
@@ -96,7 +96,6 @@
     <ClCompile Include="..\Classes\Scene\UI\ResultBox.cpp">
       <Filter>src\Scene\UI</Filter>
     </ClCompile>
-
     <ClCompile Include="..\Classes\Scene\LoginScene.cpp">
       <Filter>src\Scene</Filter>
     </ClCompile>
@@ -111,6 +110,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Scene\UI\UserBox.cpp">
       <Filter>src\Scene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Network\Client.cpp">
+      <Filter>src\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Util\Sound.cpp">
+      <Filter>src\Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -153,14 +158,8 @@
     <ClInclude Include="..\Classes\Scene\UI\GameMap.h">
       <Filter>src\Scene\UI</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Client.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Scene\LoadingScene.h">
       <Filter>src\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\api_generated.h">
-      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Manager\BubbleManager.h">
       <Filter>src\Manager</Filter>
@@ -204,14 +203,22 @@
     <ClInclude Include="..\Classes\Scene\UI\UserBox.h">
       <Filter>src\Scene\UI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\Network\Client.h">
+      <Filter>src\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Network\api_generated.h">
+      <Filter>src\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Util\Sound.h">
+      <Filter>src\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\preloadList.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\Resources\Scene\PlayingPad.png" />
-    <Image Include="..\Resources\Scene\ResultPad.png" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 #include "PlayerManager.h"
 #include "Scene/UI/GameMap.h"
-#include "api_generated.h"
+#include "Network/api_generated.h"
 USING_NS_CC;
 
 bool PlayerManager::init()

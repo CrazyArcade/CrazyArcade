@@ -2,6 +2,7 @@
 #include "Scene/LoginScene.h"
 #include "Settings.h"
 #include "SimpleAudioEngine.h"
+#include "preloadList.h"
 
 USING_NS_CC;
 
@@ -45,21 +46,13 @@ void LoadingScene::loadImage() {
 void LoadingScene::loadSpriteFrame()
 {
     auto cache = SpriteFrameCache::getInstance();
-    
-    cache->addSpriteFramesWithFile(Settings::Bubble::alive);
-    cache->addSpriteFramesWithFile(Settings::Bubble::explosion);
 
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("GameItem/Player/Player1/animation.plist");
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("GameItem/Player/Player2/animation.plist");
-
-	return;
+    for (auto plist : Preload::plists)
+    {
+        cache->addSpriteFramesWithFile(plist);
+    }
 }
 
-void LoadingScene::onEnter()
-{
-	Layer::onEnter();
-	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Sound/roomScene.mp3", true);
-}
 
 bool LoadingScene::init()
 {
