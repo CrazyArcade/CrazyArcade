@@ -7,6 +7,7 @@
 #include "Manager/BubbleManager.h"
 #include "Manager/PropManager.h"
 #include "Scene/UI/GameMap.h"
+#include "Operator/Operator.h"
 
 class GameController : public cocos2d::Layer
 {
@@ -24,8 +25,8 @@ private:
     GameMap * map;
     int gameStatus;
 
-    void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
-    void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+    Operator * oper;
+    void opHandle(Operator::OpCode opcode, Operator::OpType type);
 
     void onEnter();
     void onExit();
