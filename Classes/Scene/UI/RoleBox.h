@@ -9,7 +9,8 @@ public:
 
     enum roleChoice {
         Player1,
-        Player2
+        Player2,
+        Player3
     };
 
     virtual bool init();
