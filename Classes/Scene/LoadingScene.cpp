@@ -2,7 +2,7 @@
 #include "Scene/LoginScene.h"
 #include "Settings.h"
 #include "SimpleAudioEngine.h"
-#include "preloadList.h"
+#include "PreloadList.h"
 
 USING_NS_CC;
 
