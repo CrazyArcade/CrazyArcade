@@ -2,7 +2,7 @@
 #define __ROOM_CONTROLLER_H__
 
 #include "cocos2d.h"
-#include "Client.h"
+#include "Network/Client.h"
 #include "Scene/UI/UserBox.h"
 
 class RoomController : public cocos2d::Layer

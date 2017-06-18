@@ -3,7 +3,6 @@
 #include "Scene/GameScene.h"
 #include "Scene/StartScene.h"
 #include "Settings.h"
-#include "api_generated.h"
 
 USING_NS_CC;
 

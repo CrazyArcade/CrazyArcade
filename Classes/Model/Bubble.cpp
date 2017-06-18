@@ -75,6 +75,7 @@ bool BubbleWave::init(BubbleWave::PosInWave pos, Direction direction)
     initWithSpriteFrame(frame);
 
     this->runAction(Sequence::create(Animate::create(animation), CallFuncN::create([](Node * node) {
+        node->setVisible(false);
         node->removeFromParent();
     }), NULL));
 

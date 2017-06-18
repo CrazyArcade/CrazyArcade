@@ -1,5 +1,6 @@
 #include "Scene/UI/ResultBox.h"
 #include "Scene/UI/GameMap.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -31,10 +32,13 @@ void ResultBox::setResult(bool isWin)
     }
     if (isWin)
     {
+		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Sound/win.mp3", false);
         pad->setTexture("Scene/win.png");
     }
     else
     {
+		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Sound/defeat.mp3", false);
+
         pad->setTexture("Scene/lose.png");
     }
 }

@@ -49,7 +49,7 @@ void StartScene::musicPP(cocos2d::Ref * pSender) {
 
 void StartScene::musicInit() {
     const auto music = Menu::create();
-	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("StartScene/bgmusic.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Sound/roomScene.mp3",true);
 	musicOn = UserDefault::getInstance()->getBoolForKey("musicOn", true);
 	//musicOn = CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying();
 	//UserDefault::getInstance()->setBoolForKey("musicOn", musicOn);
@@ -143,7 +143,7 @@ cocos2d::Sprite* StartScene::createBGImage() {
     auto size = Director::getInstance()->getVisibleSize();
     auto bgImage = Sprite::create("Scene/backgroundimage.jpg");
     bgImage->setScale(1.25);
-    bgImage->setZOrder(-1);
+    bgImage->setLocalZOrder(-1);
     bgImage->setPosition(size.width / 2, size.height / 2);
     return bgImage;
 }

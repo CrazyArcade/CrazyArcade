@@ -1,5 +1,5 @@
 #include "RoomController.h"
-#include "api_generated.h"
+#include "Network/api_generated.h"
 #include "Model/User.h"
 #include "Scene/GameScene.h"
 
@@ -18,6 +18,7 @@ bool RoomController::init()
 
 void RoomController::onEnter()
 {
+    gameStatus = 0;
     Layer::onEnter();
 #ifdef NETWORK
     client = Client::getInstance();
@@ -88,8 +89,8 @@ void RoomController::onRoomInfoUpdate(const void * msg)
             //auto uid = it1->uid()->str();
             name = it1->name()->str();
             role = it1->role();
+            isReady = it1->isReady();
 
-            //isReady = it1->isReady();
             ++it1;
         }
 

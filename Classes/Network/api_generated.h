@@ -536,12 +536,18 @@ namespace API
             VT_ID = 4,
             VT_X = 6,
             VT_Y = 8,
-            VT_ROLE = 10
+            VT_ROLE = 10,
+            VT_SPEED = 12,
+            VT_DAMAGE = 14,
+            VT_BUBBLE = 16
         };
         const flatbuffers::String *id() const { return GetPointer<const flatbuffers::String *>(VT_ID); }
         int32_t x() const { return GetField<int32_t>(VT_X, 0); }
         int32_t y() const { return GetField<int32_t>(VT_Y, 0); }
         int32_t role() const { return GetField<int32_t>(VT_ROLE, 0); }
+        uint8_t speed() const { return GetField<uint8_t>(VT_SPEED, 0); }
+        uint8_t damage() const { return GetField<uint8_t>(VT_DAMAGE, 0); }
+        uint8_t bubble() const { return GetField<uint8_t>(VT_BUBBLE, 0); }
         bool Verify(flatbuffers::Verifier &verifier) const
         {
             return VerifyTableStart(verifier) &&
@@ -550,6 +556,9 @@ namespace API
                 VerifyField<int32_t>(verifier, VT_X) &&
                 VerifyField<int32_t>(verifier, VT_Y) &&
                 VerifyField<int32_t>(verifier, VT_ROLE) &&
+                VerifyField<uint8_t>(verifier, VT_SPEED) &&
+                VerifyField<uint8_t>(verifier, VT_DAMAGE) &&
+                VerifyField<uint8_t>(verifier, VT_BUBBLE) &&
                 verifier.EndTable();
         }
     };
@@ -562,11 +571,14 @@ namespace API
         void add_x(int32_t x) { fbb_.AddElement<int32_t>(PlayerData::VT_X, x, 0); }
         void add_y(int32_t y) { fbb_.AddElement<int32_t>(PlayerData::VT_Y, y, 0); }
         void add_role(int32_t role) { fbb_.AddElement<int32_t>(PlayerData::VT_ROLE, role, 0); }
+        void add_speed(uint8_t speed) { fbb_.AddElement<uint8_t>(PlayerData::VT_SPEED, speed, 0); }
+        void add_damage(uint8_t damage) { fbb_.AddElement<uint8_t>(PlayerData::VT_DAMAGE, damage, 0); }
+        void add_bubble(uint8_t bubble) { fbb_.AddElement<uint8_t>(PlayerData::VT_BUBBLE, bubble, 0); }
         PlayerDataBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
         PlayerDataBuilder &operator=(const PlayerDataBuilder &);
         flatbuffers::Offset<PlayerData> Finish()
         {
-            auto o = flatbuffers::Offset<PlayerData>(fbb_.EndTable(start_, 4));
+            auto o = flatbuffers::Offset<PlayerData>(fbb_.EndTable(start_, 7));
             return o;
         }
     };
@@ -575,13 +587,19 @@ namespace API
         flatbuffers::Offset<flatbuffers::String> id = 0,
         int32_t x = 0,
         int32_t y = 0,
-        int32_t role = 0)
+        int32_t role = 0,
+        uint8_t speed = 0,
+        uint8_t damage = 0,
+        uint8_t bubble = 0)
     {
         PlayerDataBuilder builder_(_fbb);
         builder_.add_role(role);
         builder_.add_y(y);
         builder_.add_x(x);
         builder_.add_id(id);
+        builder_.add_bubble(bubble);
+        builder_.add_damage(damage);
+        builder_.add_speed(speed);
         return builder_.Finish();
     }
 
@@ -589,9 +607,12 @@ namespace API
         const char *id = nullptr,
         int32_t x = 0,
         int32_t y = 0,
-        int32_t role = 0)
+        int32_t role = 0,
+        uint8_t speed = 0,
+        uint8_t damage = 0,
+        uint8_t bubble = 0)
     {
-        return CreatePlayerData(_fbb, id ? _fbb.CreateString(id) : 0, x, y, role);
+        return CreatePlayerData(_fbb, id ? _fbb.CreateString(id) : 0, x, y, role, speed, damage, bubble);
     }
 
     struct GameInit FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table

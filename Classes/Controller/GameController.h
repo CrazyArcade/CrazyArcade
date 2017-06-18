@@ -2,7 +2,7 @@
 #define __GAME_CONTROLLER_H__
 
 #include "cocos2d.h"
-#include "Client.h"
+#include "Network/Client.h"
 #include "Manager/PlayerManager.h"
 #include "Manager/BubbleManager.h"
 #include "Manager/PropManager.h"
