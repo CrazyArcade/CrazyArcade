@@ -61,42 +61,78 @@ Player * PlayerManager::getLocalPlayer()
 
 void PlayerManager::localPlayerMove()
 {
-    if (localPlayer->getStatus() == Player::Status::FREE && localPlayer->getDirection() != Player::Direction::NONE)
+    if (localPlayer->getStatus() != Player::Status::FREE) return;
+    
+    auto map = GameMap::getCurrentMap();
+    if (map == nullptr) return;
+    
+    enum class MoveMode : uint8_t { Direct, Offset };
+    auto mode = MoveMode::Direct;
+    const auto speed = localPlayer->getSpeed();
+    const float step = round(localPlayer->getRealSpeed() / speed * 10) / 10;
+    auto direction = localPlayer->getDirection();
+
+    for (uint8_t i = 0; i < speed; ++i)
     {
-        auto map = GameMap::getCurrentMap();
-        if (map == nullptr) return;
+        if (mode == MoveMode::Direct) {
+            direction = localPlayer->getDirection();
+        }
+        if (direction == Player::Direction::NONE) continue;
 
-        const auto speed = localPlayer->getSpeed();
-        for (uint8_t i = 0; i < speed; ++i)
-        {
-            auto currentPos = localPlayer->getPosition();
-            auto pair = getNextPos(currentPos, localPlayer->getDirection());
-            auto nextPos = pair.first, logicPos1 = pair.second.first, logicPos2 = pair.second.second;
+        const auto currentPos = localPlayer->getPosition();
+
+        auto pair = getNextPos(currentPos, direction, step);
+        auto nextPos = pair.first, logicPos1 = pair.second.first, logicPos2 = pair.second.second;
             
-            if (!map->isInMap(logicPos1) || !map->isInMap(logicPos2)) break;
+        // next move is out of map
+        if (!map->isInMap(logicPos1) || !map->isInMap(logicPos2)) break;
+            
+        // next move is in same tile
+        if (map->isInSameTile(currentPos, logicPos1) && map->isInSameTile(currentPos, logicPos2))
+        {
+            localPlayer->setPosition(nextPos);
+            continue;
+        }
 
-            if (map->isInSameTile(currentPos, logicPos1) && map->isInSameTile(currentPos, logicPos2))
-            {
-                localPlayer->setPosition(nextPos);
-            } 
-            else if (map->isCanAccess(logicPos1) && map->isCanAccess(logicPos2))
-            {
-                localPlayer->setPosition(nextPos);
-            }
-            else
-            {
-                break;
-            }
+        bool isAccessible[] = { map->isCanAccess(logicPos1), map->isCanAccess(logicPos2) };
+        
+        if (!isAccessible[0] && !isAccessible[1]) break;
+        
+        // both check point can access
+        if (isAccessible[0] && isAccessible[1])
+        {
+            localPlayer->setPosition(nextPos);
+        }
+        else // else, try offset
+        {
+            // offset still can access
+            if (mode == MoveMode::Offset) break;
 
-            if (map->at(map->positionToTileCoord(nextPos)) >= 100)
-            {
-                auto pos = new int[2];
-                pos[0] = nextPos.x, pos[1] = nextPos.y;
-                getParent()->getEventDispatcher()->dispatchCustomEvent("prop_eat", pos);
-                CC_SAFE_DELETE_ARRAY(pos);
-            }
+            const std::vector<std::pair<Player::Direction, Player::Direction>> offsetDirections = {
+                { Player::Direction::DOWN, Player::Direction::UP },
+                { Player::Direction::DOWN, Player::Direction::UP },
+                { Player::Direction::RIGHT, Player::Direction::LEFT },
+                { Player::Direction::RIGHT, Player::Direction::LEFT },
+            };
+            
+            mode = MoveMode::Offset;
+            direction = isAccessible[0] > isAccessible[1] ?
+                offsetDirections[static_cast<int>(direction)].first :
+                offsetDirections[static_cast<int>(direction)].second;
+            // backtrack 
+            --i;
+            continue;
+        }
+
+        if (map->at(map->positionToTileCoord(nextPos)) >= 100)
+        {
+            auto pos = new int[2];
+            pos[0] = nextPos.x, pos[1] = nextPos.y;
+            getParent()->getEventDispatcher()->dispatchCustomEvent("prop_eat", pos);
+            CC_SAFE_DELETE_ARRAY(pos);
         }
     }
+    
 }
 
 void PlayerManager::update(float dt)
@@ -106,12 +142,9 @@ void PlayerManager::update(float dt)
     }
 }
 
-std::pair<cocos2d::Vec2, std::pair<cocos2d::Vec2, cocos2d::Vec2>> PlayerManager::getNextPos(const cocos2d::Vec2& pos, Player::Direction direction)
+std::pair<cocos2d::Vec2, std::pair<cocos2d::Vec2, cocos2d::Vec2>> PlayerManager::getNextPos(const cocos2d::Vec2& pos, Player::Direction direction, float step)
 {
-    int step = 1;
-
-    Vec2 nextPos(pos.x, pos.y);
-    Vec2 logicPos1(pos.x, pos.y), logicPos2(pos.x, pos.y);
+    Vec2 nextPos(pos), logicPos1(pos), logicPos2(pos);
 
     switch (direction)
     {
