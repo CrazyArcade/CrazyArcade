@@ -112,7 +112,7 @@ void RoomScene::initUserBox()
 
 void RoomScene::initRoleBox()
 {
-    for (int i = 0; i < 2; ++i)
+    for (int i = 0; i < 3; ++i)
     {
         auto roleBox = RoleBox::create(static_cast<RoleBox::roleChoice>(i));
         roleBox->setPosition(cocos2d::Vec2(
