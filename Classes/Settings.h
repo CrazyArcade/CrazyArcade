@@ -42,7 +42,8 @@ namespace Settings
         constexpr char path[] = "GameItem/Player/";
         constexpr char* roleName[] = {
             "Player1",
-            "Player2"
+            "Player2",
+            "Player3"
         };
     }
     namespace Bubble
