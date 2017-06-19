@@ -1,4 +1,5 @@
 cocos2d/
+bin/
 
 # vs
 # more https://github.com/github/gitignore/blob/master/VisualStudio.gitignore

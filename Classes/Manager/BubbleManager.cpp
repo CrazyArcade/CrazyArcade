@@ -1,7 +1,6 @@
 #include "BubbleManager.h"
 #include "Scene/UI/GameMap.h"
 #include "Network/api_generated.h"
-#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -15,7 +14,6 @@ Bubble * BubbleManager::createBubble(const std::string & id, const std::string& 
 
         return bubble;
     }
-	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Sound/bubbleSet.mp3", false);
     return nullptr;
 }
 
@@ -101,7 +99,6 @@ void BubbleManager::boom(const std::string & id)
             removeBox(nextPos, isEnd[j], static_cast<BubbleWave::Direction>(j), i == damage);
         }
     }
-	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Sound/bubbleBoom.mp3", false, 1.0f, 1.0f, 1.0f);
     // remove
     map->removeBubble(bubble);
     _bubbleList.erase(id);

@@ -70,7 +70,7 @@ public:
     int at(const cocos2d::Vec2& tilecoord) const;
     int & at(const cocos2d::Vec2& tilecoord);
 
-    static GameMap * GameMap::getCurrentMap();
+    static GameMap * getCurrentMap();
 
 private:
     std::vector<std::vector<int> > mapInfo;

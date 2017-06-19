@@ -126,6 +126,9 @@
     <ClCompile Include="..\Classes\Operator\Rocker.cpp">
       <Filter>src\Operator</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Util\GameAudio.cpp">
+      <Filter>src\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -218,9 +221,6 @@
     <ClInclude Include="..\Classes\Network\api_generated.h">
       <Filter>src\Network</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\preloadList.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Operator\KeyBoard.h">
       <Filter>src\Operator</Filter>
     </ClInclude>
@@ -229,6 +229,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Operator\Rocker.h">
       <Filter>src\Operator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PreloadList.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Util\GameAudio.h">
+      <Filter>src\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -89,7 +89,7 @@ void Rocker::onTouchMoved(cocos2d::Touch * touch, cocos2d::Event * event)
     auto r = rockerDotL->getContentSize().height / 2;
 
     auto angle = getRad(point, dotLPos);
-
+    log("%d %d", point.x, point.y);
     if (sqrt(pow((dotLPos.x - point.x), 2) + pow((dotLPos.y - point.y), 2)) >= r)
     {
         auto p = Point(r * cos(angle), r * sin(angle)) + Point(dotLPos.x, dotLPos.y);
