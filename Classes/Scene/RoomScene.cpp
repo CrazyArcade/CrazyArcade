@@ -1,8 +1,8 @@
 #include "RoomScene.h"
-#include "SimpleAudioEngine.h"
 #include "Scene/GameScene.h"
 #include "Scene/StartScene.h"
 #include "Settings.h"
+#include "Util/GameAudio.h"
 
 USING_NS_CC;
 
@@ -63,6 +63,7 @@ void RoomScene::onEnter()
     Layer::onEnter();
     readyButton->setTitleText("Ready");
     isReady = false;
+    GameAudio::getInstance()->playBgm("Sound/roomScene.mp3");
 }
 
 void RoomScene::createReadyButton()
@@ -86,7 +87,7 @@ void RoomScene::createReadyButton()
         }
     });
 
-    readyButton->setPosition(Vec2(visibleSize.width*0.4f + readyButton->getContentSize().width, visibleSize.height*0.1f));
+    readyButton->setPosition(Vec2(visibleSize.width*0.5f, visibleSize.height*0.1f));
     this->addChild(readyButton);
 }
 
@@ -115,9 +116,10 @@ void RoomScene::initRoleBox()
     for (int i = 0; i < 3; ++i)
     {
         auto roleBox = RoleBox::create(static_cast<RoleBox::roleChoice>(i));
+        //roleBox->setScale(0.9f);
         roleBox->setPosition(cocos2d::Vec2(
-            visibleSize.width*0.7 + (2 * i - 1)*roleBox->getContentSize().width*0.7,
-            visibleSize.height*0.6));
+            visibleSize.width * 0.7f + (2 * i - 1) * roleBox->getContentSize().width * 0.7f,
+            visibleSize.height * 0.4f));
         addChild(roleBox);
         roleBoxes.pushBack(roleBox);
     }
@@ -159,7 +161,7 @@ void RoomScene::createBackButton()
     const auto buttons = Menu::create();
 
     const auto backButton = MenuItemLabel::create(
-        Label::createWithTTF("Back", Settings::Font::Type::base, Settings::Font::Size::label),
+        Label::createWithTTF("Back", Settings::Font::Type::base, Settings::Font::Size::normal),
         [](Ref * ref) { 
         Client::getInstance()->close();
         Director::getInstance()->popScene(); 
@@ -169,7 +171,7 @@ void RoomScene::createBackButton()
     const auto baseY = visibleSize.height * 0.85f;
 
     backButton->setPosition(backButton->getContentSize().width / 2 + 30, baseY + 30);
-
+    //backButton->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     buttons->addChild(backButton, 1);
 
     buttons->setPosition(0, 0);

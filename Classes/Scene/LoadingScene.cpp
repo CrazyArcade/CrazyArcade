@@ -28,15 +28,6 @@ void LoadingScene::endLoading(float dt) {
 
 void LoadingScene::loadSound()
 {
-    auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
-	audio->preloadBackgroundMusic("Sound/inGame.mp3");
-	audio->preloadBackgroundMusic("Sound/roomScene.mp3");
-	audio->preloadEffect("Sound/win.mp3");
-	audio->preloadEffect("Sound/defeat.mp3");
-	audio->preloadEffect("Sound/bubbleSet.mp3");
-	audio->preloadEffect("Sound/bubbleBoom.mp3");
-	audio->preloadEffect("Sound/eatProp.mp3");
-	audio->preloadEffect("Sound/gameStart.mp3");
 }
 
 void LoadingScene::loadImage() {

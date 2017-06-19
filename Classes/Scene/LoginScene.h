@@ -23,6 +23,7 @@ private:
     //void checkboxSelectedEvent(cocos2d::Ref* pSender);
     void textFieldEvent(cocos2d::Ref* sender, cocos2d::ui::TextField::EventType event);
 
+    void onEnter();
 public:
 
     static cocos2d::Scene * createScene();

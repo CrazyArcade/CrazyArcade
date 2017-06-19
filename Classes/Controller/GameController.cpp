@@ -2,7 +2,7 @@
 #include "Network/api_generated.h"
 #include "Model/User.h"
 #include "SimpleAudioEngine.h"
-
+#include "Util/GameAudio.h"
 
 
 USING_NS_CC;
@@ -178,7 +178,7 @@ void GameController::toStart()
     float dur = 1 / 30;
     schedule(schedule_selector(GameController::syncLocalPlayerPosition), dur);
 #endif // NETWORK
-	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Sound/gameStart.mp3", false, 1.0f, 1.0f, 1.0f);
+    GameAudio::getInstance()->playEffect("Sound/gameStart.mp3");
 }
 
 void GameController::toOver()
@@ -188,7 +188,14 @@ void GameController::toOver()
     
     auto isWin = new bool;
     *isWin = (playerManager->getLocalPlayer()->getStatus() != Player::Status::DIE);
-
+    if (*isWin)
+    {
+        GameAudio::getInstance()->playEffect("Sound/win.mp3");
+    }
+    else
+    {
+        GameAudio::getInstance()->playEffect("Sound/defeat.mp3");
+    }
     Director::getInstance()->getRunningScene()->getEventDispatcher()->dispatchCustomEvent("game_over", isWin);
 
     CC_SAFE_DELETE(isWin);
@@ -270,7 +277,10 @@ void GameController::onBubbleSet(const void* msg)
     auto damage = data->damage();
 
     auto player = playerManager->getPlayer(playerID);
-    if (player->isLocal()) player->setBubble();
+    if (player->isLocal()) {
+        GameAudio::getInstance()->playEffect("Sound/bubbleSet.mp3");
+        player->setBubble(); 
+    }
 
     auto bubble = bubbleManager->createBubble(id, playerID, Vec2(x, y), damage);
     if (bubble)
@@ -291,7 +301,7 @@ void GameController::onBubbleBoom(const void* msg)
     {
         player->boomBubble();
     }
-
+    GameAudio::getInstance()->playEffect("Sound/bubbleBoom.mp3");
     bubbleManager->boom(id);
 }
 

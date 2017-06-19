@@ -53,7 +53,8 @@ void GameMap::setMap(const char * mapName)
 
     readMapInfo(mapName);
 
-    this->setPosition(Vec2(visibleSize.width * 0.25, visibleSize.height * 0.05));
+    //setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    //setIgnoreAnchorPointForPosition(false);
 }
 
 int GameMap::at(const cocos2d::Vec2 & tilecoord) const

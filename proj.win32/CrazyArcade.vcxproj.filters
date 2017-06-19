@@ -126,6 +126,9 @@
     <ClCompile Include="..\Classes\Operator\Rocker.cpp">
       <Filter>src\Operator</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Util\GameAudio.cpp">
+      <Filter>src\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -229,6 +232,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\PreloadList.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Util\GameAudio.h">
+      <Filter>src\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
