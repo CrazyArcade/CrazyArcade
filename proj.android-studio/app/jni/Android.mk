@@ -13,7 +13,34 @@ LOCAL_MODULE_FILENAME := libMyGame
 
 LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../Classes/AppDelegate.cpp \
-                   ../../../Classes/HelloWorldScene.cpp
+                   ../../../Classes/Controller/GameController.cpp \
+                   ../../../Classes/Controller/RoomController.cpp \
+                   ../../../Classes/Manager/BubbleManager.cpp \
+                   ../../../Classes/Manager/PlayerManager.cpp \
+                   ../../../Classes/Manager/PropManager.cpp \
+                   ../../../Classes/Model/Bubble.cpp \
+                   ../../../Classes/Model/Entity.cpp \
+                   ../../../Classes/Model/Player.cpp \
+                   ../../../Classes/Model/Prop.cpp \
+                   ../../../Classes/Network/Client.cpp \
+                   ../../../Classes/Operator/Rocker.cpp \
+                   ../../../Classes/Operator/KeyBoard.cpp \
+                   ../../../Classes/Operator/Operator.cpp \
+                   ../../../Classes/Scene/GameScene.cpp \
+                   ../../../Classes/Scene/HelloWorldScene.cpp \
+                   ../../../Classes/Scene/HelpScene.cpp \
+                   ../../../Classes/Scene/LoadingScene.cpp \
+                   ../../../Classes/Scene/LoginScene.cpp \
+                   ../../../Classes/Scene/RoomScene.cpp \
+                   ../../../Classes/Scene/SettingsScene.cpp \
+                   ../../../Classes/Scene/StartScene.cpp \
+                   ../../../Classes/Scene/UI/ChatBox.cpp \
+                   ../../../Classes/Scene/UI/CheckBox.cpp \
+                   ../../../Classes/Scene/UI/GameMap.cpp \
+                   ../../../Classes/Scene/UI/ResultBox.cpp \
+                   ../../../Classes/Scene/UI/RoleBox.cpp \
+                   ../../../Classes/Scene/UI/UserBox.cpp \
+                   ../../../Classes/Util/AnimationLoader.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes
 
