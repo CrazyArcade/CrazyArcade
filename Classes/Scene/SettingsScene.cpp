@@ -28,28 +28,12 @@ bool SettingsScene::init()
     }
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	
-	createBackground();
-	addChild(createText());
-	createMenu();
 
-    return true;
-}
-void SettingsScene::createBackground()
-{
-	Size visibleSize = Director::getInstance()->getVisibleSize();
-	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
-	Sprite * bg = Sprite::create("SettingsScene/background6.jpg");
+	Sprite * bg = Sprite::create("SettingsScene/background1.jpg");
 	bg->setPosition(Vec2(origin.x + visibleSize.width / 2,
 		origin.y + visibleSize.height / 2));
 	this->addChild(bg);
-}
-void SettingsScene::createMenu()
-{
-	Size visibleSize = Director::getInstance()->getVisibleSize();
-	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
+	
 	musicOn = CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying();
 
 	//the sound
@@ -63,7 +47,7 @@ void SettingsScene::createMenu()
 		CC_CALLBACK_1(SettingsScene::menuSoundToggleCallback, this),
 		soundOnMenuItem,
 		soundOffMenuItem, NULL);
-	soundToggleMenuItem->setPosition(Director::getInstance()->convertToGL(Vec2(visibleSize.width*0.2f, visibleSize.height*0.75f)));
+	soundToggleMenuItem->setPosition(Director::getInstance()->convertToGL(Vec2(visibleSize.width*0.75f, visibleSize.height*0.3f)));
 
 	//the music
 	/*const auto music = Menu::create();
@@ -79,7 +63,7 @@ void SettingsScene::createMenu()
 	MenuItemToggle* musicToggleMenuItem;
 	if (musicOn)
 	{
-		musicToggleMenuItem = MenuItemToggle::createWithCallback(
+		 musicToggleMenuItem = MenuItemToggle::createWithCallback(
 			CC_CALLBACK_1(SettingsScene::menuMusicToggleCallback, this),
 			musicOnMenuItem,
 			musicOffMenuItem,
@@ -87,26 +71,32 @@ void SettingsScene::createMenu()
 	}
 	else
 	{
-		musicToggleMenuItem = MenuItemToggle::createWithCallback(
+		 musicToggleMenuItem = MenuItemToggle::createWithCallback(
 			CC_CALLBACK_1(SettingsScene::menuMusicToggleCallback, this),
 			musicOffMenuItem,
 			musicOnMenuItem,
 			NULL);
 	}
-	musicToggleMenuItem->setPosition(Director::getInstance()->convertToGL(Vec2(visibleSize.width*0.15f, visibleSize.height*0.75f)));
-	
-	/*//OK button
+	musicToggleMenuItem->setPosition(Director::getInstance()->convertToGL(Vec2(visibleSize.width*0.75f, visibleSize.height*0.4f)));
+
+
+	//OK button
 	auto okMenuItem = MenuItemImage::create(
 		"SettingsScene/ok.png",
 		"SettingsScene/ok.png",
 		CC_CALLBACK_1(SettingsScene::menuBackCallback, this));
 
-	okMenuItem->setPosition(Director::getInstance()->convertToGL(Vec2(visibleSize.width*0.25f, visibleSize.height*0.75f)));
-	*/
+	okMenuItem->setPosition(Director::getInstance()->convertToGL(Vec2(visibleSize.width*0.5f, visibleSize.height*0.5f)));
+
 	Menu * mn = Menu::create(soundToggleMenuItem,
-		musicToggleMenuItem, NULL);
+		musicToggleMenuItem, okMenuItem, NULL);
 	mn->setPosition(Vec2::ZERO);
 	this->addChild(mn);
+
+    addChild(createText());
+	
+
+    return true;
 }
 
 cocos2d::Menu* SettingsScene::createText() {
