@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 #include"LoginScene.h"
 
 
@@ -148,7 +148,7 @@ void LoginScene::initURLSkip()
 	label->setPosition();
 
 	auto listener = EventListenerTouchAllAtOnce::create();
-	listener->onTouchesEnded = CC_CALLBACK_2(OpenURL::onTouchesEnded, this);*/
+	listener->onTouchesEnded = CC_CALLBACK_2(OpenURL::onTouchesEnded, this);
 
 }
 void LoginScene::menuLoginCallback(cocos2d::Ref* pSender)
@@ -198,7 +198,7 @@ cocos2d::Menu* LoginScene::createText() {
 	buttons->setPosition(0, 0);
 
 	return buttons;
-=======
+=======*/
 #include "LoginScene.h"
 #include "Settings.h"
 #include "StartScene.h"
@@ -326,7 +326,6 @@ void LoginScene::initUserBox()
     addChild(usernameBG);
 
 }
-
 void LoginScene::initcheckBox()
 {
     auto _checkBox = CheckBox::create();
@@ -348,5 +347,5 @@ void LoginScene::textFieldEvent(Ref* sender, ui::TextField::EventType event)
 void LoginScene::menuBackCallback(cocos2d::Ref* pSender)
 {
     Director::getInstance()->popScene();
->>>>>>> refs/remotes/origin/master
+//>>>>>>> refs/remotes/origin/master
 }

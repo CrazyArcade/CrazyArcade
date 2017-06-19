@@ -9,7 +9,7 @@
 class LoginScene :public cocos2d::Layer
 {
 private:
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 	cocos2d::Menu* createText();
 	cocos2d::Sprite* createBackground();
 	cocos2d::Sprite* createLoginBox();
@@ -31,7 +31,7 @@ public :
 	      cocos2d::ui::EditBox* editBox, const std::string &text);
 	virtual void editBoxReturn(cocos2d::ui::EditBox* editBox);
 	CREATE_FUNC(LoginScene);
-=======
+=======*/
 
     cocos2d::Sprite* usernameBG;
     cocos2d::ui::TextField* usernameInput;
@@ -51,7 +51,7 @@ public:
     static cocos2d::Scene * createScene();
     virtual bool init();
     CREATE_FUNC(LoginScene);
->>>>>>> refs/remotes/origin/master
+//>>>>>>> refs/remotes/origin/master
 
 };
 #endif // ! _LOGINSCENE_SCENE_H__
