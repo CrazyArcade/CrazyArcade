@@ -22,7 +22,7 @@ public:
      * @param animationName
      * @return cocos2d::Animation * or nullptr
      */
-    cocos2d::Animation * AnimationLoader::getAnimation(const std::string & animationName);
+    cocos2d::Animation * getAnimation(const std::string & animationName);
     
 protected:
 

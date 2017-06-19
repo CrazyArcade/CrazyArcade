@@ -1,11 +1,10 @@
 #include "GameScene.h"
-#include "SimpleAudioEngine.h"
-#include "api_generated.h"
 #include "Controller/GameController.h"
 #include "Scene/UI/ResultBox.h"
 #include "Scene/UI/GameMap.h"
 #include "Scene/UI/ChatBox.h"
 #include "Settings.h"
+#include "Util/GameAudio.h"
 
 USING_NS_CC;
 
@@ -23,6 +22,11 @@ Scene* GameScene::createScene()
     // return the scene
     return scene;
 }
+void GameScene::onEnter()
+{
+	Layer::onEnter();
+    GameAudio::getInstance()->playBgm("Sound/inGame.mp3");
+}
 
 // on "init" you need to initialize your instance
 bool GameScene::init()
@@ -37,6 +41,7 @@ bool GameScene::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
 
     auto map = GameMap::create();
+    map->setPosition(visibleSize.width * 0.1f, visibleSize.height * 0.1f);
     map->setMap("town_10");
     addChild(map, -1);
 

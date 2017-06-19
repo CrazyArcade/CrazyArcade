@@ -1,9 +1,9 @@
 #ifndef  _LOGINSCENE_SCENE_H__
 #define  _LOGINSCENE_SCENE_H__
 
-#include"cocos2d.h"
-#include"cocos2d/cocos/ui/CocosGUI.h"
-#include"cocos2d/extensions/cocos-ext.h"
+#include "cocos2d.h"
+#include "ui/CocosGUI.h"
+#include "extensions/cocos-ext.h"
 
 
 class LoginScene :public cocos2d::Layer
@@ -46,6 +46,7 @@ public :
     //void checkboxSelectedEvent(cocos2d::Ref* pSender);
     void textFieldEvent(cocos2d::Ref* sender, cocos2d::ui::TextField::EventType event);
 
+    void onEnter();
 public:
 
     static cocos2d::Scene * createScene();

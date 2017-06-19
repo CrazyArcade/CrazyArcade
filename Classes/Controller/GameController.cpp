@@ -1,6 +1,9 @@
 #include "GameController.h"
-#include "api_generated.h"
+#include "Network/api_generated.h"
 #include "Model/User.h"
+#include "SimpleAudioEngine.h"
+#include "Util/GameAudio.h"
+
 
 USING_NS_CC;
 using namespace API;
@@ -11,15 +14,19 @@ bool GameController::init()
     {
         return false;
     }
-    
+
+    oper = Operator::create();
+    oper->addHandle(CC_CALLBACK_2(GameController::opHandle, this));
+
     playerManager = PlayerManager::create();
     bubbleManager = BubbleManager::create();
     propManager = PropManager::create();
 
+    addChild(oper, -1);
     addChild(playerManager, -1);
     addChild(bubbleManager, -1);
     addChild(propManager, -1);
-
+    
     return true;
 }
 
@@ -28,43 +35,28 @@ void GameController::setMap(GameMap * map)
     if (map) this->map = map;
 }
 
-void GameController::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event * event)
+void GameController::opHandle(Operator::OpCode opcode, Operator::OpType type)
 {
-    switch (keyCode)
+    if (opcode == Operator::OpCode::SPACE)
     {
-    case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
-    case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-    case EventKeyboard::KeyCode::KEY_UP_ARROW:
-    case EventKeyboard::KeyCode::KEY_DOWN_ARROW: {
-        auto player = playerManager->getLocalPlayer();
-        auto direction = static_cast<Player::Direction>(static_cast<int>(keyCode) - static_cast<int>(EventKeyboard::KeyCode::KEY_LEFT_ARROW));
-        if (player) player->setDirectionByKey(direction);
-        break;
+        if (type == Operator::OpType::RELEASE) onLocalPlayerSetBubble();
     }
-    default: break;
+    else
+    {
+        auto player = playerManager->getLocalPlayer();
+        if (!player) return;
+        auto direction = static_cast<Player::Direction>(opcode);
+        if (type == Operator::OpType::PRESS)
+        {
+            player->setDirectionByKey(direction);
+        }
+        else
+        {
+            player->removeDirectionByKey(direction);
+        }
     }
 }
 
-void GameController::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event * event)
-{
-    switch (keyCode)
-    {
-    case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
-    case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-    case EventKeyboard::KeyCode::KEY_UP_ARROW:
-    case EventKeyboard::KeyCode::KEY_DOWN_ARROW: {
-        auto player = playerManager->getLocalPlayer();
-        auto direction = static_cast<Player::Direction>(static_cast<int>(keyCode) - static_cast<int>(EventKeyboard::KeyCode::KEY_LEFT_ARROW));
-        if (player) player->removeDirectionByKey(direction);
-        break;
-    }
-    case EventKeyboard::KeyCode::KEY_SPACE: {
-        onLocalPlayerSetBubble();
-        break;
-    }
-    default: break;
-    }
-}
 
 void GameController::onEnter()
 {
@@ -155,6 +147,9 @@ void GameController::onGameInit(const void * msg)
         {
             player = playerManager->createPlayer(id, role);
         }
+        player->setSpeed(it->speed());
+        player->setDamage(it->damage());
+        player->setMaxBubble(it->bubble(), it->bubble());
         player->setPosition(x, y);
         map->addPlayer(player);
     }
@@ -178,26 +173,29 @@ void GameController::onGameStatusChange(const void * msg)
 
 void GameController::toStart()
 {
-    // game start, init keyboard listener
-    auto keyListener = EventListenerKeyboard::create();
-    keyListener->onKeyPressed = CC_CALLBACK_2(GameController::onKeyPressed, this);
-    keyListener->onKeyReleased = CC_CALLBACK_2(GameController::onKeyReleased, this);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(keyListener, this);
-
+    oper->start();
 #ifdef NETWORK
     float dur = 1 / 30;
     schedule(schedule_selector(GameController::syncLocalPlayerPosition), dur);
 #endif // NETWORK
+    GameAudio::getInstance()->playEffect("Sound/gameStart.mp3");
 }
 
 void GameController::toOver()
 {
-    _eventDispatcher->removeEventListenersForType(EventListener::Type::KEYBOARD);
+    oper->stop();
     unschedule(schedule_selector(GameController::syncLocalPlayerPosition));
     
     auto isWin = new bool;
     *isWin = (playerManager->getLocalPlayer()->getStatus() != Player::Status::DIE);
-
+    if (*isWin)
+    {
+        GameAudio::getInstance()->playEffect("Sound/win.mp3");
+    }
+    else
+    {
+        GameAudio::getInstance()->playEffect("Sound/defeat.mp3");
+    }
     Director::getInstance()->getRunningScene()->getEventDispatcher()->dispatchCustomEvent("game_over", isWin);
 
     CC_SAFE_DELETE(isWin);
@@ -279,7 +277,10 @@ void GameController::onBubbleSet(const void* msg)
     auto damage = data->damage();
 
     auto player = playerManager->getPlayer(playerID);
-    if (player->isLocal()) player->setBubble();
+    if (player->isLocal()) {
+        GameAudio::getInstance()->playEffect("Sound/bubbleSet.mp3");
+        player->setBubble(); 
+    }
 
     auto bubble = bubbleManager->createBubble(id, playerID, Vec2(x, y), damage);
     if (bubble)
@@ -300,7 +301,7 @@ void GameController::onBubbleBoom(const void* msg)
     {
         player->boomBubble();
     }
-
+    GameAudio::getInstance()->playEffect("Sound/bubbleBoom.mp3");
     bubbleManager->boom(id);
 }
 

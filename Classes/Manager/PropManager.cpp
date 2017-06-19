@@ -1,5 +1,6 @@
 #include "PropManager.h"
 #include "Scene/UI/GameMap.h"
+#include "Util/GameAudio.h"
 
 USING_NS_CC;
 
@@ -33,6 +34,7 @@ bool PropManager::checkEat(const cocos2d::Vec2 & pos)
         {
             _propList.erase(it);
             map->removeEntity(pos);
+            prop->setVisible(false);
             prop->removeFromParent();
             return true;
         }
@@ -51,7 +53,7 @@ void PropManager::addCustomEvent()
 
         if (checkEat(pos))
         {
-            // local player eat prop
+            GameAudio::getInstance()->playEffect("Sound/eatProp.mp3");
         }
     }), this);
 }

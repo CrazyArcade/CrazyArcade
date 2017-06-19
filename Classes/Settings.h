@@ -42,14 +42,13 @@ namespace Settings
         constexpr char path[] = "GameItem/Player/";
         constexpr char* roleName[] = {
             "Player1",
-            "Player2"
+            "Player2",
+            "Player3"
         };
     }
     namespace Bubble
     {
         constexpr char path[] = "GameItem/Bubble/default.png";
-        constexpr char alive[] = "GameItem/Bubble/alive.plist";
-        constexpr char explosion[] = "GameItem/Bubble/Explosion.plist";
     }
     namespace Prop
     {

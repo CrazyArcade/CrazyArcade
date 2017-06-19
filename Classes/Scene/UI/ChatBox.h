@@ -3,10 +3,9 @@
 
 #include "cocos2d.h"
 #include "Settings.h"
-#include "cocos2d/cocos/ui/UIRichText.h"
-#include "cocos2d/cocos/ui/UITextField.h"
-#include "cocos2d/cocos/ui/UIText.h"
-#include "cocos2d/cocos/ui/UIListView.h"
+#include "ui/UITextField.h"
+#include "ui/UIText.h"
+#include "ui/UIListView.h"
 
 class ChatBox :public cocos2d::Layer {
 public:

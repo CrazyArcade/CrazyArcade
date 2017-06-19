@@ -5,6 +5,8 @@
 
 class GameScene : public cocos2d::Layer
 {
+private:
+	void onEnter();
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();

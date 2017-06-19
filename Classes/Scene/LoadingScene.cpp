@@ -1,7 +1,8 @@
-#include "Scene/LoadingScene.h"
+﻿#include "Scene/LoadingScene.h"
 #include "Scene/LoginScene.h"
 #include "Settings.h"
 #include "SimpleAudioEngine.h"
+#include "PreloadList.h"
 
 USING_NS_CC;
 
@@ -27,9 +28,6 @@ void LoadingScene::endLoading(float dt) {
 
 void LoadingScene::loadSound()
 {
-    auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
-    //audio->preloadEffect("GameAudio/bubble1.wav");
-    //audio->preloadEffect("GameAudio/bubble2.wav");
 }
 
 void LoadingScene::loadImage() {
@@ -39,15 +37,13 @@ void LoadingScene::loadImage() {
 void LoadingScene::loadSpriteFrame()
 {
     auto cache = SpriteFrameCache::getInstance();
-    
-    cache->addSpriteFramesWithFile(Settings::Bubble::alive);
-    cache->addSpriteFramesWithFile(Settings::Bubble::explosion);
 
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("GameItem/Player/Player1/animation.plist");
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("GameItem/Player/Player2/animation.plist");
-
-	return;
+    for (auto plist : Preload::plists)
+    {
+        cache->addSpriteFramesWithFile(plist);
+    }
 }
+
 
 bool LoadingScene::init()
 {
