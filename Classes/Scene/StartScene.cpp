@@ -90,7 +90,7 @@ cocos2d::Menu* StartScene::createText() {                                //creat
 
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     const auto baseY = visibleSize.height * 0.85f;
-    constexpr int offset[] = { 0, 200, 260, 320, 380 };
+    constexpr int offset[] = { 0, 160, 220, 280, 340 };
 
     for (ssize_t i = 0; i < items.size(); ++i)
     {

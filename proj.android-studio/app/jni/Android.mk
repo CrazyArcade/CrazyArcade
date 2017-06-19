@@ -40,7 +40,8 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../Classes/Scene/UI/ResultBox.cpp \
                    ../../../Classes/Scene/UI/RoleBox.cpp \
                    ../../../Classes/Scene/UI/UserBox.cpp \
-                   ../../../Classes/Util/AnimationLoader.cpp
+                   ../../../Classes/Util/AnimationLoader.cpp \
+                   ../../../Classes/Util/GameAudio.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes
 

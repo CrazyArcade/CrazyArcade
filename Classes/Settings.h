@@ -61,7 +61,7 @@ namespace Settings
     }
     namespace Server
     {
-        constexpr char addr[] = "ws://dev.server.crazyarcade.giuem.com:4000";
+        constexpr char addr[] = "ws://115.159.188.148:4000";
     }
 }
 #endif
