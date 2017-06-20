@@ -1,0 +1,24 @@
+dependencies: \
+  /Users/igulu/Documents/Code/C++/Class/CrazyArcade/Classes/Scene/UI/GameMap.cpp \
+  /Users/igulu/Documents/Code/C++/Class/CrazyArcade/Classes/Scene/UI/GameMap.h \
+  /Users/igulu/Documents/Code/C++/Class/CrazyArcade/Classes/Settings.h \
+  /Users/igulu/Documents/Code/C++/Class/CrazyArcade/proj.ios_mac/../cocos2d/external/json/filereadstream.h \
+  /Users/igulu/Documents/Code/C++/Class/CrazyArcade/proj.ios_mac/../cocos2d/external/json/stream.h \
+  /Users/igulu/Documents/Code/C++/Class/CrazyArcade/proj.ios_mac/../cocos2d/external/json/rapidjson.h \
+  /Users/igulu/Documents/Code/C++/Class/CrazyArcade/proj.ios_mac/../cocos2d/external/json/encodings.h \
+  /Users/igulu/Documents/Code/C++/Class/CrazyArcade/proj.ios_mac/../cocos2d/external/json/document.h \
+  /Users/igulu/Documents/Code/C++/Class/CrazyArcade/proj.ios_mac/../cocos2d/external/json/reader.h \
+  /Users/igulu/Documents/Code/C++/Class/CrazyArcade/proj.ios_mac/../cocos2d/external/json/allocators.h \
+  /Users/igulu/Documents/Code/C++/Class/CrazyArcade/proj.ios_mac/../cocos2d/external/json/encodedstream.h \
+  /Users/igulu/Documents/Code/C++/Class/CrazyArcade/proj.ios_mac/../cocos2d/external/json/memorystream.h \
+  /Users/igulu/Documents/Code/C++/Class/CrazyArcade/proj.ios_mac/../cocos2d/external/json/internal/meta.h \
+  /Users/igulu/Documents/Code/C++/Class/CrazyArcade/proj.ios_mac/../cocos2d/external/json/internal/stack.h \
+  /Users/igulu/Documents/Code/C++/Class/CrazyArcade/proj.ios_mac/../cocos2d/external/json/internal/swap.h \
+  /Users/igulu/Documents/Code/C++/Class/CrazyArcade/proj.ios_mac/../cocos2d/external/json/internal/strtod.h \
+  /Users/igulu/Documents/Code/C++/Class/CrazyArcade/proj.ios_mac/../cocos2d/external/json/internal/ieee754.h \
+  /Users/igulu/Documents/Code/C++/Class/CrazyArcade/proj.ios_mac/../cocos2d/external/json/internal/biginteger.h \
+  /Users/igulu/Documents/Code/C++/Class/CrazyArcade/proj.ios_mac/../cocos2d/external/json/internal/diyfp.h \
+  /Users/igulu/Documents/Code/C++/Class/CrazyArcade/proj.ios_mac/../cocos2d/external/json/internal/pow10.h \
+  /Users/igulu/Documents/Code/C++/Class/CrazyArcade/proj.ios_mac/../cocos2d/external/json/error/error.h \
+  /Users/igulu/Documents/Code/C++/Class/CrazyArcade/proj.ios_mac/../cocos2d/external/json/internal/strfunc.h \
+  /Users/igulu/Documents/Code/C++/Class/CrazyArcade/proj.ios_mac/../cocos2d/external/json/internal/../stream.h
