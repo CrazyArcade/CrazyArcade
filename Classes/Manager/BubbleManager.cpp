@@ -38,7 +38,7 @@ void BubbleManager::boom(const std::string & id)
     };
     bool isEnd[4] = { false, false, false, false };
 
-    auto removeBox = [map](const Vec2& coord, bool& isEnd, BubbleWave::Direction direction, bool isTerminal)
+    auto removeBox = [map, this](const Vec2& coord, bool& isEnd, BubbleWave::Direction direction, bool isTerminal)
     {
         BubbleWave* bubbleWave = nullptr;
         auto pos = map->tileCoordToPosition(coord);
@@ -64,7 +64,10 @@ void BubbleManager::boom(const std::string & id)
             }
             if (tileType >= 100)
             {
-                // TODO remove prop
+                auto _pos = new int[2];
+                _pos[0] = pos.x, _pos[1] = pos.y;
+                getParent()->getEventDispatcher()->dispatchCustomEvent("prop_eat", _pos);
+                CC_SAFE_DELETE_ARRAY(_pos);
             }
         }
         else if (tileType == map->TILE_BOX1 || tileType == map->TILE_BOX2)

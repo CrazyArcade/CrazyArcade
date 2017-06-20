@@ -4,6 +4,16 @@
 USING_NS_CC;
 using namespace API;
 
+Client::~Client()
+{
+    if (isConnected())
+    {
+        _ws->closeAsync();
+        CC_SAFE_DELETE(_ws);
+        _ws = nullptr;
+    }
+}
+
 Client * Client::getInstance()
 {
     static Client INSTANCE;

@@ -8,8 +8,9 @@ constexpr float PI = 3.1415926f;
 bool Rocker::init()
 {
     auto size = Director::getInstance()->getVisibleSize();
-    leftPos = Vec2(size.width * 0.1f, size.height * 0.2f);
-    rightPos = Vec2(size.width * 0.9f, size.height * 0.2f);
+    auto origin = Director::getInstance()->getVisibleOrigin();
+    leftPos = Vec2(size.width * 0.12f, size.height * 0.25f) + origin;
+    rightPos = Vec2(size.width * 0.9f, size.height * 0.25f) + origin;
 
     rockerBGL = createRockerBG(leftPos);
     addChild(rockerBGL, -1);
@@ -85,16 +86,15 @@ void Rocker::onTouchMoved(cocos2d::Touch * touch, cocos2d::Event * event)
     if (!isCanMove) return;
 
     auto point = touch->getLocation();
-    auto dotLPos = rockerDotL->getPosition();
-    auto r = rockerDotL->getContentSize().height / 2;
+    auto r = rockerBGL->getContentSize().height / 2;
 
-    auto angle = getRad(point, dotLPos);
-    log("%d %d", point.x, point.y);
-    if (sqrt(pow((dotLPos.x - point.x), 2) + pow((dotLPos.y - point.y), 2)) >= r)
+    auto angle = getRad(leftPos, point);
+    
+    if (hypot(leftPos.x - point.x, leftPos.y - point.y) >= r)
     {
-        auto p = Point(r * cos(angle), r * sin(angle)) + Point(dotLPos.x, dotLPos.y);
+        auto p = Point(r * cos(angle), r * sin(angle)) + Point(leftPos.x, leftPos.y);
         rockerDotL->setPosition(p);
-        log("%d %d", p.x, p.y);
+        //log("%f %f", p.x, p.y);
     }
     else
     {
@@ -135,14 +135,20 @@ void Rocker::onTouchEnded(cocos2d::Touch * touch, cocos2d::Event * event)
     auto point = touch->getLocation();
     if (rockerDotR->getBoundingBox().containsPoint(point))
     {
+        if (!handle) return;
         handle(Operator::OpCode::SPACE, Operator::OpType::RELEASE);
-    }
+    } 
     else
     {
         if (!isCanMove) return;
         rockerDotL->stopAllActions();
         rockerDotL->runAction(MoveTo::create(0.08f, leftPos));
         isCanMove = false;
+        std::set<Operator::OpCode> opcodes = { Operator::OpCode::LEFT, Operator::OpCode::RIGHT, Operator::OpCode::UP, Operator::OpCode::DOWN };
+        for (auto &code : opcodes)
+        {
+            handle(code, Operator::OpType::RELEASE);
+        }
     }
 }
 

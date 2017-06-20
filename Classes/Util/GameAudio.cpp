@@ -12,10 +12,9 @@ GameAudio * GameAudio::getInstance()
 
 void GameAudio::playEffect(const char * name)
 {
-    audioEngine->playEffect(name);
-    if (!isEffectOn)
+    if (isEffectOn)
     {
-        stopEffect();
+        audioEngine->playEffect(name);
     }
 }
 

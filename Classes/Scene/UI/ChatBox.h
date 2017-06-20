@@ -12,12 +12,13 @@ public:
     virtual bool init();
 
     void keyReleasedAct(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event* event);
+    std::function<void(const std::string&)> sendText;
 
     CREATE_FUNC(ChatBox);
 private:
     cocos2d::ui::ListView *boxHistory;
     cocos2d::ui::TextField *boxInput;
-    int tag = 1;
+    
 
     void boxInputInit();
     void boxHistoryInit();

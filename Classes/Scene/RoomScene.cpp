@@ -3,6 +3,7 @@
 #include "Scene/StartScene.h"
 #include "Settings.h"
 #include "Util/GameAudio.h"
+#include "Scene/UI/ChatBox.h"
 
 USING_NS_CC;
 
@@ -44,6 +45,12 @@ bool RoomScene::init()
     createUI();
 
     addChild(roomController, -1);
+
+    auto chatBox = ChatBox::create();
+    chatBox->sendText = CC_CALLBACK_1(RoomController::sendChat, roomController);
+    chatBox->setPosition(visibleSize.width * 0.08f, visibleSize.height * 0.15f);
+    addChild(chatBox);
+
     return true;
 }
 
@@ -53,7 +60,7 @@ void RoomScene::createUI()
     createTitle();
     initUserBox();
     initRoleBox();
-    initMouseListener();
+    initListener();
     createBackButton();
     createReadyButton();
 }
@@ -87,7 +94,7 @@ void RoomScene::createReadyButton()
         }
     });
 
-    readyButton->setPosition(Vec2(visibleSize.width*0.5f, visibleSize.height*0.1f));
+    readyButton->setPosition(Vec2(visibleSize.width*0.5f, visibleSize.height*0.1f) + origin);
     this->addChild(readyButton);
 }
 
@@ -95,7 +102,7 @@ void RoomScene::createTitle()
 {
     //the title
     auto label = Label::createWithTTF("ROOM", Settings::Font::Type::title, Settings::Font::Size::label);
-    label->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - label->getContentSize().height));
+    label->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - label->getContentSize().height) + origin);
     label->enableGlow(Color4B::BLUE);
     this->addChild(label, 1);
 }
@@ -127,21 +134,21 @@ void RoomScene::initRoleBox()
     roleBoxes.at(0)->setChosen(true);
 }
 
-void RoomScene::initMouseListener()
+void RoomScene::initListener()
 {
-    auto mouseListener = cocos2d::EventListenerMouse::create();
-
-    mouseListener->onMouseUp = [=](Event* event)
+    auto touchListener = cocos2d::EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = [=](Touch * touch, Event * event)
     {
-        EventMouse* e = (EventMouse*)event;
-        auto touch = e->getLocation();
-        touch = Vec2(touch.x, touch.y + 147);       // possible upstream bug
+        return true;
+    };
 
+    touchListener->onTouchEnded = [=](Touch * touch, Event * event) {
+        auto point = touch->getLocation();
         for (auto prev : roleBoxes)
         {
             auto range = prev->getBoundingBox();
 
-            if (range.containsPoint(touch))
+            if (range.containsPoint(point))
             {
                 roleChangeCallback(prev->getRole());
 
@@ -153,7 +160,17 @@ void RoomScene::initMouseListener()
             }
         }
     };
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+
+    auto keyEventListener = EventListenerKeyboard::create();
+    keyEventListener->onKeyReleased = [](EventKeyboard::KeyCode code, Event* event)
+    {
+        if (code == EventKeyboard::KeyCode::KEY_ESCAPE)
+        {
+            Director::getInstance()->popScene();
+        }
+    };
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(keyEventListener, this);
 }
 
 void RoomScene::createBackButton()
@@ -170,7 +187,7 @@ void RoomScene::createBackButton()
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     const auto baseY = visibleSize.height * 0.85f;
 
-    backButton->setPosition(backButton->getContentSize().width / 2 + 30, baseY + 30);
+    backButton->setPosition(Vec2(backButton->getContentSize().width / 2 + 30, baseY + 30) + origin);
     //backButton->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     buttons->addChild(backButton, 1);
 

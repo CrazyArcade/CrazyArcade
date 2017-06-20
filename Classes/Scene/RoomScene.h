@@ -35,7 +35,7 @@ private:
 
     void initRoleBox();
 
-    void initMouseListener();
+    void initListener();
 
     void createBackButton();
 

@@ -56,6 +56,16 @@ bool SettingsScene::init()
 
     addChild(createText());
 
+    auto keyEventListener = EventListenerKeyboard::create();
+    keyEventListener->onKeyReleased = [](EventKeyboard::KeyCode code, Event* event)
+    {
+        if (code == EventKeyboard::KeyCode::KEY_ESCAPE)
+        {
+            Director::getInstance()->popScene();
+        }
+    };
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(keyEventListener, this);
+
     return true;
 }
 
