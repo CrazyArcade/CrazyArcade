@@ -44,6 +44,8 @@ namespace API
 
     struct GameStatusChange;
 
+    struct Chat;
+
     struct Msg;
 
     enum MsgType
@@ -55,109 +57,136 @@ namespace API
         MsgType_RoomInfoUpdate = 4,
         MsgType_UserChangeRole = 5,
         MsgType_UserChangeStats = 6,
-        MsgType_GameInit = 7,
-        MsgType_PlayerPosChange = 8,
-        MsgType_PlayerSetBubble = 9,
-        MsgType_BubbleSet = 10,
-        MsgType_BubbleBoom = 11,
-        MsgType_PropSet = 12,
-        MsgType_PlayerEatProp = 13,
-        MsgType_PlayerAttrChange = 14,
-        MsgType_PlayerStatusChange = 15,
-        MsgType_GameStatusChange = 16,
+        MsgType_Chat = 7,
+        MsgType_GameInit = 8,
+        MsgType_PlayerPosChange = 9,
+        MsgType_PlayerSetBubble = 10,
+        MsgType_BubbleSet = 11,
+        MsgType_BubbleBoom = 12,
+        MsgType_PropSet = 13,
+        MsgType_PlayerEatProp = 14,
+        MsgType_PlayerAttrChange = 15,
+        MsgType_PlayerStatusChange = 16,
+        MsgType_GameStatusChange = 17,
         MsgType_MIN = MsgType_NONE,
         MsgType_MAX = MsgType_GameStatusChange
     };
 
     inline const char **EnumNamesMsgType()
     {
-        static const char *names[] = { "NONE", "Welcome", "GotIt", "JoinRoom", "RoomInfoUpdate", "UserChangeRole", "UserChangeStats", "GameInit", "PlayerPosChange", "PlayerSetBubble", "BubbleSet", "BubbleBoom", "PropSet", "PlayerEatProp", "PlayerAttrChange", "PlayerStatusChange", "GameStatusChange", nullptr };
+        static const char *names[] = { "NONE", "Welcome", "GotIt", "JoinRoom", "RoomInfoUpdate", "UserChangeRole",
+            "UserChangeStats", "Chat", "GameInit", "PlayerPosChange", "PlayerSetBubble",
+            "BubbleSet", "BubbleBoom", "PropSet", "PlayerEatProp", "PlayerAttrChange",
+            "PlayerStatusChange", "GameStatusChange", nullptr };
         return names;
     }
 
     inline const char *EnumNameMsgType(MsgType e) { return EnumNamesMsgType()[static_cast<int>(e)]; }
 
-    template<typename T> struct MsgTypeTraits
+    template<typename T>
+    struct MsgTypeTraits
     {
         static const MsgType enum_value = MsgType_NONE;
     };
 
-    template<> struct MsgTypeTraits<Welcome>
+    template<>
+    struct MsgTypeTraits<Welcome>
     {
         static const MsgType enum_value = MsgType_Welcome;
     };
 
-    template<> struct MsgTypeTraits<GotIt>
+    template<>
+    struct MsgTypeTraits<GotIt>
     {
         static const MsgType enum_value = MsgType_GotIt;
     };
 
-    template<> struct MsgTypeTraits<JoinRoom>
+    template<>
+    struct MsgTypeTraits<JoinRoom>
     {
         static const MsgType enum_value = MsgType_JoinRoom;
     };
 
-    template<> struct MsgTypeTraits<RoomInfoUpdate>
+    template<>
+    struct MsgTypeTraits<RoomInfoUpdate>
     {
         static const MsgType enum_value = MsgType_RoomInfoUpdate;
     };
 
-    template<> struct MsgTypeTraits<UserChangeRole>
+    template<>
+    struct MsgTypeTraits<UserChangeRole>
     {
         static const MsgType enum_value = MsgType_UserChangeRole;
     };
 
-    template<> struct MsgTypeTraits<UserChangeStats>
+    template<>
+    struct MsgTypeTraits<UserChangeStats>
     {
         static const MsgType enum_value = MsgType_UserChangeStats;
     };
 
-    template<> struct MsgTypeTraits<GameInit>
+    template<>
+    struct MsgTypeTraits<Chat>
+    {
+        static const MsgType enum_value = MsgType_Chat;
+    };
+
+    template<>
+    struct MsgTypeTraits<GameInit>
     {
         static const MsgType enum_value = MsgType_GameInit;
     };
 
-    template<> struct MsgTypeTraits<PlayerPosChange>
+    template<>
+    struct MsgTypeTraits<PlayerPosChange>
     {
         static const MsgType enum_value = MsgType_PlayerPosChange;
     };
 
-    template<> struct MsgTypeTraits<PlayerSetBubble>
+    template<>
+    struct MsgTypeTraits<PlayerSetBubble>
     {
         static const MsgType enum_value = MsgType_PlayerSetBubble;
     };
 
-    template<> struct MsgTypeTraits<BubbleSet>
+    template<>
+    struct MsgTypeTraits<BubbleSet>
     {
         static const MsgType enum_value = MsgType_BubbleSet;
     };
 
-    template<> struct MsgTypeTraits<BubbleBoom>
+    template<>
+    struct MsgTypeTraits<BubbleBoom>
     {
         static const MsgType enum_value = MsgType_BubbleBoom;
     };
 
-    template<> struct MsgTypeTraits<PropSet>
+    template<>
+    struct MsgTypeTraits<PropSet>
     {
         static const MsgType enum_value = MsgType_PropSet;
     };
 
-    template<> struct MsgTypeTraits<PlayerEatProp>
+    template<>
+    struct MsgTypeTraits<PlayerEatProp>
     {
         static const MsgType enum_value = MsgType_PlayerEatProp;
     };
 
-    template<> struct MsgTypeTraits<PlayerAttrChange>
+    template<>
+    struct MsgTypeTraits<PlayerAttrChange>
     {
         static const MsgType enum_value = MsgType_PlayerAttrChange;
     };
 
-    template<> struct MsgTypeTraits<PlayerStatusChange>
+    template<>
+    struct MsgTypeTraits<PlayerStatusChange>
     {
         static const MsgType enum_value = MsgType_PlayerStatusChange;
     };
 
-    template<> struct MsgTypeTraits<GameStatusChange>
+    template<>
+    struct MsgTypeTraits<GameStatusChange>
     {
         static const MsgType enum_value = MsgType_GameStatusChange;
     };
@@ -237,10 +266,15 @@ namespace API
             VT_ROLE = 8,
             VT_ISREADY = 10
         };
+
         const flatbuffers::String *uid() const { return GetPointer<const flatbuffers::String *>(VT_UID); }
+
         const flatbuffers::String *name() const { return GetPointer<const flatbuffers::String *>(VT_NAME); }
+
         int32_t role() const { return GetField<int32_t>(VT_ROLE, 0); }
+
         bool isReady() const { return GetField<uint8_t>(VT_ISREADY, 0) != 0; }
+
         bool Verify(flatbuffers::Verifier &verifier) const
         {
             return VerifyTableStart(verifier) &&
@@ -258,12 +292,22 @@ namespace API
     {
         flatbuffers::FlatBufferBuilder &fbb_;
         flatbuffers::uoffset_t start_;
+
         void add_uid(flatbuffers::Offset<flatbuffers::String> uid) { fbb_.AddOffset(UserData::VT_UID, uid); }
+
         void add_name(flatbuffers::Offset<flatbuffers::String> name) { fbb_.AddOffset(UserData::VT_NAME, name); }
+
         void add_role(int32_t role) { fbb_.AddElement<int32_t>(UserData::VT_ROLE, role, 0); }
-        void add_isReady(bool isReady) { fbb_.AddElement<uint8_t>(UserData::VT_ISREADY, static_cast<uint8_t>(isReady), 0); }
+
+        void add_isReady(bool isReady)
+        {
+            fbb_.AddElement<uint8_t>(UserData::VT_ISREADY, static_cast<uint8_t>(isReady), 0);
+        }
+
         UserDataBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+
         UserDataBuilder &operator=(const UserDataBuilder &);
+
         flatbuffers::Offset<UserData> Finish()
         {
             auto o = flatbuffers::Offset<UserData>(fbb_.EndTable(start_, 4));
@@ -291,7 +335,8 @@ namespace API
         int32_t role = 0,
         bool isReady = false)
     {
-        return CreateUserData(_fbb, uid ? _fbb.CreateString(uid) : 0, name ? _fbb.CreateString(name) : 0, role, isReady);
+        return CreateUserData(_fbb, uid ? _fbb.CreateString(uid) : 0, name ? _fbb.CreateString(name) : 0, role,
+            isReady);
     }
 
     struct Welcome FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table
@@ -300,7 +345,9 @@ namespace API
         {
             VT_UID = 4
         };
+
         const flatbuffers::String *uid() const { return GetPointer<const flatbuffers::String *>(VT_UID); }
+
         bool Verify(flatbuffers::Verifier &verifier) const
         {
             return VerifyTableStart(verifier) &&
@@ -314,9 +361,13 @@ namespace API
     {
         flatbuffers::FlatBufferBuilder &fbb_;
         flatbuffers::uoffset_t start_;
+
         void add_uid(flatbuffers::Offset<flatbuffers::String> uid) { fbb_.AddOffset(Welcome::VT_UID, uid); }
+
         WelcomeBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+
         WelcomeBuilder &operator=(const WelcomeBuilder &);
+
         flatbuffers::Offset<Welcome> Finish()
         {
             auto o = flatbuffers::Offset<Welcome>(fbb_.EndTable(start_, 1));
@@ -344,7 +395,9 @@ namespace API
         {
             VT_NAME = 4
         };
+
         const flatbuffers::String *name() const { return GetPointer<const flatbuffers::String *>(VT_NAME); }
+
         bool Verify(flatbuffers::Verifier &verifier) const
         {
             return VerifyTableStart(verifier) &&
@@ -358,9 +411,13 @@ namespace API
     {
         flatbuffers::FlatBufferBuilder &fbb_;
         flatbuffers::uoffset_t start_;
+
         void add_name(flatbuffers::Offset<flatbuffers::String> name) { fbb_.AddOffset(GotIt::VT_NAME, name); }
+
         GotItBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+
         GotItBuilder &operator=(const GotItBuilder &);
+
         flatbuffers::Offset<GotIt> Finish()
         {
             auto o = flatbuffers::Offset<GotIt>(fbb_.EndTable(start_, 1));
@@ -395,8 +452,11 @@ namespace API
     {
         flatbuffers::FlatBufferBuilder &fbb_;
         flatbuffers::uoffset_t start_;
+
         JoinRoomBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+
         JoinRoomBuilder &operator=(const JoinRoomBuilder &);
+
         flatbuffers::Offset<JoinRoom> Finish()
         {
             auto o = flatbuffers::Offset<JoinRoom>(fbb_.EndTable(start_, 0));
@@ -416,7 +476,10 @@ namespace API
         {
             VT_USERS = 4
         };
-        const flatbuffers::Vector<flatbuffers::Offset<UserData>> *users() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<UserData>> *>(VT_USERS); }
+
+        const flatbuffers::Vector<flatbuffers::Offset<UserData>> *
+            users() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<UserData>> *>(VT_USERS); }
+
         bool Verify(flatbuffers::Verifier &verifier) const
         {
             return VerifyTableStart(verifier) &&
@@ -431,9 +494,16 @@ namespace API
     {
         flatbuffers::FlatBufferBuilder &fbb_;
         flatbuffers::uoffset_t start_;
-        void add_users(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<UserData>>> users) { fbb_.AddOffset(RoomInfoUpdate::VT_USERS, users); }
+
+        void add_users(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<UserData>>> users)
+        {
+            fbb_.AddOffset(RoomInfoUpdate::VT_USERS, users);
+        }
+
         RoomInfoUpdateBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+
         RoomInfoUpdateBuilder &operator=(const RoomInfoUpdateBuilder &);
+
         flatbuffers::Offset<RoomInfoUpdate> Finish()
         {
             auto o = flatbuffers::Offset<RoomInfoUpdate>(fbb_.EndTable(start_, 1));
@@ -461,7 +531,9 @@ namespace API
         {
             VT_ROLE = 4
         };
+
         int32_t role() const { return GetField<int32_t>(VT_ROLE, 0); }
+
         bool Verify(flatbuffers::Verifier &verifier) const
         {
             return VerifyTableStart(verifier) &&
@@ -474,9 +546,13 @@ namespace API
     {
         flatbuffers::FlatBufferBuilder &fbb_;
         flatbuffers::uoffset_t start_;
+
         void add_role(int32_t role) { fbb_.AddElement<int32_t>(UserChangeRole::VT_ROLE, role, 0); }
+
         UserChangeRoleBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+
         UserChangeRoleBuilder &operator=(const UserChangeRoleBuilder &);
+
         flatbuffers::Offset<UserChangeRole> Finish()
         {
             auto o = flatbuffers::Offset<UserChangeRole>(fbb_.EndTable(start_, 1));
@@ -498,7 +574,9 @@ namespace API
         {
             VT_STAT = 4
         };
+
         int32_t stat() const { return GetField<int32_t>(VT_STAT, 0); }
+
         bool Verify(flatbuffers::Verifier &verifier) const
         {
             return VerifyTableStart(verifier) &&
@@ -511,9 +589,13 @@ namespace API
     {
         flatbuffers::FlatBufferBuilder &fbb_;
         flatbuffers::uoffset_t start_;
+
         void add_stat(int32_t stat) { fbb_.AddElement<int32_t>(UserChangeStats::VT_STAT, stat, 0); }
+
         UserChangeStatsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+
         UserChangeStatsBuilder &operator=(const UserChangeStatsBuilder &);
+
         flatbuffers::Offset<UserChangeStats> Finish()
         {
             auto o = flatbuffers::Offset<UserChangeStats>(fbb_.EndTable(start_, 1));
@@ -541,13 +623,21 @@ namespace API
             VT_DAMAGE = 14,
             VT_BUBBLE = 16
         };
+
         const flatbuffers::String *id() const { return GetPointer<const flatbuffers::String *>(VT_ID); }
+
         int32_t x() const { return GetField<int32_t>(VT_X, 0); }
+
         int32_t y() const { return GetField<int32_t>(VT_Y, 0); }
+
         int32_t role() const { return GetField<int32_t>(VT_ROLE, 0); }
+
         uint8_t speed() const { return GetField<uint8_t>(VT_SPEED, 0); }
+
         uint8_t damage() const { return GetField<uint8_t>(VT_DAMAGE, 0); }
+
         uint8_t bubble() const { return GetField<uint8_t>(VT_BUBBLE, 0); }
+
         bool Verify(flatbuffers::Verifier &verifier) const
         {
             return VerifyTableStart(verifier) &&
@@ -567,15 +657,25 @@ namespace API
     {
         flatbuffers::FlatBufferBuilder &fbb_;
         flatbuffers::uoffset_t start_;
+
         void add_id(flatbuffers::Offset<flatbuffers::String> id) { fbb_.AddOffset(PlayerData::VT_ID, id); }
+
         void add_x(int32_t x) { fbb_.AddElement<int32_t>(PlayerData::VT_X, x, 0); }
+
         void add_y(int32_t y) { fbb_.AddElement<int32_t>(PlayerData::VT_Y, y, 0); }
+
         void add_role(int32_t role) { fbb_.AddElement<int32_t>(PlayerData::VT_ROLE, role, 0); }
+
         void add_speed(uint8_t speed) { fbb_.AddElement<uint8_t>(PlayerData::VT_SPEED, speed, 0); }
+
         void add_damage(uint8_t damage) { fbb_.AddElement<uint8_t>(PlayerData::VT_DAMAGE, damage, 0); }
+
         void add_bubble(uint8_t bubble) { fbb_.AddElement<uint8_t>(PlayerData::VT_BUBBLE, bubble, 0); }
+
         PlayerDataBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+
         PlayerDataBuilder &operator=(const PlayerDataBuilder &);
+
         flatbuffers::Offset<PlayerData> Finish()
         {
             auto o = flatbuffers::Offset<PlayerData>(fbb_.EndTable(start_, 7));
@@ -621,7 +721,10 @@ namespace API
         {
             VT_PLAYERS = 4
         };
-        const flatbuffers::Vector<flatbuffers::Offset<PlayerData>> *players() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<PlayerData>> *>(VT_PLAYERS); }
+
+        const flatbuffers::Vector<flatbuffers::Offset<PlayerData>> *
+            players() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<PlayerData>> *>(VT_PLAYERS); }
+
         bool Verify(flatbuffers::Verifier &verifier) const
         {
             return VerifyTableStart(verifier) &&
@@ -636,9 +739,16 @@ namespace API
     {
         flatbuffers::FlatBufferBuilder &fbb_;
         flatbuffers::uoffset_t start_;
-        void add_players(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<PlayerData>>> players) { fbb_.AddOffset(GameInit::VT_PLAYERS, players); }
+
+        void add_players(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<PlayerData>>> players)
+        {
+            fbb_.AddOffset(GameInit::VT_PLAYERS, players);
+        }
+
         GameInitBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+
         GameInitBuilder &operator=(const GameInitBuilder &);
+
         flatbuffers::Offset<GameInit> Finish()
         {
             auto o = flatbuffers::Offset<GameInit>(fbb_.EndTable(start_, 1));
@@ -669,10 +779,15 @@ namespace API
             VT_X = 8,
             VT_Y = 10
         };
+
         const flatbuffers::String *id() const { return GetPointer<const flatbuffers::String *>(VT_ID); }
+
         Direction direction() const { return static_cast<Direction>(GetField<int8_t>(VT_DIRECTION, 0)); }
+
         int32_t x() const { return GetField<int32_t>(VT_X, 0); }
+
         int32_t y() const { return GetField<int32_t>(VT_Y, 0); }
+
         bool Verify(flatbuffers::Verifier &verifier) const
         {
             return VerifyTableStart(verifier) &&
@@ -689,12 +804,22 @@ namespace API
     {
         flatbuffers::FlatBufferBuilder &fbb_;
         flatbuffers::uoffset_t start_;
+
         void add_id(flatbuffers::Offset<flatbuffers::String> id) { fbb_.AddOffset(PlayerPosChange::VT_ID, id); }
-        void add_direction(Direction direction) { fbb_.AddElement<int8_t>(PlayerPosChange::VT_DIRECTION, static_cast<int8_t>(direction), 0); }
+
+        void add_direction(Direction direction)
+        {
+            fbb_.AddElement<int8_t>(PlayerPosChange::VT_DIRECTION, static_cast<int8_t>(direction), 0);
+        }
+
         void add_x(int32_t x) { fbb_.AddElement<int32_t>(PlayerPosChange::VT_X, x, 0); }
+
         void add_y(int32_t y) { fbb_.AddElement<int32_t>(PlayerPosChange::VT_Y, y, 0); }
+
         PlayerPosChangeBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+
         PlayerPosChangeBuilder &operator=(const PlayerPosChangeBuilder &);
+
         flatbuffers::Offset<PlayerPosChange> Finish()
         {
             auto o = flatbuffers::Offset<PlayerPosChange>(fbb_.EndTable(start_, 4));
@@ -738,8 +863,11 @@ namespace API
     {
         flatbuffers::FlatBufferBuilder &fbb_;
         flatbuffers::uoffset_t start_;
+
         PlayerSetBubbleBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+
         PlayerSetBubbleBuilder &operator=(const PlayerSetBubbleBuilder &);
+
         flatbuffers::Offset<PlayerSetBubble> Finish()
         {
             auto o = flatbuffers::Offset<PlayerSetBubble>(fbb_.EndTable(start_, 0));
@@ -763,11 +891,17 @@ namespace API
             VT_Y = 10,
             VT_DAMAGE = 12
         };
+
         const flatbuffers::String *id() const { return GetPointer<const flatbuffers::String *>(VT_ID); }
+
         const flatbuffers::String *player_id() const { return GetPointer<const flatbuffers::String *>(VT_PLAYER_ID); }
+
         int32_t x() const { return GetField<int32_t>(VT_X, 0); }
+
         int32_t y() const { return GetField<int32_t>(VT_Y, 0); }
+
         uint8_t damage() const { return GetField<uint8_t>(VT_DAMAGE, 0); }
+
         bool Verify(flatbuffers::Verifier &verifier) const
         {
             return VerifyTableStart(verifier) &&
@@ -786,13 +920,24 @@ namespace API
     {
         flatbuffers::FlatBufferBuilder &fbb_;
         flatbuffers::uoffset_t start_;
+
         void add_id(flatbuffers::Offset<flatbuffers::String> id) { fbb_.AddOffset(BubbleSet::VT_ID, id); }
-        void add_player_id(flatbuffers::Offset<flatbuffers::String> player_id) { fbb_.AddOffset(BubbleSet::VT_PLAYER_ID, player_id); }
+
+        void add_player_id(flatbuffers::Offset<flatbuffers::String> player_id)
+        {
+            fbb_.AddOffset(BubbleSet::VT_PLAYER_ID, player_id);
+        }
+
         void add_x(int32_t x) { fbb_.AddElement<int32_t>(BubbleSet::VT_X, x, 0); }
+
         void add_y(int32_t y) { fbb_.AddElement<int32_t>(BubbleSet::VT_Y, y, 0); }
+
         void add_damage(uint8_t damage) { fbb_.AddElement<uint8_t>(BubbleSet::VT_DAMAGE, damage, 0); }
+
         BubbleSetBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+
         BubbleSetBuilder &operator=(const BubbleSetBuilder &);
+
         flatbuffers::Offset<BubbleSet> Finish()
         {
             auto o = flatbuffers::Offset<BubbleSet>(fbb_.EndTable(start_, 5));
@@ -823,7 +968,8 @@ namespace API
         int32_t y = 0,
         uint8_t damage = 0)
     {
-        return CreateBubbleSet(_fbb, id ? _fbb.CreateString(id) : 0, player_id ? _fbb.CreateString(player_id) : 0, x, y, damage);
+        return CreateBubbleSet(_fbb, id ? _fbb.CreateString(id) : 0, player_id ? _fbb.CreateString(player_id) : 0, x, y,
+            damage);
     }
 
     struct BubbleBoom FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table
@@ -832,7 +978,9 @@ namespace API
         {
             VT_ID = 4
         };
+
         const flatbuffers::String *id() const { return GetPointer<const flatbuffers::String *>(VT_ID); }
+
         bool Verify(flatbuffers::Verifier &verifier) const
         {
             return VerifyTableStart(verifier) &&
@@ -846,9 +994,13 @@ namespace API
     {
         flatbuffers::FlatBufferBuilder &fbb_;
         flatbuffers::uoffset_t start_;
+
         void add_id(flatbuffers::Offset<flatbuffers::String> id) { fbb_.AddOffset(BubbleBoom::VT_ID, id); }
+
         BubbleBoomBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+
         BubbleBoomBuilder &operator=(const BubbleBoomBuilder &);
+
         flatbuffers::Offset<BubbleBoom> Finish()
         {
             auto o = flatbuffers::Offset<BubbleBoom>(fbb_.EndTable(start_, 1));
@@ -879,10 +1031,15 @@ namespace API
             VT_Y = 8,
             VT_TYPE = 10
         };
+
         const flatbuffers::String *id() const { return GetPointer<const flatbuffers::String *>(VT_ID); }
+
         int32_t x() const { return GetField<int32_t>(VT_X, 0); }
+
         int32_t y() const { return GetField<int32_t>(VT_Y, 0); }
+
         PropType type() const { return static_cast<PropType>(GetField<int8_t>(VT_TYPE, 0)); }
+
         bool Verify(flatbuffers::Verifier &verifier) const
         {
             return VerifyTableStart(verifier) &&
@@ -899,12 +1056,19 @@ namespace API
     {
         flatbuffers::FlatBufferBuilder &fbb_;
         flatbuffers::uoffset_t start_;
+
         void add_id(flatbuffers::Offset<flatbuffers::String> id) { fbb_.AddOffset(PropSet::VT_ID, id); }
+
         void add_x(int32_t x) { fbb_.AddElement<int32_t>(PropSet::VT_X, x, 0); }
+
         void add_y(int32_t y) { fbb_.AddElement<int32_t>(PropSet::VT_Y, y, 0); }
+
         void add_type(PropType type) { fbb_.AddElement<int8_t>(PropSet::VT_TYPE, static_cast<int8_t>(type), 0); }
+
         PropSetBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+
         PropSetBuilder &operator=(const PropSetBuilder &);
+
         flatbuffers::Offset<PropSet> Finish()
         {
             auto o = flatbuffers::Offset<PropSet>(fbb_.EndTable(start_, 4));
@@ -942,8 +1106,11 @@ namespace API
             VT_PLAYER_ID = 4,
             VT_BUBBLE_ID = 6
         };
+
         const flatbuffers::String *player_id() const { return GetPointer<const flatbuffers::String *>(VT_PLAYER_ID); }
+
         const flatbuffers::String *bubble_id() const { return GetPointer<const flatbuffers::String *>(VT_BUBBLE_ID); }
+
         bool Verify(flatbuffers::Verifier &verifier) const
         {
             return VerifyTableStart(verifier) &&
@@ -959,10 +1126,21 @@ namespace API
     {
         flatbuffers::FlatBufferBuilder &fbb_;
         flatbuffers::uoffset_t start_;
-        void add_player_id(flatbuffers::Offset<flatbuffers::String> player_id) { fbb_.AddOffset(PlayerEatProp::VT_PLAYER_ID, player_id); }
-        void add_bubble_id(flatbuffers::Offset<flatbuffers::String> bubble_id) { fbb_.AddOffset(PlayerEatProp::VT_BUBBLE_ID, bubble_id); }
+
+        void add_player_id(flatbuffers::Offset<flatbuffers::String> player_id)
+        {
+            fbb_.AddOffset(PlayerEatProp::VT_PLAYER_ID, player_id);
+        }
+
+        void add_bubble_id(flatbuffers::Offset<flatbuffers::String> bubble_id)
+        {
+            fbb_.AddOffset(PlayerEatProp::VT_BUBBLE_ID, bubble_id);
+        }
+
         PlayerEatPropBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+
         PlayerEatPropBuilder &operator=(const PlayerEatPropBuilder &);
+
         flatbuffers::Offset<PlayerEatProp> Finish()
         {
             auto o = flatbuffers::Offset<PlayerEatProp>(fbb_.EndTable(start_, 2));
@@ -984,7 +1162,8 @@ namespace API
         const char *player_id = nullptr,
         const char *bubble_id = nullptr)
     {
-        return CreatePlayerEatProp(_fbb, player_id ? _fbb.CreateString(player_id) : 0, bubble_id ? _fbb.CreateString(bubble_id) : 0);
+        return CreatePlayerEatProp(_fbb, player_id ? _fbb.CreateString(player_id) : 0,
+            bubble_id ? _fbb.CreateString(bubble_id) : 0);
     }
 
     struct PlayerAttrChange FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table
@@ -997,11 +1176,17 @@ namespace API
             VT_MAXBUBBLE = 10,
             VT_CURRENTBUBBLE = 12
         };
+
         const flatbuffers::String *id() const { return GetPointer<const flatbuffers::String *>(VT_ID); }
+
         uint8_t speed() const { return GetField<uint8_t>(VT_SPEED, 0); }
+
         uint8_t damage() const { return GetField<uint8_t>(VT_DAMAGE, 0); }
+
         uint8_t maxBubble() const { return GetField<uint8_t>(VT_MAXBUBBLE, 0); }
+
         uint8_t currentBubble() const { return GetField<uint8_t>(VT_CURRENTBUBBLE, 0); }
+
         bool Verify(flatbuffers::Verifier &verifier) const
         {
             return VerifyTableStart(verifier) &&
@@ -1019,13 +1204,27 @@ namespace API
     {
         flatbuffers::FlatBufferBuilder &fbb_;
         flatbuffers::uoffset_t start_;
+
         void add_id(flatbuffers::Offset<flatbuffers::String> id) { fbb_.AddOffset(PlayerAttrChange::VT_ID, id); }
+
         void add_speed(uint8_t speed) { fbb_.AddElement<uint8_t>(PlayerAttrChange::VT_SPEED, speed, 0); }
+
         void add_damage(uint8_t damage) { fbb_.AddElement<uint8_t>(PlayerAttrChange::VT_DAMAGE, damage, 0); }
-        void add_maxBubble(uint8_t maxBubble) { fbb_.AddElement<uint8_t>(PlayerAttrChange::VT_MAXBUBBLE, maxBubble, 0); }
-        void add_currentBubble(uint8_t currentBubble) { fbb_.AddElement<uint8_t>(PlayerAttrChange::VT_CURRENTBUBBLE, currentBubble, 0); }
+
+        void add_maxBubble(uint8_t maxBubble)
+        {
+            fbb_.AddElement<uint8_t>(PlayerAttrChange::VT_MAXBUBBLE, maxBubble, 0);
+        }
+
+        void add_currentBubble(uint8_t currentBubble)
+        {
+            fbb_.AddElement<uint8_t>(PlayerAttrChange::VT_CURRENTBUBBLE, currentBubble, 0);
+        }
+
         PlayerAttrChangeBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+
         PlayerAttrChangeBuilder &operator=(const PlayerAttrChangeBuilder &);
+
         flatbuffers::Offset<PlayerAttrChange> Finish()
         {
             auto o = flatbuffers::Offset<PlayerAttrChange>(fbb_.EndTable(start_, 5));
@@ -1066,8 +1265,11 @@ namespace API
             VT_ID = 4,
             VT_STATUS = 6
         };
+
         const flatbuffers::String *id() const { return GetPointer<const flatbuffers::String *>(VT_ID); }
+
         PlayerStatus status() const { return static_cast<PlayerStatus>(GetField<int8_t>(VT_STATUS, 0)); }
+
         bool Verify(flatbuffers::Verifier &verifier) const
         {
             return VerifyTableStart(verifier) &&
@@ -1082,10 +1284,18 @@ namespace API
     {
         flatbuffers::FlatBufferBuilder &fbb_;
         flatbuffers::uoffset_t start_;
+
         void add_id(flatbuffers::Offset<flatbuffers::String> id) { fbb_.AddOffset(PlayerStatusChange::VT_ID, id); }
-        void add_status(PlayerStatus status) { fbb_.AddElement<int8_t>(PlayerStatusChange::VT_STATUS, static_cast<int8_t>(status), 0); }
+
+        void add_status(PlayerStatus status)
+        {
+            fbb_.AddElement<int8_t>(PlayerStatusChange::VT_STATUS, static_cast<int8_t>(status), 0);
+        }
+
         PlayerStatusChangeBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+
         PlayerStatusChangeBuilder &operator=(const PlayerStatusChangeBuilder &);
+
         flatbuffers::Offset<PlayerStatusChange> Finish()
         {
             auto o = flatbuffers::Offset<PlayerStatusChange>(fbb_.EndTable(start_, 2));
@@ -1116,7 +1326,9 @@ namespace API
         {
             VT_STATUS = 4
         };
+
         GameStatus status() const { return static_cast<GameStatus>(GetField<int8_t>(VT_STATUS, 0)); }
+
         bool Verify(flatbuffers::Verifier &verifier) const
         {
             return VerifyTableStart(verifier) &&
@@ -1129,9 +1341,16 @@ namespace API
     {
         flatbuffers::FlatBufferBuilder &fbb_;
         flatbuffers::uoffset_t start_;
-        void add_status(GameStatus status) { fbb_.AddElement<int8_t>(GameStatusChange::VT_STATUS, static_cast<int8_t>(status), 0); }
+
+        void add_status(GameStatus status)
+        {
+            fbb_.AddElement<int8_t>(GameStatusChange::VT_STATUS, static_cast<int8_t>(status), 0);
+        }
+
         GameStatusChangeBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+
         GameStatusChangeBuilder &operator=(const GameStatusChangeBuilder &);
+
         flatbuffers::Offset<GameStatusChange> Finish()
         {
             auto o = flatbuffers::Offset<GameStatusChange>(fbb_.EndTable(start_, 1));
@@ -1147,6 +1366,56 @@ namespace API
         return builder_.Finish();
     }
 
+    struct Chat FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table
+    {
+        enum
+        {
+            VT_TEXT = 4
+        };
+
+        const flatbuffers::String *text() const { return GetPointer<const flatbuffers::String *>(VT_TEXT); }
+
+        bool Verify(flatbuffers::Verifier &verifier) const
+        {
+            return VerifyTableStart(verifier) &&
+                VerifyField<flatbuffers::uoffset_t>(verifier, VT_TEXT) &&
+                verifier.Verify(text()) &&
+                verifier.EndTable();
+        }
+    };
+
+    struct ChatBuilder
+    {
+        flatbuffers::FlatBufferBuilder &fbb_;
+        flatbuffers::uoffset_t start_;
+
+        void add_text(flatbuffers::Offset<flatbuffers::String> text) { fbb_.AddOffset(Chat::VT_TEXT, text); }
+
+        ChatBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+
+        ChatBuilder &operator=(const ChatBuilder &);
+
+        flatbuffers::Offset<Chat> Finish()
+        {
+            auto o = flatbuffers::Offset<Chat>(fbb_.EndTable(start_, 1));
+            return o;
+        }
+    };
+
+    inline flatbuffers::Offset<Chat> CreateChat(flatbuffers::FlatBufferBuilder &_fbb,
+        flatbuffers::Offset<flatbuffers::String> text = 0)
+    {
+        ChatBuilder builder_(_fbb);
+        builder_.add_text(text);
+        return builder_.Finish();
+    }
+
+    inline flatbuffers::Offset<Chat> CreateChatDirect(flatbuffers::FlatBufferBuilder &_fbb,
+        const char *text = nullptr)
+    {
+        return CreateChat(_fbb, text ? _fbb.CreateString(text) : 0);
+    }
+
     struct Msg FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table
     {
         enum
@@ -1154,8 +1423,11 @@ namespace API
             VT_DATA_TYPE = 4,
             VT_DATA = 6
         };
+
         MsgType data_type() const { return static_cast<MsgType>(GetField<uint8_t>(VT_DATA_TYPE, 0)); }
+
         const void *data() const { return GetPointer<const void *>(VT_DATA); }
+
         bool Verify(flatbuffers::Verifier &verifier) const
         {
             return VerifyTableStart(verifier) &&
@@ -1170,10 +1442,18 @@ namespace API
     {
         flatbuffers::FlatBufferBuilder &fbb_;
         flatbuffers::uoffset_t start_;
-        void add_data_type(MsgType data_type) { fbb_.AddElement<uint8_t>(Msg::VT_DATA_TYPE, static_cast<uint8_t>(data_type), 0); }
+
+        void add_data_type(MsgType data_type)
+        {
+            fbb_.AddElement<uint8_t>(Msg::VT_DATA_TYPE, static_cast<uint8_t>(data_type), 0);
+        }
+
         void add_data(flatbuffers::Offset<void> data) { fbb_.AddOffset(Msg::VT_DATA, data); }
+
         MsgBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+
         MsgBuilder &operator=(const MsgBuilder &);
+
         flatbuffers::Offset<Msg> Finish()
         {
             auto o = flatbuffers::Offset<Msg>(fbb_.EndTable(start_, 2));
@@ -1195,24 +1475,44 @@ namespace API
     {
         switch (type)
         {
-        case MsgType_NONE: return true;
-        case MsgType_Welcome: return verifier.VerifyTable(reinterpret_cast<const Welcome *>(union_obj));
-        case MsgType_GotIt: return verifier.VerifyTable(reinterpret_cast<const GotIt *>(union_obj));
-        case MsgType_JoinRoom: return verifier.VerifyTable(reinterpret_cast<const JoinRoom *>(union_obj));
-        case MsgType_RoomInfoUpdate: return verifier.VerifyTable(reinterpret_cast<const RoomInfoUpdate *>(union_obj));
-        case MsgType_UserChangeRole: return verifier.VerifyTable(reinterpret_cast<const UserChangeRole *>(union_obj));
-        case MsgType_UserChangeStats: return verifier.VerifyTable(reinterpret_cast<const UserChangeStats *>(union_obj));
-        case MsgType_GameInit: return verifier.VerifyTable(reinterpret_cast<const GameInit *>(union_obj));
-        case MsgType_PlayerPosChange: return verifier.VerifyTable(reinterpret_cast<const PlayerPosChange *>(union_obj));
-        case MsgType_PlayerSetBubble: return verifier.VerifyTable(reinterpret_cast<const PlayerSetBubble *>(union_obj));
-        case MsgType_BubbleSet: return verifier.VerifyTable(reinterpret_cast<const BubbleSet *>(union_obj));
-        case MsgType_BubbleBoom: return verifier.VerifyTable(reinterpret_cast<const BubbleBoom *>(union_obj));
-        case MsgType_PropSet: return verifier.VerifyTable(reinterpret_cast<const PropSet *>(union_obj));
-        case MsgType_PlayerEatProp: return verifier.VerifyTable(reinterpret_cast<const PlayerEatProp *>(union_obj));
-        case MsgType_PlayerAttrChange: return verifier.VerifyTable(reinterpret_cast<const PlayerAttrChange *>(union_obj));
-        case MsgType_PlayerStatusChange: return verifier.VerifyTable(reinterpret_cast<const PlayerStatusChange *>(union_obj));
-        case MsgType_GameStatusChange: return verifier.VerifyTable(reinterpret_cast<const GameStatusChange *>(union_obj));
-        default: return false;
+        case MsgType_NONE:
+            return true;
+        case MsgType_Welcome:
+            return verifier.VerifyTable(reinterpret_cast<const Welcome *>(union_obj));
+        case MsgType_GotIt:
+            return verifier.VerifyTable(reinterpret_cast<const GotIt *>(union_obj));
+        case MsgType_JoinRoom:
+            return verifier.VerifyTable(reinterpret_cast<const JoinRoom *>(union_obj));
+        case MsgType_RoomInfoUpdate:
+            return verifier.VerifyTable(reinterpret_cast<const RoomInfoUpdate *>(union_obj));
+        case MsgType_UserChangeRole:
+            return verifier.VerifyTable(reinterpret_cast<const UserChangeRole *>(union_obj));
+        case MsgType_UserChangeStats:
+            return verifier.VerifyTable(reinterpret_cast<const UserChangeStats *>(union_obj));
+        case MsgType_Chat:
+            return verifier.VerifyTable(reinterpret_cast<const Chat *>(union_obj));
+        case MsgType_GameInit:
+            return verifier.VerifyTable(reinterpret_cast<const GameInit *>(union_obj));
+        case MsgType_PlayerPosChange:
+            return verifier.VerifyTable(reinterpret_cast<const PlayerPosChange *>(union_obj));
+        case MsgType_PlayerSetBubble:
+            return verifier.VerifyTable(reinterpret_cast<const PlayerSetBubble *>(union_obj));
+        case MsgType_BubbleSet:
+            return verifier.VerifyTable(reinterpret_cast<const BubbleSet *>(union_obj));
+        case MsgType_BubbleBoom:
+            return verifier.VerifyTable(reinterpret_cast<const BubbleBoom *>(union_obj));
+        case MsgType_PropSet:
+            return verifier.VerifyTable(reinterpret_cast<const PropSet *>(union_obj));
+        case MsgType_PlayerEatProp:
+            return verifier.VerifyTable(reinterpret_cast<const PlayerEatProp *>(union_obj));
+        case MsgType_PlayerAttrChange:
+            return verifier.VerifyTable(reinterpret_cast<const PlayerAttrChange *>(union_obj));
+        case MsgType_PlayerStatusChange:
+            return verifier.VerifyTable(reinterpret_cast<const PlayerStatusChange *>(union_obj));
+        case MsgType_GameStatusChange:
+            return verifier.VerifyTable(reinterpret_cast<const GameStatusChange *>(union_obj));
+        default:
+            return false;
         }
     }
 

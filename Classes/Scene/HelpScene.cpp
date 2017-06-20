@@ -42,6 +42,15 @@ bool HelpScene::init()
 		bg03Init();
 		createItem();
 	}
+    auto keyEventListener = EventListenerKeyboard::create();
+    keyEventListener->onKeyReleased = [](EventKeyboard::KeyCode code, Event* event)
+    {
+        if (code == EventKeyboard::KeyCode::KEY_ESCAPE)
+        {
+            Director::getInstance()->popScene();
+        }
+    };
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(keyEventListener, this);
 	return true;
 }
 void HelpScene::bg01Init()

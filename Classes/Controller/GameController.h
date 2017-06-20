@@ -23,6 +23,8 @@ private:
     PropManager * propManager;
     Client * client;
     GameMap * map;
+
+    cocos2d::Vec2 origin;
     int gameStatus;
 
     Operator * oper;

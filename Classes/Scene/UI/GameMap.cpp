@@ -15,12 +15,10 @@ void GameMap::readMapInfo(const char * mapName)
     using namespace rapidjson;
     
     auto path = Settings::Map::path + std::string{ mapName } + ".json";
-    FILE* fp = fopen(path.c_str(), "rb");
-    char readBuffer[500];
-    FileReadStream is(fp, readBuffer, sizeof(readBuffer)); 
+    auto contents = FileUtils::getInstance()->getStringFromFile(path);
     
     Document d;
-    d.ParseStream(is);
+    d.Parse(contents.data(), contents.size());
 
     mapInfo.resize(13);
 
@@ -30,7 +28,6 @@ void GameMap::readMapInfo(const char * mapName)
         }
     }
 
-    fclose(fp);
 }
 
 void GameMap::setMap(const char * mapName)

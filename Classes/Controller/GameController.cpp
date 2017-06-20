@@ -15,6 +15,8 @@ bool GameController::init()
         return false;
     }
 
+    origin = Director::getInstance()->getVisibleOrigin();
+
     oper = Operator::create();
     oper->addHandle(CC_CALLBACK_2(GameController::opHandle, this));
 
@@ -120,7 +122,7 @@ void GameController::syncLocalPlayerPosition(float dt)
         flatbuffers::FlatBufferBuilder builder;
         auto id = builder.CreateString(localPlayer->getID());
         auto dir = static_cast<Direction>(localPlayer->getDirection());
-        auto pos = localPlayer->getPosition();
+        auto pos = localPlayer->getPosition() - origin;
         auto data = CreatePlayerPosChange(builder, id, dir, pos.x * 10, pos.y * 10);
         auto msg = CreateMsg(builder, MsgType_PlayerPosChange, data.Union());
         builder.Finish(msg);
@@ -150,7 +152,7 @@ void GameController::onGameInit(const void * msg)
         player->setSpeed(it->speed());
         player->setDamage(it->damage());
         player->setMaxBubble(it->bubble(), it->bubble());
-        player->setPosition(x, y);
+        player->setPosition(Vec2(x, y) + origin);
         map->addPlayer(player);
     }
 }
@@ -187,7 +189,9 @@ void GameController::toOver()
     unschedule(schedule_selector(GameController::syncLocalPlayerPosition));
     
     auto isWin = new bool;
-    *isWin = (playerManager->getLocalPlayer()->getStatus() != Player::Status::DIE);
+    auto localPlayer = playerManager->getLocalPlayer();
+    if (!localPlayer) return;
+    *isWin = (localPlayer->getStatus() != Player::Status::DIE);
     if (*isWin)
     {
         GameAudio::getInstance()->playEffect("Sound/win.mp3");
@@ -209,7 +213,7 @@ void GameController::onPlayerPositionChange(const void* msg)
     {
         auto pos = Vec2(data->x() / 10, data->y() / 10);
         auto dir = static_cast<Player::Direction>(data->direction());
-        player->setPosition(pos);
+        player->setPosition(pos + origin);
         player->setDirection(dir);
         propManager->checkEat(pos);
     }
@@ -241,7 +245,7 @@ void GameController::onPlayerStatusChange(const void * msg)
 void GameController::onLocalPlayerSetBubble()
 {
     auto localPlayer = playerManager->getLocalPlayer();
-    if (localPlayer->isCanSetBubble() && map->at(map->positionToTileCoord(localPlayer->getPosition())) != map->TILE_BUBBLE)
+    if (localPlayer->isCanSetBubble() && map->at(map->positionToTileCoord(localPlayer->getPosition() - origin)) != map->TILE_BUBBLE)
     {
         //localPlayer->setBubble();
 #ifdef NETWORK
@@ -282,7 +286,7 @@ void GameController::onBubbleSet(const void* msg)
         player->setBubble(); 
     }
 
-    auto bubble = bubbleManager->createBubble(id, playerID, Vec2(x, y), damage);
+    auto bubble = bubbleManager->createBubble(id, playerID, Vec2(x, y) + origin, damage);
     if (bubble)
     {
         map->addBubble(bubble);
@@ -310,7 +314,7 @@ void GameController::onPropSet(const void* msg)
     auto data = static_cast<const API::PropSet*>(msg);
     auto id = data->id()->str();
     auto type = static_cast<Prop::Type>(data->type());
-    auto pos = Vec2(data->x(), data->y());
+    auto pos = Vec2(data->x(), data->y()) + origin;
     auto prop = propManager->createProp(id, type, pos);
 
     map->addProp(prop, prop->getType());

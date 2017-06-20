@@ -2,7 +2,6 @@
 #include "Controller/GameController.h"
 #include "Scene/UI/ResultBox.h"
 #include "Scene/UI/GameMap.h"
-#include "Scene/UI/ChatBox.h"
 #include "Settings.h"
 #include "Util/GameAudio.h"
 
@@ -39,10 +38,10 @@ bool GameScene::init()
     }
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
-
+    auto origin = Director::getInstance()->getVisibleOrigin();
     auto map = GameMap::create();
-    map->setPosition(visibleSize.width * 0.1f, visibleSize.height * 0.1f);
     map->setMap("town_10");
+    map->setPosition(Vec2((visibleSize.width - map->getMapSize().width * 40) * 0.5f, (visibleSize.height - map->getMapSize().height * 40) * 0.48f) + origin);
     addChild(map, -1);
 
     auto gameController = GameController::create();
@@ -50,8 +49,8 @@ bool GameScene::init()
 
     addChild(gameController, -1);
   
-    auto _chatBox = ChatBox::create();
-    addChild(_chatBox, 0);
+    //auto _chatBox = ChatBox::create();
+    //addChild(_chatBox, 0);
 
     auto _resultBox = ResultBox::create();
     addChild(_resultBox, 1);

@@ -33,7 +33,15 @@ bool StartScene::init()
     addChild(createBGImage());
     addChild(createText());
 
-
+    auto keyEventListener = EventListenerKeyboard::create();
+    keyEventListener->onKeyReleased = [](EventKeyboard::KeyCode code, Event* event)
+    {
+        if (code == EventKeyboard::KeyCode::KEY_ESCAPE)
+        {
+            Director::getInstance()->end();
+        }
+    };
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(keyEventListener, this);
     return true;
 }
 

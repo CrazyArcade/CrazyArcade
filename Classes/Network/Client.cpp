@@ -4,6 +4,16 @@
 USING_NS_CC;
 using namespace API;
 
+Client::~Client()
+{
+    if (isConnected())
+    {
+        _ws->closeAsync();
+        CC_SAFE_DELETE(_ws);
+        _ws = nullptr;
+    }
+}
+
 Client * Client::getInstance()
 {
     static Client INSTANCE;
@@ -13,7 +23,7 @@ Client * Client::getInstance()
 bool Client::connect(const std::string & addr)
 {
     if (_ws == nullptr) _ws = new WebSocket();
-    return _ws->init(*this, Settings::Server::addr);
+    return _ws->init(*this, "ws://192.168.1.61:4000");
 }
 
 bool Client::isConnected()
