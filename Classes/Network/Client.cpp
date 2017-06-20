@@ -23,7 +23,7 @@ Client * Client::getInstance()
 bool Client::connect(const std::string & addr)
 {
     if (_ws == nullptr) _ws = new WebSocket();
-    return _ws->init(*this, "ws://192.168.1.61:4000");
+    return _ws->init(*this, Settings::Server::addr);
 }
 
 bool Client::isConnected()
