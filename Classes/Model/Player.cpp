@@ -65,7 +65,7 @@ uint8_t Player::getSpeed()
 
 float Player::getRealSpeed()
 {
-    return 0.8f + attr.speed * 0.4f;
+    return 0.8f + attr.speed * 0.3f;
 }
 
 void Player::setSpeed(uint8_t speed)
