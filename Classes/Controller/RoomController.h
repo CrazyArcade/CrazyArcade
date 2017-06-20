@@ -17,6 +17,8 @@ public:
 
     void onUserChangeStats(bool isReady);
 
+    void sendChat(const std::string& text);
+
 private:
     Client * client;
     int gameStatus;
@@ -29,6 +31,8 @@ private:
     void onRoomInfoUpdate(const void* msg);
 
     void onGameStatusChange(const void* msg);
+
+    void onChat(const void* msg);
 
 };
 

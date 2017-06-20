@@ -1,7 +1,6 @@
 #include "SettingsScene.h"
 #include "Settings.h"
-#include "StartScene.h"
-#include "SimpleAudioEngine.h"
+#include "Util/GameAudio.h"
 
 USING_NS_CC;
 
@@ -26,90 +25,63 @@ bool SettingsScene::init()
     {
         return false;
     }
-	Size visibleSize = Director::getInstance()->getVisibleSize();
-	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    auto middleX = visibleSize.width / 2;
 
-	Sprite * bg = Sprite::create("SettingsScene/background1.jpg");
-	bg->setPosition(Vec2(origin.x + visibleSize.width / 2,
-		origin.y + visibleSize.height / 2));
-	this->addChild(bg);
-	
-	musicOn = CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying();
+    Sprite * bg = Sprite::create("SettingsScene/background1.jpg");
+    bg->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
+    this->addChild(bg, -1);
 
-	//the sound
-	auto soundOnMenuItem = MenuItemImage::create(
-		"SettingsScene/sound-on.png",
-		"SettingsScene/sound-on.png");
-	auto soundOffMenuItem = MenuItemImage::create(
-		"SettingsScene/sound-off.png",
-		"SettingsScene/sound-off.png");
-	auto soundToggleMenuItem = MenuItemToggle::createWithCallback(
-		CC_CALLBACK_1(SettingsScene::menuSoundToggleCallback, this),
-		soundOnMenuItem,
-		soundOffMenuItem, NULL);
-	soundToggleMenuItem->setPosition(Director::getInstance()->convertToGL(Vec2(visibleSize.width*0.75f, visibleSize.height*0.3f)));
+    auto musicLabel = createLabel("Background Music");
+    auto musicCheckBox = createCheckBox([=](Ref*, ui::CheckBox::EventType type) {
+        GameAudio::getInstance()->setBgmOn(type == ui::CheckBox::EventType::SELECTED);
+    });
+    musicLabel->setPosition(Vec2(middleX, visibleSize.height * 0.7f));
+    musicCheckBox->setPosition(Vec2(middleX + 20, visibleSize.height * 0.7f));
+    musicCheckBox->setSelected(GameAudio::getInstance()->getBgmOn());
+    addChild(musicLabel);
+    addChild(musicCheckBox);
 
-	//the music
-	/*const auto music = Menu::create();
-	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("StartScene/bgmusic.mp3");
-	musicOn = UserDefault::getInstance()->getBoolForKey("musicOn", true);*/
-
-	auto musicOnMenuItem = MenuItemImage::create(
-		"SettingsScene/music-on.png",
-		"SettingsScene/music-on.png");
-	auto musicOffMenuItem = MenuItemImage::create(
-		"SettingsScene/music-off.png",
-		"SettingsScene/music-off.png");
-	MenuItemToggle* musicToggleMenuItem;
-	if (musicOn)
-	{
-		 musicToggleMenuItem = MenuItemToggle::createWithCallback(
-			CC_CALLBACK_1(SettingsScene::menuMusicToggleCallback, this),
-			musicOnMenuItem,
-			musicOffMenuItem,
-			NULL);
-	}
-	else
-	{
-		 musicToggleMenuItem = MenuItemToggle::createWithCallback(
-			CC_CALLBACK_1(SettingsScene::menuMusicToggleCallback, this),
-			musicOffMenuItem,
-			musicOnMenuItem,
-			NULL);
-	}
-	musicToggleMenuItem->setPosition(Director::getInstance()->convertToGL(Vec2(visibleSize.width*0.75f, visibleSize.height*0.4f)));
-
-
-	//OK button
-	auto okMenuItem = MenuItemImage::create(
-		"SettingsScene/ok.png",
-		"SettingsScene/ok.png",
-		CC_CALLBACK_1(SettingsScene::menuBackCallback, this));
-
-	okMenuItem->setPosition(Director::getInstance()->convertToGL(Vec2(visibleSize.width*0.5f, visibleSize.height*0.5f)));
-
-	Menu * mn = Menu::create(soundToggleMenuItem,
-		musicToggleMenuItem, okMenuItem, NULL);
-	mn->setPosition(Vec2::ZERO);
-	this->addChild(mn);
+    auto effectLabel = createLabel("Effect Music");
+    auto effectCheckBox = createCheckBox([=](Ref*, ui::CheckBox::EventType type)
+    {
+        GameAudio::getInstance()->setEffectOn(type == ui::CheckBox::EventType::SELECTED);
+    });
+    effectLabel->setPosition(Vec2(middleX, visibleSize.height * 0.6f));
+    effectCheckBox->setPosition(Vec2(middleX + 20, visibleSize.height * 0.6f));
+    effectCheckBox->setSelected(GameAudio::getInstance()->getBgmOn());
+    addChild(effectLabel);
+    addChild(effectCheckBox);
 
     addChild(createText());
-	
+
+    auto keyEventListener = EventListenerKeyboard::create();
+    keyEventListener->onKeyReleased = [](EventKeyboard::KeyCode code, Event* event)
+    {
+        if (code == EventKeyboard::KeyCode::KEY_ESCAPE)
+        {
+            Director::getInstance()->popScene();
+        }
+    };
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(keyEventListener, this);
 
     return true;
 }
 
-cocos2d::Menu* SettingsScene::createText() {
+cocos2d::Menu* SettingsScene::createText()
+{
     const auto buttons = Menu::create();
 
     const auto backButton = MenuItemLabel::create(
-        Label::createWithTTF("Back", Settings::Font::Type::base, Settings::Font::Size::label),
-        CC_CALLBACK_1(SettingsScene::menuBackCallback, this));
+        Label::createWithTTF("OK", Settings::Font::Type::title, Settings::Font::Size::normal),
+        CC_CALLBACK_1(SettingsScene::menuOkCallback, this));
 
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     const auto baseY = visibleSize.height * 0.85f;
 
-    backButton->setPosition(backButton->getContentSize().width / 2 + 30, baseY + 30);
+    backButton->setPosition(visibleSize.width * 0.5f, visibleSize.height * 0.2f);
+    static_cast<Label*>(backButton->getLabel())->enableGlow(Color4B(0, 0, 0, 255 * 0.6f));
 
     buttons->addChild(backButton, 1);
 
@@ -118,38 +90,29 @@ cocos2d::Menu* SettingsScene::createText() {
     return buttons;
 }
 
-void SettingsScene::musicPP(cocos2d::Ref * pSender) {
-	musicOn = CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying();
-	if (musicOn)
-		CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
-	else
-		CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
-	musicOn = !musicOn;
-	UserDefault::getInstance()->setBoolForKey("musicOn", musicOn);
+void SettingsScene::onEnter()
+{
+    Layer::onEnter();
+    GameAudio::getInstance()->playBgm("Sound/mainScene.mp3");
 }
 
-void SettingsScene::menuBackCallback(Ref* pSender)
+void SettingsScene::menuOkCallback(cocos2d::Ref * pSender)
 {
     Director::getInstance()->popScene();
 }
-void SettingsScene::menuSoundToggleCallback(cocos2d::Ref * pSender) 
-{
-	//const auto scene = HelpScene::createScene();
-	//Director::getInstance()->pushScene(scene);
-	
-}
-void SettingsScene::menuMusicToggleCallback(cocos2d::Ref * pSender) 
-{
-	//const auto scene = HelpScene::createScene();
-	//Director::getInstance()->pushScene(scene);
-	//auto scene = StartScene::createScene();
-	musicPP(pSender);
-	//change the label in the startscene at the same time
 
-	
-}
-void SettingsScene::menuOkCallback(cocos2d::Ref * pSender)
+cocos2d::ui::CheckBox * SettingsScene::createCheckBox(std::function<void(Ref*, ui::CheckBox::EventType)> callback)
 {
-	const auto scene = StartScene::createScene();
-	Director::getInstance()->pushScene(scene);
+    auto checkBox = ui::CheckBox::create("Scene/checkbox_normal.png", "Scene/checkbox_active.png");
+    checkBox->setAnchorPoint(Vec2::ANCHOR_MIDDLE_LEFT);
+    checkBox->addEventListener(callback);
+    return checkBox;
+}
+
+cocos2d::Label * SettingsScene::createLabel(const char * text)
+{
+    auto label = Label::createWithTTF(text, Settings::Font::Type::title, Settings::Font::Size::normal);
+    label->enableShadow(Color4B(0, 0, 0, 255 * 0.15f), Size(2, -2), 2);
+    label->setAnchorPoint(Vec2::ANCHOR_MIDDLE_RIGHT);
+    return label;
 }

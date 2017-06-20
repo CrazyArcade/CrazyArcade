@@ -159,6 +159,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Model\Player.cpp" />
     <ClCompile Include="..\Classes\Model\Prop.cpp" />
     <ClCompile Include="..\Classes\Network\Client.cpp" />
+    <ClCompile Include="..\Classes\Operator\Rocker.cpp" />
+    <ClCompile Include="..\Classes\Operator\KeyBoard.cpp" />
+    <ClCompile Include="..\Classes\Operator\Operator.cpp" />
     <ClCompile Include="..\Classes\Scene\GameScene.cpp" />
     <ClCompile Include="..\Classes\Scene\HelloWorldScene.cpp" />
     <ClCompile Include="..\Classes\Scene\HelpScene.cpp" />
@@ -176,6 +179,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Scene\UI\RoleBox.cpp" />
     <ClCompile Include="..\Classes\Scene\UI\UserBox.cpp" />
     <ClCompile Include="..\Classes\Util\AnimationLoader.cpp" />
+    <ClCompile Include="..\Classes\Util\GameAudio.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -192,7 +196,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Model\User.h" />
     <ClInclude Include="..\Classes\Network\api_generated.h" />
     <ClInclude Include="..\Classes\Network\Client.h" />
-    <ClInclude Include="..\Classes\preloadList.h" />
+    <ClInclude Include="..\Classes\Operator\Rocker.h" />
+    <ClInclude Include="..\Classes\Operator\KeyBoard.h" />
+    <ClInclude Include="..\Classes\Operator\Operator.h" />
+    <ClInclude Include="..\Classes\PreloadList.h" />
     <ClInclude Include="..\Classes\Scene\GameScene.h" />
     <ClInclude Include="..\Classes\Scene\HelloWorldScene.h" />
     <ClInclude Include="..\Classes\Scene\HelpScene.h" />
@@ -209,6 +216,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Scene\UI\UserBox.h" />
     <ClInclude Include="..\Classes\Settings.h" />
     <ClInclude Include="..\Classes\Util\AnimationLoader.h" />
+    <ClInclude Include="..\Classes\Util\GameAudio.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>

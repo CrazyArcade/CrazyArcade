@@ -26,10 +26,19 @@ void RoomController::onEnter()
     {
         client->connect();
     }
-
+    if (userBoxes.size() > 0)
+    {
+        // second enter room, request room info update
+        flatbuffers::FlatBufferBuilder builder;
+        auto orc = CreateRoomInfoUpdate(builder);
+        auto msg = CreateMsg(builder, MsgType::MsgType_RoomInfoUpdate, orc.Union());
+        builder.Finish(msg);
+        client->send(builder.GetBufferPointer(), builder.GetSize());
+    }
     CLIENT_ON(MsgType_Welcome, RoomController::onWelcome);
     CLIENT_ON(MsgType_RoomInfoUpdate, RoomController::onRoomInfoUpdate);
     CLIENT_ON(MsgType_GameStatusChange, RoomController::onGameStatusChange);
+    CLIENT_ON(MsgType_Chat, RoomController::onChat);
 #endif // NETWORK
 }
 
@@ -111,6 +120,23 @@ void RoomController::onGameStatusChange(const void * msg)
     {
         Director::getInstance()->pushScene(GameScene::createScene());
     }
+}
+
+void RoomController::onChat(const void * msg)
+{
+    auto data = static_cast<const Chat*>(msg);
+    getParent()->getEventDispatcher()->dispatchCustomEvent("update_chat", const_cast<char *>(data->text()->c_str()));
+}
+
+void RoomController::sendChat(const std::string & text)
+{
+    flatbuffers::FlatBufferBuilder builder;
+    auto str = builder.CreateString(text);
+    auto orc = CreateChat(builder, str);
+    auto msg = CreateMsg(builder, MsgType_Chat, orc.Union());
+    builder.Finish(msg);
+
+    client->send(builder.GetBufferPointer(), builder.GetSize());
 }
 
 void RoomController::onUserChangeRole(int role)

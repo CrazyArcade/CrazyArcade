@@ -1,10 +1,9 @@
 #include "GameScene.h"
-#include "SimpleAudioEngine.h"
 #include "Controller/GameController.h"
 #include "Scene/UI/ResultBox.h"
 #include "Scene/UI/GameMap.h"
-#include "Scene/UI/ChatBox.h"
 #include "Settings.h"
+#include "Util/GameAudio.h"
 
 USING_NS_CC;
 
@@ -25,7 +24,7 @@ Scene* GameScene::createScene()
 void GameScene::onEnter()
 {
 	Layer::onEnter();
-	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Sound/inGame.mp3", true);
+    GameAudio::getInstance()->playBgm("Sound/inGame.mp3");
 }
 
 // on "init" you need to initialize your instance
@@ -39,9 +38,10 @@ bool GameScene::init()
     }
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
-
+    auto origin = Director::getInstance()->getVisibleOrigin();
     auto map = GameMap::create();
     map->setMap("town_10");
+    map->setPosition(Vec2((visibleSize.width - map->getMapSize().width * 40) * 0.5f, (visibleSize.height - map->getMapSize().height * 40) * 0.48f) + origin);
     addChild(map, -1);
 
     auto gameController = GameController::create();
@@ -49,8 +49,8 @@ bool GameScene::init()
 
     addChild(gameController, -1);
   
-    auto _chatBox = ChatBox::create();
-    addChild(_chatBox, 0);
+    //auto _chatBox = ChatBox::create();
+    //addChild(_chatBox, 0);
 
     auto _resultBox = ResultBox::create();
     addChild(_resultBox, 1);

@@ -18,6 +18,7 @@ public:
 
     Client(Client const &) = delete;
     void operator=(Client const &) = delete;
+    ~Client();
 
     static Client * getInstance();
 

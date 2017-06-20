@@ -31,6 +31,9 @@
     <Filter Include="src\Network">
       <UniqueIdentifier>{9586c25b-657a-42e2-8f38-46a8515a2319}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Operator">
+      <UniqueIdentifier>{615a3f64-f37b-406f-8f6b-8a291a35c6b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -113,6 +116,18 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Network\Client.cpp">
       <Filter>src\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Operator\Operator.cpp">
+      <Filter>src\Operator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Operator\KeyBoard.cpp">
+      <Filter>src\Operator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Operator\Rocker.cpp">
+      <Filter>src\Operator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Util\GameAudio.cpp">
+      <Filter>src\Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -206,8 +221,20 @@
     <ClInclude Include="..\Classes\Network\api_generated.h">
       <Filter>src\Network</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\preloadList.h">
+    <ClInclude Include="..\Classes\Operator\KeyBoard.h">
+      <Filter>src\Operator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Operator\Operator.h">
+      <Filter>src\Operator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Operator\Rocker.h">
+      <Filter>src\Operator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PreloadList.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Util\GameAudio.h">
+      <Filter>src\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

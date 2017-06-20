@@ -3,6 +3,7 @@
 #include "StartScene.h"
 #include "Scene/UI/CheckBox.h"
 #include "Model/User.h"
+#include "Util/GameAudio.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -125,6 +126,12 @@ void LoginScene::textFieldEvent(Ref* sender, ui::TextField::EventType event)
         usernameBG->setTexture("LoginScene/input_normal.png");
         break;
     }
+}
+
+void LoginScene::onEnter()
+{
+    Layer::onEnter();
+    GameAudio::getInstance()->playBgm("Sound/mainScene.mp3");
 }
 
 void LoginScene::menuBackCallback(cocos2d::Ref* pSender)
